@@ -16,7 +16,7 @@ for title, filename in title_to_image.items():
     image_path = f"images/{filename}"
     cursor.execute("""
         UPDATE Recipes
-        SET "Image URL" = ?
+        SET "Image" = ?
         WHERE Title = ?
     """, (image_path, title))
     if cursor.rowcount == 0:
