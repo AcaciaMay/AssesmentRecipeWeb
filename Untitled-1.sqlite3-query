@@ -1,4 +1,4 @@
 -- database: ./database.db
 
 SELECT * FROM Recipes;
-INSERT INTO Recipes (RecipeID, Title, Creator, Image, Ingredients, Category, Website, RecipeLink) VALUES(1,'Chicken and Leek Pie', 'Nagi Maehashi', '3', 'Chicken, Leek, Puff Pastry', 'Dinner', 'Recipetineats', 'https://www.recipetineats.com/chicken-and-leek-pie/');
+INSERT INTO Recipes (RecipeID, Title, Creator, Ingredients, Category, Website, RecipeLink) VALUES(1,'Chicken and Leek Pie', 'Nagi Maehashi', 'Chicken, Leek, Puff Pastry', 'Dinner', 'Recipetineats', 'https://www.recipetineats.com/chicken-and-leek-pie/');
