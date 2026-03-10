@@ -1,7 +1,8 @@
 import sqlite3
 
 title_to_image = {
-"Chicken and Leek Pie": "chickenandleek.jpg"
+"Chicken and Leek Pie": "chickenandleek.jpg",
+"BBQ Butterflied Lamb": "bbqlamb.jpg"
 }
 
 
