@@ -3,7 +3,12 @@ import sqlite3
 title_to_image = {
 "Chicken and Leek Pie": "chickenandleek.jpg",
 "BBQ Butterflied Lamb": "bbqlamb.jpg",
-"Sticky Five Spice Beef": "spicebeef.jpg"
+"Sticky Five Spice Beef": "spicebeef.jpg",
+"Roti Chicken Curry": "chickencurry.jpg",
+"Oreo Cheesecake Slice": "oreocheesecake.jpg",
+"Chocolate Roulade": "chocolateroulade.jpg",
+"Easter Cheesecake Cups": "eastercheesecale.jpg",
+"Strawberry Tray Cheesecake": "strawberrytray.jpg"
 }
 
 
