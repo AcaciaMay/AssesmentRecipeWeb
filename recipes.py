@@ -8,7 +8,10 @@ title_to_image = {
 "Oreo Cheesecake Slice": "oreocheesecake.jpg",
 "Chocolate Roulade": "chocolateroulade.jpg",
 "Easter Cheesecake Cups": "eastercheesecale.jpg",
-"Strawberry Tray Cheesecake": "strawberrytray.jpg"
+"Strawberry Tray Cheesecake": "strawberrytray.jpg",
+"Chocolate Roulade": "chocolateroulade.jpg",
+"Turkish Delight Rocky Road": "turkishchocolate.jpg",
+"Peanut Butter Brownies": "peanutbutterbrownies.jpg"
 }
 
 
