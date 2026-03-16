@@ -3,6 +3,11 @@ import sqlite3
 
 app = Flask(__name__)
 
+
+@app.route("/")
+def home():
+    return render_template("home.html")
+
 def get_db():
     db = getattr(g, '_database', None)
     if db is None:
