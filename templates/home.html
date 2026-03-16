@@ -19,3 +19,22 @@
 <div style="margin-left:25%">
 ... page content ...
 </div>
+
+<div class="header-container">
+  <div class="header-left">
+    <h1 class="main-title">RecipeWeb</h1>
+    <p class="subtitle">Discover delicious recipes for every occasion</p>
+  </div>
+
+  <nav class="custom-navbar">
+    <a href="/" class="nav-button">Home</a>
+     <form method="GET" action="/" class="nav-form">
+        <select name="genre" class="nav-select" onchange="this.form.submit()">
+            <option value="">Genre</option>
+            {% for genre in genres %}
+                <option value="{{ genre['Genre'] }}" {% if genre['Genre'] == selected_genre %}selected{% endif %}>
+                    {{ genre['Genre'] }}
+                </option>
+            {% endfor %}
+        </select>
+    </form>
