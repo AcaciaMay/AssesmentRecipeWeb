@@ -15,3 +15,18 @@ body.dark-mode {
   justify-content: space-between;
   align-items: center; 
 }
+
+.sidebar {
+  height: 100%;
+  width: 200px;
+  position: fixed; 
+  top: 0;
+  left: 0;
+  background-color: #111;
+  overflow-x: hidden;
+}
+
+.main-content {
+  margin-left: 200px; 
+  padding: 20px;
+}
