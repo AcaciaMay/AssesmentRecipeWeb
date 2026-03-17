@@ -5,7 +5,6 @@ body.dark-mode {
   background-color: #8c918f;
   color: #000; 
 }
-
 .header-container {
   background-color: #f1f1f1; 
   padding: 20px 10px; 
@@ -15,7 +14,6 @@ body.dark-mode {
   justify-content: space-between;
   align-items: center; 
 }
-
 .navbar {
   display: flex;
   justify-content: space-between;
@@ -39,7 +37,6 @@ body.dark-mode {
 .nav-links a:hover {
   color: #04AA6D;
 }
-
 .sidebar {
   height: 100%;
   width: 200px;
@@ -49,7 +46,6 @@ body.dark-mode {
   background-color: #3f3d3d;
   overflow-x: hidden;
 }
-
 .main-content {
   margin-left: 200px; 
   padding: 20px;
