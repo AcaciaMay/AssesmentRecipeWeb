@@ -5,3 +5,13 @@ body.dark-mode {
   background-color: #8c918f;
   color: #000; 
 }
+
+.header-container {
+  background-color: #f1f1f1; 
+  padding: 20px 10px; 
+  color: black;
+  overflow: hidden; 
+  display: flex;
+  justify-content: space-between;
+  align-items: center; 
+}
