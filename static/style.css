@@ -14,6 +14,11 @@ body.dark-mode {
   justify-content: space-between;
   align-items: center; 
 }
+
+.main-title{
+   font-family: 'Lora', serif;
+}
+
 .navbar {
   display: flex;
   justify-content: space-between;
@@ -29,6 +34,7 @@ body.dark-mode {
   overflow-x: hidden;
 }
 .nav-links {
+  font-family: 'Lora', serif;
   list-style: none;
   display: flex;
   gap: 15px;
@@ -36,6 +42,7 @@ body.dark-mode {
   padding: 0;
 }
 .nav-links a {
+  font-family: 'Lora', serif;
   text-decoration: none;
   color: white;
   font-weight: bold;
@@ -54,6 +61,7 @@ body.dark-mode {
 
 }
 .main-content {
+  font-family: 'Lora', serif;
   margin-left: 200px; 
   padding: 20px;
 }
