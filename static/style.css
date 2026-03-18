@@ -1,7 +1,8 @@
 html {
   scroll-behavior: smooth;
 }
-body.dark-mode {
+body {
+  font-family: 'Lora', serif;
   background-color: #8c918f;
   color: #000; 
 }
