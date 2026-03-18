@@ -11,7 +11,23 @@ title_to_image = {
 "Strawberry Tray Cheesecake": "strawberrytray.jpg",
 "Chocolate Roulade": "chocolateroulade.jpg",
 "Turkish Delight Rocky Road": "turkishchocolate.jpg",
-"Peanut Butter Brownies": "peanutbutterbrownies.jpg"
+"Peanut Butter Brownies": "peanutbutterbrownies.jpg",
+"Tiramsu": "tiramsu.jpg", 
+"Puttanesca Chicken": "puttanesa.jpg",
+"Asparagus Omlette": "asparagusomlette",
+"Berry Smoothie": "berrysmoothie.jpg",
+"Cauliflower Rice and Eggs": "cauliflowerriceandeggs.jpg",
+"Cheese and Herb Garlic Bread": "cheeseandherbgarlicbread",
+"Chicken and Leek": "chickenandleek.jpg",
+"Chicken Wontons": "chickenwonton.jpg",
+"Crepese": 'crepese',
+"Deviled Eggs": "deviledeggs",
+"Eggs Benedict": "eggsbenedict.jpg",
+"Flat Bread Pizzas": "flatbreadpizzas",
+"Honey Garlic Chicken": "honeygarlicchicken",
+"Perfect Pancakes": "perfectpancakes",
+"Pear and Honey Toast": "pearandhoneytoast",
+"Pikelets": "pikelets"
 }
 
 
