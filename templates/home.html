@@ -21,6 +21,29 @@
     <input type="text" name="Search" placeholder="Search recipes..." class="nav-search"> 
   </nav>
 
+  <div class="recipe-container">
+    <img src="{{ url_for('static', filename=Recipes[4]) }}" alt="{{ Recipes[0] }}" class="recipe-cover">
+
+    <div class="recipe-main">
+        <div class="recipe-title">
+            <h1>{{ Recipes[0] }}</h1>
+            <p><em>{{ Recipes[2] }}</em></p>
+        </div>
+
+        <div class="recipe-image">
+            <p>{{ Recipes[4] }}</p>
+        </div>
+    </div>
+
+    <div class="recipe-info">
+        <p><strong>Ingredients:</strong> {{ Recipes[5] }}</p>
+        <p><strong>Creator:</strong> {{ Recipes[3] }}</p>
+        <p><strong>Category:</strong> {{ Recipes[6] }}</p>
+        <p><strong>Website:</strong> {{ Recipes[7] }}</p>
+        <p><strong>RecipeLink:</strong> {{ Recipes[8] }}</p>
+    </div>
+</div>
+
     <!-- Sidebar (pantry) -->
     <div class="sidebar" style="width:25%">
   <a href="#" class="w3-bar-item w3-button">Link 1</a>
