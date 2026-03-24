@@ -18,13 +18,13 @@ body {
 
 .main-wrapper {
     display: flex;
-    margin-top: 20px; /* Adjust this so it starts below your header */
+    margin-top: 20px; 
     min-height: 100vh;
 }
 
-/* The left side where the recipe goes */
+
 .content-area {
-    flex: 3; /* Takes up 75% of the width */
+    flex: 3; 
     padding: 20px;
     display: flex;
     flex-direction: column;
@@ -34,10 +34,11 @@ body {
 
 /* The right side (Pantry) */
 .sidebar {
-    flex: 1; /* Takes up 25% of the width */
-    background-color: #666; /* Matching the dark grey in your design */
+    flex: 1; 
+    background-color: #666; 
     color: white;
     padding: 20px;
+    height:1000px;
 }
 
 /* Make sure images don't break the layout */
@@ -62,11 +63,11 @@ body {
 
 .navbar {
   display: flex;
-  justify-content: space-between; /* Pushes content to opposite ends */
-  align-items: center; /* Centers items vertically */
-  background-color: #bbb; /* Matching the light grey bar in your image */
+  justify-content: space-between; 
+  align-items: left; 
+  background-color: #bbb; 
   padding: 10px 20px;
-  border-radius: 20px; /* Gives it that pill-shaped look */
+  
 }
 
 .nav-links {
