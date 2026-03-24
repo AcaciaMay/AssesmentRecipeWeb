@@ -22,26 +22,22 @@
   </nav>
 
   <div class="recipe-container">
-    <img src="{{ url_for('static', filename=Recipes[4]) }}" alt="{{ Recipes[0] }}" class="recipe-cover">
-
-    <div class="recipe-main">
+    {% if Recipes and Recipes|length > 0 %}
         <div class="recipe-title">
-            <h1>{{ Recipes[0] }}</h1>
-            <p><em>{{ Recipes[2] }}</em></p>
+            <h1>{{ Recipes[0]['title'] }}</h1> 
         </div>
+
 
         <div class="recipe-image">
-            <p>{{ Recipes[4] }}</p>
+    <img src="{{ Recipes[4] }}" alt="Recipe Image" style="max-width: 100%; height: auto;">
+</div>
+          <div class="recipe-info">
+            <p><strong>Ingredients:</strong> {{ Recipes[0]['ingredients'] }}</p>
+            <p><strong>Creator:</strong> {{ Recipes[0]['creator'] }}</p>
         </div>
-    </div>
-
-    <div class="recipe-info">
-        <p><strong>Ingredients:</strong> {{ Recipes[5] }}</p>
-        <p><strong>Creator:</strong> {{ Recipes[3] }}</p>
-        <p><strong>Category:</strong> {{ Recipes[6] }}</p>
-        <p><strong>Website:</strong> {{ Recipes[7] }}</p>
-        <p><strong>RecipeLink:</strong> {{ Recipes[8] }}</p>
-    </div>
+    {% else %}
+        <p>No recipes found.</p>
+    {% endif %}
 </div>
 
     <!-- Sidebar (pantry) -->

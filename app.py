@@ -6,7 +6,8 @@ app = Flask(__name__)
 
 @app.route("/")
 def home():
-    return render_template("home.html")
+    recipes_data = query_db("SELECT * FROM Recipes")
+    return render_template("home.html", Recipes=recipes_data)
 
 def get_db():
     db = getattr(g, '_database', None)
@@ -27,10 +28,6 @@ def query_db(query, args=(), one=False):
     cur.close()
     return (rv[0] if rv else None) if one else rv
 
-@app.route("/recipes")
-def list_recipes():
-    recipes = query_db("SELECT * FROM Recipes")
-    return render_template("recipes.html", recipes=recipes)
 
 if __name__ == "__main__":
     app.run(debug=True)
