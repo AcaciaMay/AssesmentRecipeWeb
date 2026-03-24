@@ -38,7 +38,7 @@ body {
     background-color: #666; 
     color: white;
     padding: 20px;
-    height:1000px;
+    margin-top: 0px;
 }
 
 /* Make sure images don't break the layout */
@@ -67,6 +67,7 @@ body {
   align-items: left; 
   background-color: #bbb; 
   padding: 10px 20px;
+  margin-right: 360px;
   
 }
 
