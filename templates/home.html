@@ -16,33 +16,43 @@
   </div>
 
   <nav class="navbar">
+  <div class="nav-links">
     <a href="/" class="nav-button">Home</a>
-     <form method="GET" action="/" class="nav-form"></form>
-    <input type="text" name="Search" placeholder="Search recipes..." class="nav-search"> 
-  </nav>
+    <a href="/about" class="nav-button">About</a>
+    <a href="/meal-types" class="nav-button">Meal Types</a>
+  </div>
+  
+  <form action="/search" method="GET" class="nav-search-form">
+    <input type="text" name="query" placeholder="Search recipes..." class="nav-search">
+    <button type="submit" class="search-btn">Search</button>
+  </form>
+</nav>
 
-  <div class="recipe-container">
-    {% if Recipes and Recipes|length > 0 %}
-        <div class="recipe-title">
-            <h1>{{ Recipes[0]['title'] }}</h1> 
+  <div class="main-wrapper">
+    
+    <div class="content-area">
+        <div class="recipe-container">
+            <div class="recipe-title">
+                <h1>{{ Recipes[1][1]}}</h1> 
+            </div>
+            <div class="recipe-image">
+                 <img src="{{ Recipes[0][3] }}" alt="Recipe Image" style="max-width: 100%;">
+            </div>
         </div>
 
-
-        <div class="recipe-image">
-    <img src="{{ Recipes[4] }}" alt="Recipe Image" style="max-width: 100%; height: auto;">
-</div>
-          <div class="recipe-info">
-            <p><strong>Ingredients:</strong> {{ Recipes[0]['ingredients'] }}</p>
-            <p><strong>Creator:</strong> {{ Recipes[0]['creator'] }}</p>
+        <div class="recipe-info">
+            <p><strong>Ingredients:</strong> {{ Recipes[0][4] }}</p>
+            
         </div>
-    {% else %}
-        <p>No recipes found.</p>
-    {% endif %}
-</div>
+    </div>
 
-    <!-- Sidebar (pantry) -->
-    <div class="sidebar" style="width:25%">
-  <a href="#" class="w3-bar-item w3-button">Link 1</a>
-  <a href="#" class="w3-bar-item w3-button">Link 2</a>
-  <a href="#" class="w3-bar-item w3-button">Link 3</a>
+    
+    <div class="sidebar">
+        <h2>Pantry</h2>
+        <input type="text" placeholder="Search Ingredients">
+        <h3>Common</h3>
+        <p>Olive Oil</p>
+        <p>Bread</p>
+        
+    </div>
 </div>
