@@ -16,6 +16,20 @@ body {
     background-color: white; 
 }
 
+.main-title {
+  font-size: 85px;
+  font-family: 'Lora', serif;
+  color: #000;
+  margin: 0;
+}
+
+.subtitle {
+  font-size: 24px;
+  font-family: 'Lora', serif;
+  color: #000;
+  margin-top: 5px;
+}
+
 .main-wrapper {
     display: flex;
     margin-top: 0px; 
