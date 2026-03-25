@@ -59,11 +59,18 @@ body {
     top: 0;  
 }
 
+.recipe-section {
+  display: grid;  
+  grid-template-columns: repeat(3, 1fr);  
+  gap: 25px;  
+  margin: 20px; 
+}
+
 /* Make sure images don't break the layout */
 .recipe-image img {
-    max-width: 100%;
-    height: auto;
-    border-radius: 8px;
+     width: 200px;       
+  height: 275px;      
+  border-radius: 8px;
 }
 
 .recipe-container {
