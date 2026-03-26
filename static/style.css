@@ -90,9 +90,10 @@ body {
 
 .recipe-info {
   flex: 1;
-  width: 75%;
+  width: 40%;
   overflow: hidden;     
   text-overflow: ellipsis;
+  font-size: 18px;
 }
 
 .recipe-container:hover {
