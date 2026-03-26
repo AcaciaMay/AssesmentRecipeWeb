@@ -36,7 +36,8 @@
                 <h1>{{ Recipes[0][1]}}</h1> 
             </div>
             <div class="recipe-image">
-                 <img src="{{ Recipes[0][3] }}" alt="Recipe Image" style="max-width: 100%;">
+    <img src="{{ url_for('static', filename=Recipes[0][3]) }}" alt="Recipe Image" >
+</div>
         <div class="recipe-info">
             <p><strong>Ingredients:</strong> {{ Recipes[0][4] }}</p>
             
@@ -50,8 +51,8 @@
         <h2>Pantry</h2>
         <input type="text" placeholder="Search Ingredients">
         <h3>Common</h3>
-        <p>Olive Oil</p>
-        <p>Bread</p>
+        <p>Dairy</p>
+        <p>Baking</p>
         
     </div>
 </div>
