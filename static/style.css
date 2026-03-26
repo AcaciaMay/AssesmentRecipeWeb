@@ -88,6 +88,10 @@ body {
   overflow: hidden;   
 }
 
+.recipe-title{
+  font-size: 2px;
+}
+
 .recipe-info {
   flex: 1;
   width: 40%;
