@@ -20,7 +20,7 @@ title_to_image = {
 "Cheese and Herb Garlic Bread": "cheeseandherbgarlicbread",
 "Chicken and Leek": "chickenandleek.jpg",
 "Chicken Wontons": "chickenwonton.jpg",
-"Crepese": 'crepese',
+"Crepes": 'crepes.jpg',
 "Deviled Eggs": "deviledeggs",
 "Eggs Benedict": "eggsbenedict.jpg",
 "Flat Bread Pizzas": "flatbreadpizzas",
