@@ -12,7 +12,7 @@ title_to_image = {
 "Chocolate Roulade": "chocolateroulade.jpg",
 "Turkish Delight Rocky Road": "turkishchocolate.jpg",
 "Peanut Butter Brownies": "peanutbutterbrownies.jpg",
-"Tiramsu": "tiramsu.jpg", 
+"Tiramisu": "tiramasu.jpg", 
 "Puttanesca Chicken": "puttanesa.jpg",
 "Asparagus Omlette": "asparagusomlette",
 "Berry Smoothie": "berrysmoothie.jpg",
