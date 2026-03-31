@@ -26,7 +26,7 @@ title_to_image = {
 "Flat Bread Pizzas": "flatbreadpizzas",
 "Honey Garlic Chicken": "honeygarlicchicken",
 "Perfect Pancakes": "perfectpancakes",
-"Pear and Honey Toast": "pearandhoneytoast",
+"Pear, Honey & Ricotta Toast": "pearandhoneytoast",
 "Pikelets": "pikelets"
 }
 
