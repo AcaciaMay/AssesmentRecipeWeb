@@ -21,20 +21,6 @@
     <a href="/about" class="nav-button">About</a>
     <a href="/meal-types" class="nav-button">Meal Types</a>
   </div>
-  
-<div id="myBtnContainer">
-  <button class="btn active" onclick="filterSelection('all')">Show all</button>
-  {% for category in categories %}
-    <button class="btn" onclick="filterSelection('{{ category }}')">{{ category }}</button>
-  {% endfor %}
-</div>
-
-<div class="container">
-  {% for name, category in items %}
-    <!-- category from database becomes the filter class -->
-    <div class="filterDiv {{ category }}">{{ name }}</div>
-  {% endfor %}
-</div>
 
   <form action="/search" method="GET" class="nav-search-form">
     <input type="text" name="query" placeholder="Search recipes..." class="nav-search">
