@@ -16,21 +16,10 @@ def get_db():
         db.row_factory = sqlite3.Row  
     return db
 
-
-@app.route('/')
-def index():
-    conn = sqlite3.connect('my_database.db')
-    cursor = conn.cursor()
-    
-    cursor.execute("SELECT name, category FROM Recipes")
-    items = cursor.fetchall() # Returns list of tuples: [('Dinner', 'Dessert'), ...]
-    
-    conn.close()
-    return render_template('index.html', items=items)
-
-    cursor.execute("SELECT DISTINCT category FROM Recipes")
-    categories = [c[0] for c in cursor.fetchall()]
-    return render_template('index.html', items=items, categories=categories)
+@app.route("/mealtypes/<meal_type>")
+def filter_by_meal_type(meal_type):
+    recipes_data = query_db("SELECT * FROM Recipes WHERE Category = ?", (meal_type,))
+    return render_template("home.html", Recipes=recipes_data)
 
 @app.teardown_appcontext
 def close_connection(exception):

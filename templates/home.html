@@ -29,17 +29,6 @@
   {% endfor %}
 </div>
 
-<!-- Control buttons -->
-<div id="myBtnContainer">
-  <button class="btn active" onclick="filterSelection('all')"> Show all</button>
-  <button class="btn" onclick="filterSelection('Breakfast')"> Breakfast</button>
-  <button class="btn" onclick="filterSelection('Brunch')"> Brunch</button>
-  <button class="btn" onclick="filterSelection('Lunch')"> Lunch</button>
-  <button class="btn" onclick="filterSelection('Afternoon tea')"> Afternoon Tea</button>
-  <button class="btn" onclick="filterSelection('Dinner')"> Dinner</button>
-  <button class="btn" onclick="filterSelection('Dessert')"> Dessert</button>
-</div>
-
 <div class="container">
   {% for name, category in items %}
     <!-- category from database becomes the filter class -->
