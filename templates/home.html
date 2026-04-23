@@ -17,10 +17,25 @@
 
   <nav class="navbar">
   <div class="nav-links">
-    <a href="/home" class="nav-button">Home</a>
+    <a href="/" class="nav-button">Home</a>
     <a href="/about" class="nav-button">About</a>
-    <a href="/meal-types" class="nav-button">Meal Types</a>
-  </div>
+         <form method="GET" action="/" class="nav-form">
+        <select name="meal_type" class="nav-select" onchange="this.form.submit()">
+          <select title="Meal Type"></select>
+            <option value="">Breakfast</option>
+            <option value="">Brunch</option>
+            <option value="">Lunch</option>
+            <option value="">Afternoon Tea</option>
+            <option value="">Dinner</option>
+            <option value="">Dessert</option>
+            {% for category in category %}
+                <option value="{{ category['Category'] }}" {% if category['Category'] == selected_category %}selected{% endif %}>
+                    {{ category['Category'] }}
+                </option>
+            {% endfor %}
+        </select>
+    </form>
+
 
   <form action="/search" method="GET" class="nav-search-form">
     <input type="text" name="query" placeholder="Search recipes..." class="nav-search">
