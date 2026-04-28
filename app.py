@@ -16,7 +16,7 @@ def get_db():
         db.row_factory = sqlite3.Row  
     return db
 
-@app.route("/mealtypes/<category>")
+@app.route("/category/<category>")
 def filter_by_category(category):
     recipes_data = query_db("SELECT * FROM Recipes WHERE Category = ?", (category,))
     return render_template("home.html", Recipes=recipes_data)
