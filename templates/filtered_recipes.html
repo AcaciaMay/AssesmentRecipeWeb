@@ -1,0 +1,61 @@
+{% extends "home.html" %}
+{% block body %}
+
+
+  <nav class="navbar">
+  <div class="nav-links">
+    <a href="/" class="nav-button">Home</a>
+    <a href="/about" class="nav-button">About</a>
+        <form method="GET" action="/" class="nav-form">
+    <select name="category" class="nav-select" onchange="this.form.submit()">
+        <option value="" disabled selected hidden>Meal Type</option>
+            <option value="">Breakfast</option>
+            <option value="">Brunch</option>
+            <option value="">Lunch</option>
+            <option value="">Afternoon Tea</option>
+            <option value="">Dinner</option>
+            <option value="">Dessert</option>
+            {% for category in categories %}
+                <option value="{{ category['Category'] }}" {% if category['Category'] == selected_category %}selected{% endif %}>
+                    {{ category['Category'] }}
+                </option>
+            {% endfor %}
+        </select>
+    </form>
+
+
+  <form action="/search" method="GET" class="nav-search-form">
+    <input type="text" name="query" placeholder="Search recipes..." class="nav-search">
+    
+  </form>
+</nav>
+
+    
+<h2>Recipes in "{{ selected_category }}"</h2>
+
+{% if recipes %}
+  <div class="all-recipes-section">
+    {% for recipe in recipes %}
+      <a href="{{ url_for('recipe_detail', id=recipe[0]) }}" class="recipe-card-link">
+        <div class="recipe-card">
+          <div class="recipe-image">
+            <img src="{{ url_for('static', filename=recipe[3]) }}" alt="Recipe Image img">
+          </div>
+          <div class="recipe-info">
+            <h3 class="recipe-title">{{ recipe[1] }}</h3>
+            <p><strong>Creator:</strong> {{ recipe[2] }}</p>
+            <p><strong>Image:</strong> {{ recipe[3] }}</p>
+            <p><strong>Ingredients:</strong> {{ recipe[4] }}</p>
+            <p><strong>Category:</strong> {{ recipe[5] }}</p>
+            <p><strong>Website:</strong> {{ recipe[6] }}</p>
+          </div>
+        </div>
+      </a>
+    {% endfor %}
+  </div>
+{% else %}
+  <p>No recipes found for this Meal Type.</p>
+{% endif %}
+
+
+{% endblock %}

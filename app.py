@@ -9,6 +9,7 @@ def home():
     recipes_data = query_db("SELECT * FROM Recipes")
     return render_template("home.html", Recipes=recipes_data)
 
+
 def get_db():
     db = getattr(g, '_database', None)
     if db is None:

@@ -1,0 +1,28 @@
+{% extends "home.html" %}
+{% block body %}
+<div style="display: flex; gap: 2rem; align-items: flex-start; padding: 2rem; flex-wrap: wrap;">
+
+  <!-- recipe image -->
+  <div style="flex: 1; min-width: 200px;">
+    <img src="{{ url_for('static', filename=recipe[3]) }}" alt="{{ recipe[1] }}" width="200" height="300">
+  </div>
+
+  <!-- Main Info -->
+  <div style="flex: 2; min-width: 300px;">
+    <h2>{{ recipe[1] }}</h2> <!--Title-->
+    <h3>by {{ recipe[2] }}</h3> <!-- Author -->
+    <p>{{ recipe[5] }}</p> <!-- Description -->
+  </div>
+
+  <!-- Metadata -->
+  <div style="flex: 1; min-width: 200px;">
+    <p><strong>Category:</strong> {{ recipe[5] }}</p>
+    <p><strong>Ingredients:</strong> {{ recipe[4] }}</p>
+    <p><strong>Creator:</strong> {{ recipe[2] }}</p>
+    <p><strong>Image:</strong> {{ recipe[3] }}</p>
+    <p><strong>Website:</strong> {{ recipe[6] }}</p>
+    <p><strong>Recipelink:</strong> {{ recipe[9] }}</p>
+  </div>
+
+</div>
+{% endblock %}
