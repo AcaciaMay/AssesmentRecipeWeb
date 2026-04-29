@@ -129,7 +129,7 @@ body {
 
 .nav-links {
   display: flex;
-  gap: 15px; /* Adds space between navbar stuff */
+  gap: 15px; 
 }
 
 .nav-button {
