@@ -3,7 +3,22 @@ import sqlite3
 
 app = Flask(__name__)
 
-# --- DATABASE HELPERS ---
+
+
+@app.route("/")
+def home():
+    category = request.args.get("category", "")
+    
+    
+    categories = get_unique_categories()
+
+    
+    base_select = """
+        SELECT RowNum, Title, Creator, Image, Ingredients, Category, Website 
+        FROM (SELECT ROW_NUMBER() OVER (ORDER BY Title ASC) AS RowNum, 
+              Title, Creator, Image, Ingredients, Category, Website 
+              FROM Recipes)
+    """
 
 def get_db():
     db = getattr(g, '_database', None)
@@ -29,30 +44,14 @@ def get_unique_categories():
     raw_data = query_db("SELECT DISTINCT Category FROM Recipes WHERE Category IS NOT NULL")
     category_set = set()
     for row in raw_data:
-        # Splits "Breakfast, Dessert" into ["Breakfast", "Dessert"]
+        
         parts = [p.strip() for p in row['Category'].split(',')]
         category_set.update(parts)
     return sorted(list(category_set))
 
-# --- ROUTES ---
-
-@app.route("/")
-def home():
-    category = request.args.get("category", "")
-    
-    # Get the cleaned, unique list for the sidebar/dropdown
-    categories = get_unique_categories()
-
-    # Base SQL logic
-    base_select = """
-        SELECT RowNum, Title, Creator, Image, Ingredients, Category, Website 
-        FROM (SELECT ROW_NUMBER() OVER (ORDER BY Title ASC) AS RowNum, 
-              Title, Creator, Image, Ingredients, Category, Website 
-              FROM Recipes)
-    """
 
     if category:
-        # Use LIKE to find the category even if it's in a list (e.g., "Breakfast, Dessert")
+        
         sql = base_select + " WHERE Category LIKE ?"
         recipes = query_db(sql, (f"%{category}%",))
     else:
@@ -67,10 +66,9 @@ def home():
 
 @app.route("/category/<category>")
 def filter_by_category(category):
-    # Get the cleaned list so the sidebar remains populated on this page too
+   
     categories = get_unique_categories()
     
-    # Filter recipes where the category string contains the selected word
     recipes_data = query_db("SELECT * FROM Recipes WHERE Category LIKE ?", (f"%{category}%",))
     
     return render_template(

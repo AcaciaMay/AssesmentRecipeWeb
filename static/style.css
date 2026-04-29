@@ -129,7 +129,7 @@ body {
 
 .nav-links {
   display: flex;
-  gap: 15px; /* Adds space between Home, About, etc. */
+  gap: 15px; /* Adds space between navbar stuff */
 }
 
 .nav-button {
@@ -156,7 +156,7 @@ body {
   outline: none;
 }
 
-/* Dropdown Positioning */
+/* Dropdown option positioning */
 .dropdown {
     position: relative;
     display: inline-block;
@@ -164,10 +164,10 @@ body {
 
 /* The actual box that appears */
 .dropdown-content {
-    display: none; /* Hidden by default */
+    display: none; 
     position: absolute;
     background-color: #f9f9f9;
-    min-width: 300px; /* Adjust based on how many pills you have */
+    min-width: 300px; 
     box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
     padding: 15px;
     z-index: 100;
