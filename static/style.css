@@ -47,7 +47,7 @@ body {
     text-align: center;
 }
 
-/* The right side (Pantry) */
+
 .sidebar {
     flex: 1;
     background-color: #666; 
@@ -156,13 +156,13 @@ body {
   outline: none;
 }
 
-/* Dropdown option positioning */
+
 .dropdown {
     position: relative;
     display: inline-block;
 }
 
-/* The actual box that appears */
+
 .dropdown-content {
     display: none; 
     position: absolute;
@@ -175,19 +175,19 @@ body {
     margin-top: 5px;
 }
 
-/* Show the menu when hovering over the "Meal Types" button */
+
 .dropdown:hover .dropdown-content {
     display: block;
 }
 
-/* Reset filter-bar inside the dropdown */
+
 .filter-bar {
     display: flex;
     flex-wrap: wrap;
     gap: 8px;
 }
 
-/* Pill Styling to match your image */
+
 .filter-pill {
     background-color: #e0e0e0;
     color: #333;
@@ -196,7 +196,7 @@ body {
     text-decoration: none;
     font-size: 13px;
     border: 1px solid #ccc;
-    white-space: nowrap; /* Keeps text on one line inside pill */
+    white-space: nowrap; 
 }
 
 .filter-pill:hover {
@@ -208,7 +208,7 @@ body {
     color: white;
 }
 
-/* Clean up the button appearance */
+
 .dropdown-trigger {
     background: none;
     border: none;
