@@ -22,12 +22,12 @@
         <form method="GET" action="/" class="nav-form">
     <select name="category" class="nav-select" onchange="this.form.submit()">
         <option value="" disabled selected hidden>Meal Type</option>
-            <option value="">Breakfast</option>
-            <option value="">Brunch</option>
-            <option value="">Lunch</option>
-            <option value="">Afternoon Tea</option>
-            <option value="">Dinner</option>
-            <option value="">Dessert</option>
+         <option value="Breakfast">Breakfast</option>
+            <option value="Brunch">Brunch</option>
+            <option value="Lunch">Lunch</option>
+            <option value="Afternoon Tea">Afternoon Tea</option>
+            <option value="Dinner">Dinner</option>
+            <option value="Dessert">Dessert</option>
             {% for category in categories %}
                 <option value="{{ category['Category'] }}" {% if category['Category'] == selected_category %}selected{% endif %}>
                     {{ category['Category'] }}
@@ -48,13 +48,13 @@
     <div class="recipe-section">
         <div class="recipe-container">
             <div class="recipe-title">
-                <h1>{{ Recipes[0][1]}}</h1> 
+                <h1>{{ recipes[0][1]}}</h1> 
             </div>
             <div class="recipe-image">
-    <img src="{{ url_for('static', filename=Recipes[0][3]) }}" alt="Recipe Image" >
+    <img src="{{ url_for('static', filename=recipes[0][3]) }}" alt="Recipe Image" >
 </div>
         <div class="recipe-info">
-            <p><strong>Ingredients:</strong> {{ Recipes[0][4] }}</p>
+            <p><strong>Ingredients:</strong> {{ recipes[0][4] }}</p>
             
         </div>
     </div>

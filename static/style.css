@@ -93,6 +93,18 @@ body {
     
 }
 
+.recipe-cover {
+  width: 100%;
+  max-width: 200px;
+  border-radius: 10px;
+}
+
+.recipe-main {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
 .recipe-info {
   flex: 1;
   width: 70%;

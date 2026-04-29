@@ -1,8 +1,8 @@
-{% extends "home.html" %}
+{% extends "layout.html" %}
 {% block body %}
 
 
-  <nav class="navbar">
+ <nav class="navbar">
   <div class="nav-links">
     <a href="/" class="nav-button">Home</a>
     <a href="/about" class="nav-button">About</a>
@@ -30,32 +30,29 @@
   </form>
 </nav>
 
-    
-<h2>Recipes in "{{ selected_category }}"</h2>
+<div class="recipe-container">
+    <img src="{{ url_for('static', filename=recipe[6]) }}" alt="{{ recipe[0] }}" class="recipe-cover">
 
-{% if recipes %}
-  <div class="all-recipes-section">
-    {% for recipe in recipes %}
-      <a href="{{ url_for('recipe_detail', id=recipe[0]) }}" class="recipe-card-link">
-        <div class="recipe-card">
-          <div class="recipe-image">
-            <img src="{{ url_for('static', filename=recipe[3]) }}" alt="Recipe Image">
-          </div>
-          <div class="recipe-info">
-            <h3 class="recipe-title">{{ recipe[1] }}</h3>
-            <p><strong>Creator:</strong> {{ recipe[2] }}</p>
-            <p><strong>Image:</strong> {{ recipe[3] }}</p>
-            <p><strong>Ingredients:</strong> {{ recipe[4] }}</p>
-            <p><strong>Category:</strong> {{ recipe[5] }}</p>
-            <p><strong>Website:</strong> {{ recipe[6] }}</p>
-          </div>
+    <div class="recipe-main">
+        <div class="recipe-title">
+            <h1>{{ recipe[0] }}</h1>
+            <p><em>{{ recipe[1] }}</em></p>
         </div>
-      </a>
-    {% endfor %}
+
+        <div class="recipe-ingredients">
+            <p>{{ recipe[7] }}</p>
+        </div>
+    </div>
+
+    <div class="book-details">
+    <p><strong>Category:</strong> {{ recipe[5] }}</p>
+    <p><strong>Ingredients:</strong> {{ recipe[4] }}</p>
+    <p><strong>Creator:</strong> {{ recipe[2] }}</p>
+    <p><strong>Image:</strong> {{ recipe[3] }}</p>
+    <p><strong>Website:</strong> {{ recipe[6] }}</p>
+    <p><strong>Recipelink:</strong> {{ recipe[9] }}</p>
   </div>
-{% else %}
-  <p>No recipes found for this Meal Type.</p>
-{% endif %}
 
-
+</div>
+</div>
 {% endblock %}
