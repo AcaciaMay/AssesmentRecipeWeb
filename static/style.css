@@ -156,4 +156,62 @@ body {
   outline: none;
 }
 
+/* Dropdown Positioning */
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
 
+/* The actual box that appears */
+.dropdown-content {
+    display: none; /* Hidden by default */
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 300px; /* Adjust based on how many pills you have */
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    padding: 15px;
+    z-index: 100;
+    border-radius: 8px;
+    margin-top: 5px;
+}
+
+/* Show the menu when hovering over the "Meal Types" button */
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+/* Reset filter-bar inside the dropdown */
+.filter-bar {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+/* Pill Styling to match your image */
+.filter-pill {
+    background-color: #e0e0e0;
+    color: #333;
+    padding: 5px 15px;
+    border-radius: 20px;
+    text-decoration: none;
+    font-size: 13px;
+    border: 1px solid #ccc;
+    white-space: nowrap; /* Keeps text on one line inside pill */
+}
+
+.filter-pill:hover {
+    background-color: #d0d0d0;
+}
+
+.filter-pill.active {
+    background-color: #666;
+    color: white;
+}
+
+/* Clean up the button appearance */
+.dropdown-trigger {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-family: inherit;
+}

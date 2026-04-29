@@ -39,7 +39,7 @@
       <a href="{{ url_for('recipe_detail', id=recipe[0]) }}" class="recipe-card-link">
         <div class="recipe-card">
           <div class="recipe-image">
-            <img src="{{ url_for('static', filename=recipe[3]) }}" alt="Recipe Image">
+            <img src="{{ url_for('static', filename=recipe[3]) }}" alt="{{ recipe[1] }} Image">
           </div>
           <div class="recipe-info">
             <h3 class="recipe-title">{{ recipe[1] }}</h3>

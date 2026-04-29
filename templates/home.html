@@ -4,70 +4,69 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>RecipeWeb</title>
-
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/5/w3.css">   
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Alice">
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
 
-<div class="header-container">
-  <div class="header-left">
-    <h1 class="main-title">RecipeWeb</h1>
-    <p class="subtitle">Discover delicious recipes for every occasion</p>
-  </div>
+<nav class="navbar">
+    <div class="nav-links">
+        <a href="/" class="nav-button">Home</a>
+        <a href="/about" class="nav-button">About</a>
+        
+        <!-- Meal Types Dropdown Trigger -->
+        <div class="dropdown">
+            <button class="nav-button dropdown-trigger">Meal Types ▾</button>
+            <div class="dropdown-content">
+                <div class="filter-bar">
+                    {% for meal in categories %}
+                        <a href="{{ url_for('home', category=meal) }}" 
+                           class="filter-pill {% if meal == selected_category %}active{% endif %}">
+                            {{ meal }}
+                        </a>
+                    {% endfor %}
+                    
+                    {% if selected_category %}
+                        <a href="{{ url_for('home') }}" class="clear-link">Clear Filter</a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
 
-  <nav class="navbar">
-  <div class="nav-links">
-    <a href="/" class="nav-button">Home</a>
-    <a href="/about" class="nav-button">About</a>
-        <form method="GET" action="/" class="nav-form">
-    <select name="category" class="nav-select" onchange="this.form.submit()">
-        <option value="" disabled selected hidden>Meal Type</option>
-         <option value="Breakfast">Breakfast</option>
-            <option value="Brunch">Brunch</option>
-            <option value="Lunch">Lunch</option>
-            <option value="Afternoon Tea">Afternoon Tea</option>
-            <option value="Dinner">Dinner</option>
-            <option value="Dessert">Dessert</option>
-            {% for category in categories %}
-                <option value="{{ category['Category'] }}" {% if category['Category'] == selected_category %}selected{% endif %}>
-                    {{ category['Category'] }}
-                </option>
-            {% endfor %}
-        </select>
-    </form>
-
-
-  <form action="/search" method="GET" class="nav-search-form">
-    <input type="text" name="query" placeholder="Search recipes..." class="nav-search">
-    
-  </form>
+        <form action="/search" method="GET" class="nav-search-form">
+            <input type="text" name="query" placeholder="Search recipes..." class="nav-search">
+        </form>
+    </div>
 </nav>
 
-  <div class="main-wrapper">
-    
+
+<div class="main-wrapper">
     <div class="recipe-section">
+        <!-- Your existing recipe display logic -->
+        {% if recipes %}
         <div class="recipe-container">
             <div class="recipe-title">
-                <h1>{{ recipes[0][1]}}</h1> 
+                <h1>{{ recipes[0][1] }}</h1> 
             </div>
             <div class="recipe-image">
-    <img src="{{ url_for('static', filename=recipes[0][3]) }}" alt="Recipe Image" >
-</div>
-        <div class="recipe-info">
-            <p><strong>Ingredients:</strong> {{ recipes[0][4] }}</p>
-            
+                <img src="{{ url_for('static', filename=recipes[0][3]) }}" alt="Recipe Image">
+            </div>
+            <div class="recipe-info">
+                <p><strong>Ingredients:</strong> {{ recipes[0][4] }}</p>
+            </div>
         </div>
+        {% else %}
+        <p>No recipes found for this category.</p>
+        {% endif %}
     </div>
-    </div>
-        </div>
 
-    
     <div class="sidebar">
         <h2>Pantry</h2>
         <input type="text" placeholder="Search Ingredients">
         <h3>Common</h3>
         <p>Dairy</p>
         <p>Baking</p>
-        
     </div>
 </div>
+</body>
+</html>
