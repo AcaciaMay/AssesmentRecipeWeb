@@ -8,12 +8,11 @@ body {
   padding-top: 150px; 
 }
 
-.header-container {
-    position: fixed;
-    top: 0;
-    width: 100%;
-    z-index: 1000;
-    background-color: white; 
+.header-section {
+    background-color: #f8f9fa;
+    padding: 60px 20px;
+    text-align: center;
+    border-bottom: 1px solid #ddd;
 }
 
 .main-title {

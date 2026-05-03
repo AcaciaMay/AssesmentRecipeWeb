@@ -4,22 +4,6 @@ import sqlite3
 app = Flask(__name__)
 
 
-
-@app.route("/")
-def home():
-    category = request.args.get("category", "")
-    
-    
-    categories = get_unique_categories()
-
-    
-    base_select = """
-        SELECT RowNum, Title, Creator, Image, Ingredients, Category, Website 
-        FROM (SELECT ROW_NUMBER() OVER (ORDER BY Title ASC) AS RowNum, 
-              Title, Creator, Image, Ingredients, Category, Website 
-              FROM Recipes)
-    """
-
 def get_db():
     db = getattr(g, '_database', None)
     if db is None:
@@ -49,6 +33,22 @@ def get_unique_categories():
         category_set.update(parts)
     return sorted(list(category_set))
 
+
+
+@app.route("/")
+def home():
+    category = request.args.get("category", "")
+    
+    
+    categories = get_unique_categories()
+
+    
+    base_select = """
+        SELECT RowNum, Title, Creator, Image, Ingredients, Category, Website 
+        FROM (SELECT ROW_NUMBER() OVER (ORDER BY Title ASC) AS RowNum, 
+              Title, Creator, Image, Ingredients, Category, Website 
+              FROM Recipes)
+    """
 
     if category:
         
