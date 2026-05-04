@@ -62,21 +62,23 @@ def home():
         recipes=recipes, 
         categories=categories, 
         selected_category=category
-    )
+        )
 
 @app.route("/category/<category>")
 def filter_by_category(category):
-   
     categories = get_unique_categories()
-    
-    recipes_data = query_db("SELECT * FROM Recipes WHERE Category LIKE ?", (f"%{category}%",))
-    
+    recipes_data = query_db("SELECT * FROM Recipes")
     return render_template(
-        "filtered_recipes.html", 
-        recipes=recipes_data, 
+        "filtered_recipes.html",
+        recipes=recipes_data,
         categories=categories,
         selected_category=category
-    )
+)
+
+
+@app.route('/about')
+def about():
+    return render_template('about.html')
 
 if __name__ == "__main__":
     app.run(debug=True)
