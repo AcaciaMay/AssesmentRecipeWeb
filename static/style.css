@@ -29,21 +29,50 @@ body {
   margin-top: 5px;
 }
 
+/* Remove default margins that push the title down */
+.content-area {
+    flex: 3; 
+    padding: 0 20px 20px 20px; /* Top padding set to 0 */
+}
+
+/* Ensure the RecipeWeb title doesn't have a top margin */
+h1 {
+    margin-top: 0;
+    padding-top: 10px; /* Adjust this for a small, clean gap */
+}
+
+/* Position the Sidebar at the top */
+.sidebar {
+    flex: 1;
+    background-color: #666; 
+    color: white;
+    padding: 20px;
+    margin-top: 0;
+    min-height: 100vh;
+    position: sticky;        
+    top: 0;  /* Keeps it stuck to the very top edge of the screen */
+}
+
+
 .main-wrapper {
     display: flex;
     margin-top: 0px; 
     min-height: 100vh;
     
 }
+/* Ensure the wrapper starts at the very top */
+.main-wrapper {
+    display: flex;
+    margin-top: 0; 
+    padding-top: 0;
+    align-items: flex-start; /* Aligns children (content & sidebar) to the top */
+}
+
 
 
 .content-area {
     flex: 3; 
     padding: 20px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
 }
 
 
@@ -52,17 +81,17 @@ body {
     background-color: #666; 
     color: white;
     padding: 20px;
-    margin-top: 0px;       
-    min-height: 1000vh;      
+    min-height: 100vh; 
     position: sticky;        
     top: 0;  
 }
 
+
 .recipe-section {
-  display: grid;  
-  grid-template-columns: repeat(3, 1fr);  
-  gap: 25px;  
-  margin: 20px; 
+    display: grid;  
+    grid-template-columns: repeat(3, 1fr);  
+    gap: 25px;  
+    margin: 20px; 
 }
 
 
@@ -82,8 +111,7 @@ body {
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
   transition: transform 0.2s ease, box-shadow 0.2s ease;
   cursor: pointer;
-  
-  height: 300px;      
+    
   overflow: hidden;  
 }
 
