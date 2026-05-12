@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Filtered Pantry</title>
+    <!-- Link to your existing static stylesheet -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <style>
+        /* Form styling to ensure the submit button handles changes */
+        .pantry-form { display: flex; width: 100%; }
+        .sidebar { width: 280px; margin-right: 30px; }
+        
+        /* Layout for pantry section items */
+        .pantry-group { margin-bottom: 15px; border: 1px solid #ccc; border-radius: 4px; }
+        .pantry-header { display: block; width: 100%; padding: 10px; background: #f4f4f4; text-align: left; font-weight: bold; border: none; }
+        .pantry-content { padding: 10px; display: flex; flex-wrap: wrap; gap: 6px; }
+        
+        /* Turn structural checkboxes into interactive tag buttons */
+        .tag-checkbox { display: none; } /* Hides the native browser checkbox square */
+        .tag-label {
+            display: inline-block;
+            padding: 6px 12px;
+            background-color: #f0f0f0;
+            color: #555;
+            border-radius: 4px;
+            cursor: pointer;
+            user-select: none;
+            font-size: 14px;
+        }
+        /* Style rule when hidden checkbox item state is checked */
+        .tag-checkbox:checked + .tag-label {
+            background-color: #8cc63f;
+            color: white;
+        }
+        
+        .update-btn { width: 100%; padding: 10px; margin-top: 10px; background-color: #333; color: #fff; border: none; border-radius: 4px; cursor: pointer; }
+    </style>
+</head>
+<body>
+
+    <!-- Native HTML Form handling input pass-off directly to your Python backend -->
+    <form action="{{ url_for('filtered_pantry') }}" method="GET" class="pantry-form">
+        
+        <!-- Sidebar Navigation Area -->
+        <div class="sidebar">
+            <h2>Pantry</h2>
+            
+            <!-- Loop through categories passed from Python app.py query -->
+            {% for category, items in structured_pantry.items() %}
+            <div class="pantry-group">
+                <div class="pantry-header">{{ category }}</div>
+                <div class="pantry-content">
+                    {% for item in items %}
+                    <!-- Checkbox id matches label for selector to trigger on tag click -->
+                    <input type="checkbox" 
+                           name="ingredients" 
+                           value="{{ item.id }}" 
+                           id="item-{{ item.id }}" 
+                           class="tag-checkbox"
+                           {% if item.id|string in selected_ingredients %}checked{% endif %}>
+                    <label for="item-{{ item.id }}" class="tag-label">{{ item.name }}</label>
+                    {% endfor %}
+                </div>
+            </div>
+            {% endfor %}
+            
+            <button type="submit" class="update-btn">Filter Recipes</button>
+        </div>
+
+        <!-- Main Output Panel showing matched recipes from your recipes.py/database.db setup -->
+        <div class="main-content">
+            <h2>Matched Recipe Results</h2>
+            <div class="recipes-container">
+                {% if matching_recipes %}
+                    {% for recipe in matching_recipes %}
+                        <div class="recipe-card">
+                            <h3><a href="{{ url_for('recipe_detail', recipe_id=recipe.id) }}">{{ recipe.title }}</a></h3>
+                        </div>
+                    {% endfor %}
+                {% else %}
+                    <p>No recipes match your current selected ingredients filter checklist.</p>
+                {% endif %}
+            </div>
+        </div>
+
+    </form>
+
+</body>
+</html>
