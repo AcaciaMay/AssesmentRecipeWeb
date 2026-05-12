@@ -66,15 +66,26 @@
             {% endfor %}
         </div>
     </div>
-          <div class="sidebar" style="width: 250px; margin-left: 20px;">
-            <h2>Pantry</h2>
-           <input type="text" placeholder="Search Ingredients">
-        <p>Common</p>
-        <p>Vegetables</p>
-        <p>Meat</p>
-        <p>Dairy</p>
-        <p>Fruit</p>
-    </div>
+         <div class="sidebar" style="width: 250px; margin-left: 20px;">
+    <h2>Pantry</h2>
+    <input type="text" id="ingredientSearch" placeholder="Search Ingredients">
+    
+    
+    <label for="categoryFilter">Category:</label>
+    <select id="categoryFilter">
+        <option value="all">All Categories</option>
+        <option value="common">Common</option>
+        <option value="vegetables">Vegetables</option>
+        <option value="meat">Meat</option>
+        <option value="dairy">Dairy</option>
+        <option value="baking">Baking</option>
+        <option value="fruit">Fruit</option>
+        <option value="mushrooms">Mushrooms</option>
+        <option value="berries">Berries</option>
+        <option value="grains">Grains</option>
+        <option value="substitutes">Substitutes</option>
+    </select>
+</div>
 </div>
 </body>
 </html>
