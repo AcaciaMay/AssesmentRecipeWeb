@@ -1,13 +1,13 @@
 -- database: ./database.db
 
 SELECT * FROM Pantry;
-INSERT INTO Pantry (Commons) VALUES(olive oil, eggs, pepper, salt, chicken stock, vinegar, cumin, rosemary, mint, parsely, );
-INSERT INTO Pantry (Vegetables) VALUES(leek, celery, thyme, bay leaves,  );
-INSERT INTO Pantry (Meats) VALUES(chicken thighs, bacon, lamb leg, );
-INSERT INTO Pantry (Dairy) VALUES(butter, cream cheese, milk, cream);
+INSERT INTO Pantry (Commons) VALUES(water, olive oil, eggs, pepper, salt, chicken stock, beef stock, cumin, rosemary, mint, parsely, coriander, sesame oil, sesame seeds, ginger, garlic, );
+INSERT INTO Pantry (Vegetables) VALUES(leek, celery, thyme, bay leaves, spring onion, bok choy, green beans, brocolini, onion, carrot, potato, red capsicum, kumara, frozen peas, );
+INSERT INTO Pantry (Meats) VALUES(chicken thighs, bacon, lamb leg, steak, );
+INSERT INTO Pantry (Dairy) VALUES(butter, cream cheese, milk, cream),;
 INSERT INTO Pantry (Baking) VALUES(flour, pastry sheets, brown sugar );
 INSERT INTO Pantry (Fruits) VALUES();
 INSERT INTO Pantry (Mushrooms) VALUES(   
 INSERT INTO Pantry (Berries) VALUES(
-INSERT INTO Pantry (Grains) VALUES(
-INSERT INTO Pantry (Miscellaneous) VALUES(chardonnay, mustard, 
+INSERT INTO Pantry (Grains) VALUES(white rice,
+INSERT INTO Pantry (Miscellaneous) VALUES(sweet chilli sauce, mustard, vinegar, apple cider vinegar, soy sauce, Worcestershire sauce, hot sauce, honey, maple syrup, peanut butter, jam, chocolate chips, coffee, tea, chardonnay, chinese 5 spice powder, roti, );
