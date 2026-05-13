@@ -3,7 +3,7 @@
 SELECT * FROM Pantry;
 INSERT INTO Pantry (Common) VALUES('water, olive oil, eggs, pepper, salt, chicken stock, beef stock, cumin, rosemary, mint, parsely, coriander, sesame oil, sesame seeds, ginger, garlic, biscuits, chocolate, peanut butter, instant coffee, milk, vegetable oil, strawberry jam, yogurt, smoked paprika, dill weed, maple syrup, honey');
 INSERT INTO Pantry (Vegetables) VALUES('spinach, asparagus, beetroot, leek, celery, thyme, bay leaves, spring onion, bok choy, green beans, brocolini, onion, carrot, potato, red capsicum, kumara, frozen peas');
-INSERT INTO Pantry (Meats) VALUES('chicken thighs, bacon, lamb leg, steak');
+INSERT INTO Pantry (Meats) VALUES('chicken thighs, bacon, lamb leg, steak, chicken, minced beef');
 INSERT INTO Pantry (Dairy) VALUES('butter, cream cheese, cheese, milk, cream, whipped cream, yogurt, coconut cream, ricotta');
 INSERT INTO Pantry (Baking) VALUES('flour, pastry sheets, brown sugar, white sugar, sugar, vanilla extract, icing sugar, dark chocolate, vanilla cocoa, milk chocolate, chocolate chips, condensed milk, baking soda, baking powder, yeast');
 INSERT INTO Pantry (Fruits) VALUES('lemon, lemon juice, yellow peach, peach, pear');
