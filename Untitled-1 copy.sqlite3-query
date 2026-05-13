@@ -1,6 +1,6 @@
 -- database: ./database.db
 
-SELECT * FROM Recipes;
+SELECT * FROM Pantry;
 INSERT INTO Pantry (Commons) VALUES(olive oil, eggs, pepper, salt, chicken stock, vinegar, cumin, rosemary, mint, parsely, );
 INSERT INTO Pantry (Vegetables) VALUES(leek, celery, thyme, bay leaves,  );
 INSERT INTO Pantry (Meats) VALUES(chicken thighs, bacon, lamb leg, );
