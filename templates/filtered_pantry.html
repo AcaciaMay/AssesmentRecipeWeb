@@ -3,20 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <title>Filtered Pantry</title>
-    <!-- Link to your existing static stylesheet -->
+   
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
     <style>
-        /* Form styling to ensure the submit button handles changes */
+        
         .pantry-form { display: flex; width: 100%; }
         .sidebar { width: 280px; margin-right: 30px; }
         
-        /* Layout for pantry section items */
+        
         .pantry-group { margin-bottom: 15px; border: 1px solid #ccc; border-radius: 4px; }
         .pantry-header { display: block; width: 100%; padding: 10px; background: #f4f4f4; text-align: left; font-weight: bold; border: none; }
         .pantry-content { padding: 10px; display: flex; flex-wrap: wrap; gap: 6px; }
         
-        /* Turn structural checkboxes into interactive tag buttons */
-        .tag-checkbox { display: none; } /* Hides the native browser checkbox square */
+       
+        .tag-checkbox { display: none; } 
         .tag-label {
             display: inline-block;
             padding: 6px 12px;
@@ -27,7 +27,7 @@
             user-select: none;
             font-size: 14px;
         }
-        /* Style rule when hidden checkbox item state is checked */
+        
         .tag-checkbox:checked + .tag-label {
             background-color: #8cc63f;
             color: white;
@@ -38,20 +38,20 @@
 </head>
 <body>
 
-    <!-- Native HTML Form handling input pass-off directly to your Python backend -->
+    
     <form action="{{ url_for('filtered_pantry') }}" method="GET" class="pantry-form">
         
-        <!-- Sidebar Navigation Area -->
+        
         <div class="sidebar">
             <h2>Pantry</h2>
             
-            <!-- Loop through categories passed from Python app.py query -->
+            
             {% for category, items in structured_pantry.items() %}
             <div class="pantry-group">
                 <div class="pantry-header">{{ category }}</div>
                 <div class="pantry-content">
                     {% for item in items %}
-                    <!-- Checkbox id matches label for selector to trigger on tag click -->
+                
                     <input type="checkbox" 
                            name="ingredients" 
                            value="{{ item.id }}" 
