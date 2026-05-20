@@ -1,13 +1,14 @@
-from flask import Flask, g, render_template, request
+from flask import Flask, g, render_template, request, abort
 import sqlite3
 
 app = Flask(__name__)
+DATABASE = 'database.db'
 
 
 def get_db():
     db = getattr(g, '_database', None)
     if db is None:
-        db = g._database = sqlite3.connect(database='database.db')
+        db = g._database = sqlite3.connect(DATABASE)
         db.row_factory = sqlite3.Row  
     return db
 
@@ -75,10 +76,66 @@ def filter_by_category(category):
         selected_category=category
 )
 
-
 @app.route('/about')
 def about():
     return render_template('about.html')
+
+
+@app.route("/search", methods=["GET"])
+def search():
+    query = request.args.get("q", "").lower()
+    sql = """
+        SELECT 
+            ROW_NUMBER() OVER (ORDER BY Title ASC) AS RowNum,
+            Title,
+            Creator,
+            Image,
+            Ingredients
+        FROM Recipes
+        WHERE LOWER(Title) LIKE ? OR LOWER(Creator) LIKE ?
+        ORDER BY Title ASC;
+    """
+    like_query = f"%{query}%"
+    results = query_db(sql, (like_query, like_query))
+    return render_template("search_results.html", results=results, query=query)
+
+
+
+@app.route("/recipes/<recipeid>")
+def recipe_detail(recipeid):
+    sql = """
+        SELECT 
+            Title,
+            Creator,
+            Image,
+            Ingredients,
+            Category,
+            Website,
+            RecipeLink
+        FROM Recipes
+        WHERE RecipesID = ?
+    """
+    recipe = query_db(sql, (recipeid,), one=True)
+    if not recipe:
+        abort(404)
+    return render_template("recipes.html", recipes=recipes)
+
+
+
+
+
+@app.route("/recipe/recipeid/<recipeid>")
+def recipe_by_recipeid(recipeid):
+    sql = """
+        SELECT Title, Creator, Image, Ingredients, Category, Website, Recipelink
+        FROM Recipes
+        WHERE RecipeID = ?;
+    """
+    result = query_db(sql, [recipeid], one=True)
+    if result is None:
+        return "Recipe not found", 404
+    return render_template("recipe.html", recipe=result)
+
 
 if __name__ == "__main__":
     app.run(debug=True)
