@@ -94,6 +94,12 @@ h1 {
     margin: 20px; 
 }
 
+.recipe-card-link {
+  text-decoration: none;
+    color: inherit;
+    display: block;
+}
+
 
 .recipe-image img {
      width: 60px;       

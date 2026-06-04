@@ -52,9 +52,10 @@
     <div class="content-area">
         <div class="recipe-section">
             {% for recipe in recipes %}
+             <a href="{{ url_for('recipe_detail', recipeid=recipe[0]['RecipeID']) }}" class="recipe-card-link">
             <div class="recipe-container">
                 <div class="recipe-title">
-                    <h1>{{ recipe['Title'] }}</h1> 
+                    <h1>{{ recipe[1]['Title'] }}</h1> 
                 </div>
                 <div class="recipe-image">
                     <img src="{{ url_for('static', filename=recipe['Image']) }}" alt="Recipe Image">

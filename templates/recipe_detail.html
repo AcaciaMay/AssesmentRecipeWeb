@@ -1,5 +1,16 @@
-{% extends "home.html" %}
-{% block body %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RecipeWeb</title>
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/5/w3.css">   
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Alice">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+
 <div style="display: flex; gap: 2rem; align-items: flex-start; padding: 2rem; flex-wrap: wrap;">
 
   
@@ -11,7 +22,6 @@
   <div style="flex: 2; min-width: 300px;">
     <h2>{{ recipe[1] }}</h2> 
     <h3>by {{ recipe[2] }}</h3> 
-    <p>{{ recipe[5] }}</p> 
   </div>
 
   
@@ -25,4 +35,3 @@
   </div>
 
 </div>
-{% endblock %}
