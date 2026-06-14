@@ -13,14 +13,13 @@ body {
     padding: 60px 20px;
     text-align: center;
     border-bottom: 1px solid #ddd;
-    margin-top: 10px;
 }
 
 .main-title {
   font-size: 85px;
   font-family: 'Lora', serif;
   color: #000;
-  margin: 0;
+   margin-top: 0px;
 }
 
 .subtitle {
