@@ -56,15 +56,13 @@ h1 {
 
 
 .main-wrapper {
-    display: flex;
-    margin-top: 0px; 
+    display: flex; 
     min-height: 100vh;
     
 }
 
 .main-wrapper {
     display: flex;
-    margin-top: 0; 
     padding-top: 0;
     align-items: flex-start; 
 }
