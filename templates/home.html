@@ -69,7 +69,12 @@
     </div>
          <div class="sidebar" style="width: 250px; margin-left: 20px;">
     <h2>Pantry</h2>
-    <input type="text" id="ingredientSearch" placeholder="Search Ingredients">
+
+    <div></div>
+        <form action="/search" method="GET" class="nav-search-form">
+            <input type="text" name="query" placeholder="Search recipes..." class="nav-search">
+        </form>
+    </div>
     
     
     <label for="categoryFilter">Category:</label>

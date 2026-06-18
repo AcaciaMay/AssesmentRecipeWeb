@@ -48,8 +48,8 @@ h1 {
     color: white;
     padding: 20px;
     margin-top: 0;
-    min-height: 100vh;
-    position: sticky;        
+    position: sticky;      
+    display: flex;  
     top: 0;  
     margin-top:0px;
 }
