@@ -5,7 +5,6 @@ body {
   font-family: 'Lora', serif;
   background-color: #8c918f;
   color: #000; 
-  padding-top: 150px; 
 }
 
 .header-section {
@@ -14,10 +13,11 @@ body {
     text-align: center;
     border-bottom: 1px solid #ddd;
     margin-top:0px;
+    margin-right: 500px;
 }
 
 .main-title {
-  font-size: 85px;
+  font-size: 200px;
   font-family: 'Lora', serif;
   color: #000;
    margin-top: 0px;
@@ -47,7 +47,6 @@ h1 {
     background-color: #666; 
     color: white;
     padding: 20px;
-    margin-top: 0;
     position: sticky;      
     display: flex;  
     top: 0;  
@@ -67,25 +66,10 @@ h1 {
     align-items: flex-start; 
 }
 
-
-
 .content-area {
     flex: 3; 
     padding: 20px;
 }
-
-
-.sidebar {
-    flex: 1;
-    background-color: #666; 
-    color: white;
-    padding: 20px;
-    min-height: 100vh; 
-    position: sticky;        
-    top: 0;  
-    margin-top: 0px;
-}
-
 
 .recipe-section {
     display: grid;  
