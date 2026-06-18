@@ -257,3 +257,8 @@ h1 {
 .about-title{
   font-size: 30px;
 }
+
+.category{
+  font-size: 20px;
+  background-color: midnightblue;
+}
