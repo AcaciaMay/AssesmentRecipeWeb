@@ -1,12 +1,24 @@
 -- database: ./database.db
 
 SELECT * FROM Pantry;
-INSERT INTO Pantry (Common) VALUES('water, olive oil, eggs, pepper, salt, chicken stock, beef stock, cumin, rosemary, mint, parsely, coriander, sesame oil, sesame seeds, ginger, garlic, biscuits, chocolate, peanut butter, instant coffee, milk, vegetable oil, strawberry jam, yogurt, smoked paprika, dill weed, maple syrup, honey');
+INSERT INTO Pantry (id, Common) VALUES(1, 'Water'), (2, 'olive oil'), (3, 'eggs'), (4, 'pepper'), (5, 'salt'), (6, 'chicken stock'), (7, 'beef stock'), (8, 'cumin'), (9, 'rosemary'), (10, 'mint'), (11, 'parsely'), (12, 'coriander'), (13, 'sesame oil'), (14, 'sesame seeds'), (15, 'ginger'), (16, 'garlic'), (17, 'biscuits'), (18, 'chocolate'), (19, 'peanut butter'), (20, 'instant coffee'), (21, 'milk'), (22, 'vegetable oil'), (23, 'strawberry jam'), (24, 'yogurt'), (25, 'smoked paprika'), (26, 'dill weed'), (27, 'maple syrup'), (28, 'honey');
 INSERT INTO Pantry (Vegetables) VALUES('spinach, asparagus, beetroot, leek, celery, thyme, bay leaves, spring onion, bok choy, green beans, brocolini, onion, carrot, potato, red capsicum, kumara, frozen peas');
 INSERT INTO Pantry (Meats) VALUES('chicken thighs, bacon, lamb leg, steak, chicken, minced beef');
 INSERT INTO Pantry (Dairy) VALUES('butter, cream cheese, cheese, milk, cream, whipped cream, yogurt, coconut cream, ricotta');
-INSERT INTO Pantry (Baking) VALUES('flour, pastry sheets, brown sugar, white sugar, sugar, vanilla extract, icing sugar, dark chocolate, vanilla cocoa, milk chocolate, chocolate chips, condensed milk, baking soda, baking powder, yeast');
-INSERT INTO Pantry (Fruits) VALUES('lemon, lemon juice, yellow peach, peach, pear');
+INSERT INTO Pantry (Baking) VALUES('flour, pastry sheets, brown sugar, white sugar, sugar, vanilla extract,
+dark chocolate,',
+vanilla cocoa,
+milk chocolate,
+chocolate chips,
+condensed milk,
+baking soda,
+baking powder,
+yeast');
+INSERT INTO Pantry (Fruits) VALUES('lemon,
+lemon juice,
+yellow peach,
+peach,
+pear');
 INSERT INTO Pantry (Mushrooms) VALUES('white button mushroom, mushroom, brown mushroom, portebello mushroom, oyster mushroom, shitake mushroom');
 INSERT INTO Pantry (Berries) VALUES('strawberries, blueberries, rasberries, frozen strawberries');
 INSERT INTO Pantry ([Nuts&Grains]) VALUES('white rice, roasted almonds, rolled oats, quinoa, couscous');

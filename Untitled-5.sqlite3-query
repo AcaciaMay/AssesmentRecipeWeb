@@ -1,0 +1,6 @@
+-- database: ./database.db
+
+-- Use the ▷ button in the top right corner to run the entire file.
+
+SELECT * FROM Pantry;
+INSERT INTO Pantry (id, Common) VALUES(1, 'Water'), (2, 'olive oil'), (3, 'eggs'), (4, 'pepper'), (5, 'salt'), (6, 'chicken stock'), (7, 'beef stock'), (8, 'cumin'), (9, 'rosemary'), (10, 'mint'), (11, 'parsely'), (12, 'coriander'), (13, 'sesame oil'), (14, 'sesame seeds'), (15, 'ginger'), (16, 'garlic'), (17, 'biscuits'), (18, 'chocolate'), (19, 'peanut butter'), (20, 'instant coffee'), (21, 'milk'), (22, 'vegetable oil'), (23, 'strawberry jam'), (24, 'yogurt'), (25, 'smoked paprika'), (26, 'dill weed');
