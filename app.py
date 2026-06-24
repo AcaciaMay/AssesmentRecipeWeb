@@ -76,6 +76,53 @@ def filter_by_category(category):
         selected_category=category
 )
 
+
+
+@app.route("/")
+def home():
+    common = request.args.get("common", "")
+    
+    
+    common = get_unique_common()
+
+    
+    base_select = """
+        SELECT RowNum, Title, Creator, Image, Ingredients, Category, Website 
+        FROM (SELECT ROW_NUMBER() OVER (ORDER BY Title ASC) AS RowNum, 
+              Title, Creator, Image, Ingredients, Category, Website 
+              FROM Recipes)
+    """
+
+    if common:
+        
+        sql = base_select + " WHERE Common LIKE ?"
+        pantry = query_db(sql, (f"%{common}%",))
+    else:
+        pantry = query_db(base_select)
+
+    return render_template(
+        "home.html", 
+        pantry=pantry, 
+        common=common
+        selected_common=common
+        )
+
+@app.route("/common/<common>")
+def filter_by_common(common):
+    common_items = get_unique_common()
+    recipes_data = query_db("SELECT * FROM Recipes")
+    return render_template(
+        "filtered_recipes.html",
+        recipes=recipes_data,
+        categories=categories,
+        selected_category=category
+)
+
+
+
+
+
+
 @app.route('/about')
 def about():
     return render_template('about.html')

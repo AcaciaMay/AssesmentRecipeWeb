@@ -31,25 +31,28 @@ body {
   margin-top: 5px;
 }
 
+
+.sidebar {
+    background-color: #666; 
+    color: white;
+    padding: 20px;    
+    position: sticky;  
+    margin-top:0px;
+    width: 360px; 
+    margin-right: 0px;  
+    height: fill;
+    overflow-y: auto;
+    min-height: 100vh;
+}
+
 .content-area {
     flex: 3; 
     padding: 0 20px 20px 20px; 
 }
 
 
-h2 {
-    margin-top: 0;
+h1 {
     padding-top: 10px;
-}
-
-
-.sidebar {
-    background-color: #666; 
-    color: white;
-    padding: 20px;    
-    display: flex;  
-    top: 0;  
-    margin-top:0px;
 }
 
 
