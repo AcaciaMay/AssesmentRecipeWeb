@@ -1,0 +1,26 @@
+-- database: ./database.db
+
+SELECT * FROM Pantry;
+INSERT INTO Pantry (id, Common, Vegetables, Meats, Dairy, Baking, Fruits, Mushrooms, Herbs, [Nuts&Grains], Miscellaneous) 
+VALUES
+(1, 'Water', 'Spinach', 'Chicken Thighs', 'Butter', 'Flour', 'Apple', 'White Button Mushroom', 'Basil', 'White Rice', 'Sweet Chilli Sauce'),
+(2, 'Olive Oil', 'Asparagus', 'Bacon', 'Cream Cheese', 'Sugar', 'Banana', 'Mushroom', 'Oregano', 'Roasted Almonds', 'Mustard'),
+(3, 'Eggs', 'Beetroot', 'Lamb Leg', 'Cheese', 'Baking Powder', 'Orange', 'Brown Mushroom', 'Thyme', 'Rolled Oats', 'Vinegar'),
+(4, 'Pepper', 'Leek', 'Steak', 'Milk', 'Baking Soda', 'Lemon', 'Portebello Mushroom', 'Rosemary', 'Quinoa', 'Apple Cider Vinegar'),
+(5, 'Salt', 'Celery', 'Chicken', 'Cream', 'Vanilla Extract', 'Lime', 'Oyster Mushroom', 'Parsley', 'Couscous', 'Soy Sauce'),
+(6, 'Chicken Stock', 'Thyme', 'Minced Beef', 'Whipped Cream', 'Cocoa Powder', 'Strawberries', 'Shitake Mushroom', 'Cilantro', 'White Rice', 'Worcestershire Sauce'),
+(7, 'Beef Stock', 'Bay Leaves', 'Chicken Thighs', 'Yogurt', 'Yeast', 'Blueberries', 'White Button Mushroom', 'Chicken Salt', 'Roasted Almonds', 'Hot Sauce'),
+(8, 'Sesame Oil', 'Spring Onion', 'Bacon', 'Butter', 'Flour', 'Apple', 'Mushroom', 'Cumin', 'Rolled Oats', 'Honey'),
+(9, 'Sesame Seeds', 'Bok Choy', 'Lamb Leg', 'Cream Cheese', 'Sugar', 'Banana', 'Brown Mushroom', 'Rosemary', 'Quinoa', 'Maple Syrup'),
+(10, 'Biscuits', 'Green Beans', 'Steak', 'Cheese', 'Baking Powder', 'Orange', 'Portebello Mushroom', 'Mint', 'Couscous', 'Peanut Butter'),
+(11, 'Chocolate', 'Brocolini', 'Chicken', 'Milk', 'Baking Soda', 'Lemon', 'Oyster Mushroom', 'Coriander', 'White Rice', 'Jam'),
+(12, 'Peanut Butter', 'Onion', 'Minced Beef', 'Cream', 'Vanilla Extract', 'Lime', 'Shitake Mushroom', 'Ginger', 'Roasted Almonds', 'Chocolate Chips'),
+(13, 'Instant Coffee', 'Carrot', 'Chicken Thighs', 'Whipped Cream', 'Cocoa Powder', 'Strawberries', 'White Button Mushroom', 'Garlic', 'Rolled Oats', 'Coffee'),
+(14, 'Milk', 'Potato', 'Bacon', 'Yogurt', 'Yeast', 'Blueberries', 'Mushroom', 'Smoked Paprika', 'Quinoa', 'Tea'),
+(15, 'Vegetable Oil', 'Red Capsicum', 'Lamb Leg', 'Butter', 'Flour', 'Apple', 'Brown Mushroom', 'Dill Weed', 'Couscous', 'Chardonnay'),
+(16, 'Strawberry Jam', 'Kumara', 'Steak', 'Cream Cheese', 'Sugar', 'Banana', 'Portebello Mushroom', 'Basil', 'White Rice', 'Chinese 5 Spice Powder'),
+(17, 'Yogurt', 'Frozen Peas', 'Chicken', 'Cheese', 'Baking Powder', 'Orange', 'Oyster Mushroom', 'Oregano', 'Roasted Almonds', 'Roti'),
+(18, 'Smoked Paprika', 'Spinach', 'Minced Beef', 'Milk', 'Baking Soda', 'Lemon', 'Shitake Mushroom', 'Thyme', 'Rolled Oats', 'Sweet Chilli Sauce'),
+(19, 'Dill Weed', 'Asparagus', 'Chicken Thighs', 'Cream', 'Vanilla Extract', 'Lime', 'White Button Mushroom', 'Rosemary', 'Quinoa', 'Mustard'),
+(20, 'Maple Syrup', 'Beetroot', 'Bacon', 'Whipped Cream', 'Cocoa Powder', 'Strawberries', 'Mushroom', 'Parsley', 'Couscous', 'Vinegar'),
+(21, 'Honey', 'Leek', 'Lamb Leg', 'Yogurt', 'Yeast', 'Blueberries', 'Brown Mushroom', 'Cilantro', 'White Rice', 'Apple Cider Vinegar');
