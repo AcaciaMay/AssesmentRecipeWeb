@@ -76,10 +76,19 @@ def filter_by_category(category):
         selected_category=category
 )
 
+def get_unique_common():
+    """Fetches, splits, and deduplicates common ingredients from the DB."""
+    raw_data = query_db("SELECT DISTINCT Common FROM Pantry WHERE Common IS NOT NULL")
+    common_set = set()
+    for row in raw_data:
+        
+        parts = [p.strip() for p in row['Common'].split(',')]
+        common_set.update(parts)
+    return sorted(list(common_set))
 
 
-@app.route("/")
-def home():
+@app.route("/common")
+def function(common):
     common = request.args.get("common", "")
     
     
@@ -102,10 +111,9 @@ def home():
 
     return render_template(
         "home.html", 
-        pantry=pantry, 
-        common=common
-        selected_common=common
-        )
+        pantry=pantry,
+        common=common,
+        selected_common=common)
 
 @app.route("/common/<common>")
 def filter_by_common(common):
@@ -114,8 +122,8 @@ def filter_by_common(common):
     return render_template(
         "filtered_recipes.html",
         recipes=recipes_data,
-        categories=categories,
-        selected_category=category
+        common=common_items,
+        selected_common=common
 )
 
 
