@@ -176,7 +176,55 @@ def filter_by_vegetables(vegetables):
         selected_vegetables=vegetables
 )
 
+def get_unique_meat():
+    """Fetches, splits, and deduplicates meat ingredients from the DB."""
+    raw_data = query_db("SELECT DISTINCT Meat FROM Pantry WHERE Meat IS NOT NULL")
+    Meat_set = set()
+    for row in raw_data:
+        
+        parts = [p.strip() for p in row['Meat'].split(',')]
+        Meat_set.update(parts)
+    return sorted(list(Meat_set))
 
+
+@app.route("/meat")
+def function3(meat):
+    meat = request.args.get("meat", "")
+    
+    
+    meat = get_unique_meat()
+
+    
+    base_select = """
+        SELECT RowNum, Title, Creator, Image, Ingredients, Category, Website 
+        FROM (SELECT ROW_NUMBER() OVER (ORDER BY Title ASC) AS RowNum, 
+              Title, Creator, Image, Ingredients, Category, Website 
+              FROM Recipes)
+    """
+
+    if meat:
+        
+        sql = base_select + " WHERE Meat LIKE ?"
+        pantry = query_db(sql, (f"%{meat}%",))
+    else:
+        pantry = query_db(base_select)
+
+    return render_template(
+        "home.html", 
+        pantry=pantry,
+        meat=meat,
+        selected_meat=meat)
+
+@app.route("/meat/<meat>")
+def filter_by_meat(meat):
+    meat_items = get_unique_meat()
+    recipes_data = query_db("SELECT * FROM Recipes")
+    return render_template(
+        "filtered_recipes.html",
+        recipes=recipes_data,
+        meat=meat_items,
+        selected_meat=meat
+)
 
 
 
