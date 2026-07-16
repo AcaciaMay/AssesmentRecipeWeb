@@ -126,6 +126,58 @@ def filter_by_common(common):
         selected_common=common
 )
 
+def get_unique_vegetables():
+    """Fetches, splits, and deduplicates vegetable ingredients from the DB."""
+    raw_data = query_db("SELECT DISTINCT Vegetables FROM Pantry WHERE Vegetables IS NOT NULL")
+    vegetables_set = set()
+    for row in raw_data:
+        
+        parts = [p.strip() for p in row['Vegetables'].split(',')]
+        vegetables_set.update(parts)
+    return sorted(list(vegetables_set))
+
+
+@app.route("/vegetables")
+def function2(vegetables):
+    vegetables = request.args.get("vegetables", "")
+    
+    
+    vegetables = get_unique_vegetables()
+
+    
+    base_select = """
+        SELECT RowNum, Title, Creator, Image, Ingredients, Category, Website 
+        FROM (SELECT ROW_NUMBER() OVER (ORDER BY Title ASC) AS RowNum, 
+              Title, Creator, Image, Ingredients, Category, Website 
+              FROM Recipes)
+    """
+
+    if vegetables:
+        
+        sql = base_select + " WHERE Vegetables LIKE ?"
+        pantry = query_db(sql, (f"%{vegetables}%",))
+    else:
+        pantry = query_db(base_select)
+
+    return render_template(
+        "home.html", 
+        pantry=pantry,
+        vegetables=vegetables,
+        selected_vegetables=vegetables)
+
+@app.route("/vegetables/<vegetables>")
+def filter_by_vegetables(vegetables):
+    vegetables_items = get_unique_vegetables()
+    recipes_data = query_db("SELECT * FROM Recipes")
+    return render_template(
+        "filtered_recipes.html",
+        recipes=recipes_data,
+        vegetables=vegetables_items,
+        selected_vegetables=vegetables
+)
+
+
+
 
 
 

@@ -94,6 +94,24 @@
             </div>
         </div>
 
+        <div class="dropdown">
+            <button class="nav-button dropdown-trigger">Vegetables ▾</button>
+            <div class="dropdown-content">
+                <div class="filter-bar">
+                    {% for meal in categories %}
+                        <a href="{{ url_for('home', category=meal) }}" 
+                           class="filter-pill {% if meal == selected_category %}active{% endif %}">
+                            {{ meal }}
+                        </a>
+                    {% endfor %}
+                    
+                    {% if selected_category %}
+                        <a href="{{ url_for('home') }}" class="clear-link">Clear Filter</a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+
 </div>
 </div>
 </body>
