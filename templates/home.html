@@ -9,19 +9,19 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 
-<header class="header.section">
-    <div class="main-title">
+<header class="header.section"style="margin-right: 370px;">
+    <div class="main-title" style="margin-right: 370px;">
         <h1>RecipeWeb</h1> </div>
         <p class="subtitle">Search for recipes based on your ingredients.</p>
 </header>
 
-<nav class="navbar">
+<nav class="navbar" style="margin-right: 370px;">
     <div class="nav-links">
         <a href="/" class="nav-button">Home</a>
         <a href="/about" class="nav-button">About</a>
         
         
-        <div class="dropdown">
+        <div class="dropdown" >
             <button class="nav-button dropdown-trigger">Meal Types ▾</button>
             <div class="dropdown-content">
                 <div class="filter-bar">
@@ -66,15 +66,19 @@
             {% endfor %}
         </div>
     </div>
-         <div class="sidebar" style="width: 360px; margin-right: 0px; margin-top: 0px; height: fill;">
-    <h2>Pantry</h2>
+        
+        <!-- Change this line to remove inline styles -->
+    <div class="sidebar">
+        <h2>Pantry</h2>
 
-    
         <form action="/search" method="GET" class="nav-search-form">
             <input type="text" name="query" placeholder="Search recipes..." class="nav-search">
         </form>
+    </div> <!-- Close sidebar -->
+</div> <!-- Close main-wrapper -->
+</body> <!-- Don't forget your closing tags -->
+</html>
 
-    
 
         <div class="dropdown">
             <button class="nav-button dropdown-trigger">Common ▾</button>

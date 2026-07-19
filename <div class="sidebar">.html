@@ -1,0 +1,181 @@
+<div class="sidebar">
+    <h2>Pantry</h2>
+
+    <!-- Recipe Text Search Field -->
+    <form action="/search" method="GET" class="nav-search-form">
+        <input type="text" name="query" placeholder="Search recipes..." class="nav-search">
+    </form>
+
+    <!-- UNIFIED MULTI-SELECT INGREDIENT COLUMN FORM -->
+    <form action="/home" method="GET" id="pantry-filter-form">
+        
+        <!-- 1. COMMON INGREDIENTS DROPDOWN -->
+        <div class="dropdown">
+            <button type="button" class="nav-button dropdown-trigger">Common ▾</button>
+            <div class="dropdown-content">
+                <div class="filter-bar">
+                    {% for item in sidebar_items.common %}
+                        <label class="filter-pill {% if item in selected_ingredients %}active{% endif %}">
+                            <input type="checkbox" name="ingredients" value="{{ item }}" 
+                                   {% if item in selected_ingredients %}checked{% endif %} 
+                                   class="ingredient-checkbox">
+                            {{ item }}
+                        </label>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+
+        <!-- 2. VEGETABLES DROPDOWN -->
+        <div class="dropdown">
+            <button type="button" class="nav-button dropdown-trigger">Vegetables ▾</button>
+            <div class="dropdown-content">
+                <div class="filter-bar">
+                    {% for item in sidebar_items.vegetables %}
+                        <label class="filter-pill {% if item in selected_ingredients %}active{% endif %}">
+                            <input type="checkbox" name="ingredients" value="{{ item }}" 
+                                   {% if item in selected_ingredients %}checked{% endif %} 
+                                   class="ingredient-checkbox">
+                            {{ item }}
+                        </label>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+
+        <!-- 3. MEAT DROPDOWN -->
+        <div class="dropdown">
+            <button type="button" class="nav-button dropdown-trigger">Meats ▾</button>
+            <div class="dropdown-content">
+                <div class="filter-bar">
+                    {% for item in sidebar_items.meat %}
+                        <label class="filter-pill {% if item in selected_ingredients %}active{% endif %}">
+                            <input type="checkbox" name="ingredients" value="{{ item }}" 
+                                   {% if item in selected_ingredients %}checked{% endif %} 
+                                   class="ingredient-checkbox">
+                            {{ item }}
+                        </label>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+
+        <!-- 4. DAIRY DROPDOWN -->
+        <div class="dropdown">
+            <button type="button" class="nav-button dropdown-trigger">Dairy ▾</button>
+            <div class="dropdown-content">
+                <div class="filter-bar">
+                    {% for item in sidebar_items.dairy %}
+                        <label class="filter-pill {% if item in selected_ingredients %}active{% endif %}">
+                            <input type="checkbox" name="ingredients" value="{{ item }}" 
+                                   {% if item in selected_ingredients %}checked{% endif %} 
+                                   class="ingredient-checkbox">
+                            {{ item }}
+                        </label>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+
+        <!-- 5. BAKING DROPDOWN -->
+        <div class="dropdown">
+            <button type="button" class="nav-button dropdown-trigger">Baking ▾</button>
+            <div class="dropdown-content">
+                <div class="filter-bar">
+                    {% for item in sidebar_items.baking %}
+                        <label class="filter-pill {% if item in selected_ingredients %}active{% endif %}">
+                            <input type="checkbox" name="ingredients" value="{{ item }}" 
+                                   {% if item in selected_ingredients %}checked{% endif %} 
+                                   class="ingredient-checkbox">
+                            {{ item }}
+                        </label>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+
+        <!-- 6. FRUITS DROPDOWN -->
+        <div class="dropdown">
+            <button type="button" class="nav-button dropdown-trigger">Fruits ▾</button>
+            <div class="dropdown-content">
+                <div class="filter-bar">
+                    {% for item in sidebar_items.fruits %}
+                        <label class="filter-pill {% if item in selected_ingredients %}active{% endif %}">
+                            <input type="checkbox" name="ingredients" value="{{ item }}" 
+                                   {% if item in selected_ingredients %}checked{% endif %} 
+                                   class="ingredient-checkbox">
+                            {{ item }}
+                        </label>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+
+        <!-- Master clear button resets layout states cleanly -->
+        {% if selected_ingredients %}
+            <a href="/home" class="clear-link" style="display: block; margin-top: 15px; text-align: center;">Reset Active Filters</a>
+        {% endif %}
+    </form>
+</div>
+
+app.py
+
+from flask import render_template, request
+
+# Helper functions to gather sorted sidebar lists
+def get_unique_column_items(column_name):
+    """Generic helper to fetch, split, and deduplicate ingredients by column name."""
+    raw_data = query_db(f"SELECT DISTINCT {column_name} FROM Pantry WHERE {column_name} IS NOT NULL")
+    items_set = set()
+    for row in raw_data:
+        parts = [p.strip() for p in row[column_name].split(',')]
+        items_set.update(parts)
+    return sorted(list(items_set))
+
+@app.route("/")
+@app.route("/home")
+def home():
+    # 1. Fetch distinct arrays for all categories to populate the dropdown menus
+    sidebar_data = {
+        'common': get_unique_column_items('Common'),
+        'vegetables': get_unique_column_items('Vegetables'),
+        'meat': get_unique_column_items('Meat'),
+        'dairy': get_unique_column_items('Dairy'),
+        'baking': get_unique_column_items('Baking'),
+        'fruits': get_unique_column_items('Fruits')
+        # Add your remaining database fields: mushrooms, herbs, nuts, misc using the helper
+    }
+
+    # 2. Get the list of all currently checked ingredients from form submission
+    # Combines checkboxes into a clean Python array: ['Tomato', 'Chicken', 'Cheese']
+    selected_ingredients = request.args.getlist('ingredients')
+
+    # Base query template structure 
+    base_sql = """
+        SELECT RowNum, Title, Creator, Image, Ingredients, Category, Website 
+        FROM (SELECT ROW_NUMBER() OVER (ORDER BY Title ASC) AS RowNum, 
+              Title, Creator, Image, Ingredients, Category, Website 
+              FROM Recipes)
+    """
+
+    # 3. Dynamic multi-select search construction
+    query_params = []
+    if selected_ingredients:
+        # Construct multi-stage conditions like: WHERE Ingredients LIKE ? AND Ingredients LIKE ?
+        conditions = []
+        for item in selected_ingredients:
+            conditions.append("Ingredients LIKE ?")
+            query_params.append(f"%{item}%")
+        
+        final_sql = f"{base_sql} WHERE {' AND '.join(conditions)}"
+        recipes = query_db(final_sql, tuple(query_params))
+    else:
+        # Default behavior matches original layout: load all entries when zero filters are chosen
+        recipes = query_db(base_sql)
+
+    return render_template(
+        "home.html", 
+        recipes=recipes,                          # Replaces 'pantry' references inside your list cards
+        sidebar_items=sidebar_data,               # Contains all structural menu options
+        selected_ingredients=selected_ingredients # Remembers checkboxes across page reloads
+    )

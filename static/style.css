@@ -5,7 +5,9 @@ body {
   font-family: 'Lora', serif;
   background-color: #8c918f;
   color: #000; 
+  margin: 0;   /* ADD THIS: Clears default browser outer spacing */
 }
+
 
 .header-section {
     background-color: #f8f9fa;
@@ -13,7 +15,7 @@ body {
     text-align: center;
     border-bottom: 1px solid #ddd;
     margin-top:0px;
-    margin-right: 360px;
+    margin-right: 370px;
 }
 
 .main-title h1 {
@@ -21,7 +23,7 @@ body {
   font-family: 'Lora', serif;
   color: #000;
    margin-top: 0px;
-   margin-right: 1500px
+   margin-right: 370px
 }
 
 .subtitle {
@@ -29,6 +31,7 @@ body {
   font-family: 'Lora', serif;
   color: #000;
   margin-top: 5px;
+ margin-right: 370px;
 }
 
 
@@ -36,14 +39,20 @@ body {
     background-color: #666; 
     color: white;
     padding: 20px;    
-    position: sticky;  
-    margin-top:0px;
+    
+    /* CRUCIAL FIXES */
+    position: fixed;        /* Pulls the sidebar completely out of the regular document flow */
+    top: 0;                 /* Touches the absolute top edge of the browser viewport */
+    right: 0;               /* Snaps it directly to the right edge of the screen */
     width: 360px; 
-    margin-right: 0px;  
-    height: fill;
-    overflow-y: auto;
-    min-height: 100vh;
+    height: 100vh;          /* Spans the exact height of the browser screen */
+    box-sizing: border-box; /* Forces padding to stay inside the 360px width limits */
+    
+    overflow-y: auto;       /* Keeps your scrolling feature working */
+    z-index: 100;           /* Ensures it layers on top of recipe cards during scrolling */
 }
+
+
 
 .content-area {
     flex: 3; 
@@ -57,15 +66,10 @@ h1 {
 
 
 .main-wrapper {
-    display: flex; 
-    min-height: 100vh;
-    
-}
-
-.main-wrapper {
     display: flex;
     padding-top: 0;
     align-items: flex-start; 
+    margin-right: 360px; /* CRUCIAL FIX: Blocks recipes from slipping under the 360px sidebar */
 }
 
 .content-area {
@@ -142,7 +146,7 @@ h1 {
   align-items: left; 
   background-color: #bbb; 
   padding: 10px 20px;
-  margin-right: 361px;
+  margin-right: 370px;
   
 }
 
