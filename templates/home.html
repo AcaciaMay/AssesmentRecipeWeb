@@ -81,13 +81,13 @@
             <div class="dropdown-content">
                 <div class="filter-bar">
                     {% for meal in categories %}
-                        <a href="{{ url_for('home', category=meal) }}" 
-                           class="filter-pill {% if meal == selected_category %}active{% endif %}">
+                        <a href="{{ url_for('home', common=meal) }}" 
+                           class="filter-pill {% if meal == selected_common %}active{% endif %}">
                             {{ meal }}
                         </a>
                     {% endfor %}
                     
-                    {% if selected_category %}
+                    {% if selected_common %}
                         <a href="{{ url_for('home') }}" class="clear-link">Clear Filter</a>
                     {% endif %}
                 </div>
