@@ -179,3 +179,13 @@ def home():
         sidebar_items=sidebar_data,               # Contains all structural menu options
         selected_ingredients=selected_ingredients # Remembers checkboxes across page reloads
     )
+
+    before closing body tag
+    <script>
+    // Submits the ingredient query array whenever any checklist bubble changes state
+    document.querySelectorAll('.ingredient-checkbox').forEach(box => {
+        box.addEventListener('change', () => {
+            document.getElementById('pantry-filter-form').submit();
+        });
+    });
+</script>
