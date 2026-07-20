@@ -68,11 +68,6 @@ body {
     margin-right: 360px; /* CRUCIAL FIX: Blocks recipes from slipping under the 360px sidebar */
 }
 
-.content-area {
-    flex: 3; 
-    padding: 20px;
-}
-
 .recipe-section {
     display: grid;  
     grid-template-columns: repeat(3, 1fr);  
