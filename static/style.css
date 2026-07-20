@@ -93,9 +93,8 @@ body {
   cursor: pointer;
 }
 
-.recipe-title {
-    font-size: 7px;
-
+h4 {
+  font-size: 20px;
 }
 
 .recipe-cover {
@@ -135,7 +134,7 @@ body {
   align-items: left; 
   background-color: #bbb; 
   padding: 10px 20px;
-  margin-right: 370px;
+  margin-right: 360px;
   
 }
 

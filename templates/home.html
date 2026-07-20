@@ -52,8 +52,8 @@
             {% for recipe in recipes %}
             <a href="{{ url_for('recipe_detail', recipeid=recipe['RecipeID']) }}" class="recipe-card-link">
                 <div class="recipe-container">
-                    <div class="recipe-title" style="font-size: 20px;">
-                        <h1>{{ recipe['Title'] }}</h1> 
+                    <div class="recipe-title">
+                        <h4>{{ recipe['Title'] }}</h4> 
                     </div>
                     <div class="recipe-image">
                         <!-- Ensure recipe['Image'] evaluates to just the filename string -->
