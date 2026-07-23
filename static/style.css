@@ -14,8 +14,9 @@ body {
     padding: 60px 20px;
     text-align: center;
     border-bottom: 1px solid #5e244e;
-    margin-top:0px;
+    margin-top:1px;
     margin-right: 360px;
+    min-height: 340px;
 }
 
 .main-title h1 {
