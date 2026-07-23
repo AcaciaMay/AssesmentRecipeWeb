@@ -200,22 +200,22 @@ h4 {
 
 
 .filter-pill {
-    background-color: #bac14e;
+    background-color: #ffe8b4;
     color: #333;
     padding: 5px 15px;
     border-radius: 20px;
     text-decoration: none;
     font-size: 13px;
-    border: 1px solid #ccc;
+    border: 1px solid #ffe8b4;
     white-space: nowrap; 
 }
 
 .filter-pill:hover {
-    background-color: #d0d0d0;
+    background-color: #ffe8b4;
 }
 
 .filter-pill.active {
-    background-color: #666;
+    background-color: #aa1c41;
     color: white;
 }
 
