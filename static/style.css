@@ -11,9 +11,7 @@ body {
 
 .header-section {
     background-color: #5e244e;
-    padding: 60px 20px;
     text-align: center;
-    border-bottom: 1px solid #5e244e;
     margin-top:1px;
     margin-right: 360px;
     min-height: 340px;
@@ -141,7 +139,7 @@ h4 {
   background-color: #bac14e; 
   padding: 10px 20px;
   margin-right: 360px;
-  
+  margin-top: 40px;
 }
 
 .nav-links {
