@@ -14,24 +14,27 @@ body {
 }
 
 .main-title {
-    background-color: #5e244e;  /* Automatically centers everything inside */
-    width: 100%;         /* Fixes the 2000px overflow bug */
+    background-color: #5e244e;  
+    width: 100%;         
     margin: 0;
-    padding: 40px 0;     /* Safely gives the header some top/bottom height */
+    padding: 40px 0 40px 270px; /* Shorthand: Top (40px), Right (0), Bottom (40px), Left (400px) */
+    box-sizing: border-box;     /* Crucial: Prevents the 400px padding from breaking the 100% width */
 }
 
 .main-title h1 {
     font-size: 85px;
     font-family: 'Lora', serif;
-    color: #000000;      /* Keeps text black */
-    margin: 0;           /* Removes browser gaps and left alignment push */
+    color: #000000;      
+    margin: 0;           
 }
 
 .main-title .subtitle {
-    font-size: 18px;     /* Adjust text size as you prefer */
+    font-size: 18px;     
     color: #000000;
-    margin: 10px 0 0 0;  /* Adds just a tiny bit of space below the H1 title */
+    margin: 10px 0 0 0;
+    padding-left: 20px; 
 }
+
 
 
 
