@@ -7,38 +7,33 @@ body {
   color: #000;
 }
 
-
 .header-section {
     background-color: #5e244e;
-    text-align: center;
-    margin-top: 0px;
-    margin-right: 360px;
+    margin: 0;           /* Clear arbitrary outer margins */
+    width: 100%;         /* Let it naturally fill the top area */
 }
+
 .main-title {
-  
-  color: #000;
-   margin-top: 0px;
-   margin-right: 360px;
-   min-width: 2000px;
-   background-color: #5e244e;
-   margin-bottom: 0px;
-   padding-bottom: 0px;
+    background-color: #5e244e;  /* Automatically centers everything inside */
+    width: 100%;         /* Fixes the 2000px overflow bug */
+    margin: 0;
+    padding: 40px 0;     /* Safely gives the header some top/bottom height */
 }
 
 .main-title h1 {
-  font-size: 85px;
-  font-family: 'Lora', serif;
-  margin-left: 245px;
- 
+    font-size: 85px;
+    font-family: 'Lora', serif;
+    color: #000000;      /* Keeps text black */
+    margin: 0;           /* Removes browser gaps and left alignment push */
 }
-.subtitle {
-  font-size: 24px;
-  font-family: 'Lora', serif;
-  color: #000;
-  margin-right: 30px;
-  margin-left: 225px;
-  margin-top: 0px;
+
+.main-title .subtitle {
+    font-size: 18px;     /* Adjust text size as you prefer */
+    color: #000000;
+    margin: 10px 0 0 0;  /* Adds just a tiny bit of space below the H1 title */
 }
+
+
 
 
 .sidebar {

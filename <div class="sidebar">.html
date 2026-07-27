@@ -189,3 +189,31 @@ def home():
         });
     });
 </script>
+  stylecss
+  .header-section {
+    background-color: #5e244e;
+    text-align: center;
+    margin: 0;           /* Clear arbitrary outer margins */
+    width: 100%;         /* Let it naturally fill the top area */
+}
+
+.main-title {
+    background-color: #5e244e;
+    text-align: center;  /* Automatically centers everything inside */
+    width: 100%;         /* Fixes the 2000px overflow bug */
+    margin: 0;
+    padding: 40px 0;     /* Safely gives the header some top/bottom height */
+}
+
+.main-title h1 {
+    font-size: 85px;
+    font-family: 'Lora', serif;
+    color: #000000;      /* Keeps text black */
+    margin: 0;           /* Removes browser gaps and left alignment push */
+}
+
+.main-title .subtitle {
+    font-size: 18px;     /* Adjust text size as you prefer */
+    color: #000000;
+    margin: 10px 0 0 0;  /* Adds just a tiny bit of space below the H1 title */
+}
