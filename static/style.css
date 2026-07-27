@@ -19,16 +19,20 @@ body {
     min-height: 340px;
 }
 
-.main-title h1 {
-  font-size: 85px;
-  font-family: 'Lora', serif;
+.main-title {
+  
   color: #000;
    margin-top: 0px;
    margin-right: 360px;
-   margin-left: 230px;
+   min-width: 2000px;
    background-color: #5e244e;
 }
 
+.main-title h1 {
+  font-size: 85px;
+  font-family: 'Lora', serif;
+  margin-left: 245px;
+}
 .subtitle {
   font-size: 24px;
   font-family: 'Lora', serif;

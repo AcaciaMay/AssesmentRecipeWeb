@@ -2,10 +2,7 @@
 {% block body %}
 <div style="display: flex; gap: 2rem; align-items: flex-start; padding: 2rem; flex-wrap: wrap;">
 
-  <!-- Book Cover -->
-  <div style="flex: 1; min-width: 200px;">
-    <img src="{{ url_for('static', filename=recipe[3]) }}" alt="{{ recipe[1] }}" width="200" height="300">
-  </div>
+   <a href="{{ url_for('recipe_detail', id=recipe['ID']) }}" class="recipe-card-link"></a>
 
   <!-- Main Info -->
   <div style="flex: 2; min-width: 300px;">
@@ -36,3 +33,4 @@
   </div>
 
 </div>
+{% endblock %}

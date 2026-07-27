@@ -611,7 +611,7 @@ def search():
 
 
 @app.route("/recipes/<recipeid>")
-def recipe_detail(recipeid):
+def recipe_detail(id):
     sql = """
         SELECT 
             Title,
@@ -622,9 +622,9 @@ def recipe_detail(recipeid):
             Website,
             RecipeLink
         FROM Recipes
-        WHERE RecipesID = ?
+        WHERE ID = ?
     """
-    recipe = query_db(sql, (recipeid,), one=True)
+    recipe = query_db(sql, (id,), one=True)
     if not recipe:
         abort(404)
     return render_template("recipes.html", recipe=recipe)
@@ -633,14 +633,14 @@ def recipe_detail(recipeid):
 
 
 
-@app.route("/recipe/recipeid/<recipeid>")
-def recipe_by_recipeid(recipeid):
+@app.route("/recipe/id/<id>")
+def recipe_by_id(id):
     sql = """
         SELECT Title, Creator, Image, Ingredients, Category, Website, Recipelink
         FROM Recipes
-        WHERE RecipeID = ?;
+        WHERE ID = ?;
     """
-    result = query_db(sql, [recipeid], one=True)
+    result = query_db(sql, [id], one=True)
     if result is None:
         return "Recipe not found", 404
     return render_template("recipe.html", recipe=result)
