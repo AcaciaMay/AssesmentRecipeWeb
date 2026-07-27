@@ -4,8 +4,7 @@ html {
 body {
   font-family: 'Lora', serif;
   background-color: #29653d;
-  color: #000; 
-    /* ADD THIS: Clears default browser outer spacing */
+  color: #000;
 }
 
 
@@ -15,7 +14,6 @@ body {
     margin-top: 0px;
     margin-right: 360px;
 }
-
 .main-title {
   
   color: #000;
@@ -23,12 +21,15 @@ body {
    margin-right: 360px;
    min-width: 2000px;
    background-color: #5e244e;
+   margin-bottom: 0px;
+   padding-bottom: 0px;
 }
 
 .main-title h1 {
   font-size: 85px;
   font-family: 'Lora', serif;
   margin-left: 245px;
+ 
 }
 .subtitle {
   font-size: 24px;
@@ -64,6 +65,7 @@ body {
   padding: 10px 20px;
   margin-right: 360px;
   margin-top: 0px;
+  margin-bottom: 0px;
 }
 
 .nav-links {
