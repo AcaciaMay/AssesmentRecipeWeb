@@ -1,16 +1,18 @@
+{% extends "home.html" %}
+{% block body %}
+<div style="display: flex; gap: 2rem; align-items: flex-start; padding: 2rem; flex-wrap: wrap;">
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>RecipeWeb</title>
-    <link rel="stylesheet" href="https://www.w3schools.com/w3css/5/w3.css">   
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Alice">
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-</head>
+  <!-- Book Cover -->
+  <div style="flex: 1; min-width: 200px;">
+    <img src="{{ url_for('static', filename=recipe[3]) }}" alt="{{ recipe[1] }}" width="200" height="300">
+  </div>
 
-
+  <!-- Main Info -->
+  <div style="flex: 2; min-width: 300px;">
+    <h2>{{ recipe[1] }}</h2> <!--Title-->
+    <h3>by {{ recipe[3] }}</h3> <!-- Author -->
+    <p>{{ recipe[7] }}</p> <!-- Description -->
+  </div>
 <div style="display: flex; gap: 2rem; align-items: flex-start; padding: 2rem; flex-wrap: wrap;">
 
   
@@ -21,17 +23,16 @@
   
   <div style="flex: 2; min-width: 300px;">
     <h2>{{ recipe[1] }}</h2> 
-    <h3>by {{ recipe[2] }}</h3> 
+    <h3>by {{ recipe[3] }}</h3> 
   </div>
 
   
   <div style="flex: 1; min-width: 200px;">
-    <p><strong>Category:</strong> {{ recipe[5] }}</p>
     <p><strong>Ingredients:</strong> {{ recipe[4] }}</p>
     <p><strong>Creator:</strong> {{ recipe[2] }}</p>
-    <p><strong>Image:</strong> {{ recipe[3] }}</p>
+    <p><strong>Category:</strong> {{ recipe[5] }}</p>
     <p><strong>Website:</strong> {{ recipe[6] }}</p>
-    <p><strong>Recipelink:</strong> {{ recipe[9] }}</p>
+    <p><strong>Recipelink:</strong> {{ recipe[7] }}</p>
   </div>
 
 </div>
