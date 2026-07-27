@@ -229,10 +229,12 @@ h4 {
 }
 
 .about-section{
-  font-family: inherit;
-  font-size: 50px;
+    display: flex;
+    padding-top: 0;
+    align-items: flex-start; 
+    margin-right: 360px; 
 }
 
-.about-title{
-  font-size: 30px;
+.about-title h2{
+  font-size: 400px;
 }
