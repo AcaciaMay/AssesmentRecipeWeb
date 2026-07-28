@@ -240,11 +240,18 @@ h4 {
     display: flex;
     padding-top: 0;
     align-items: flex-start; 
-    margin-right: 360px; 
+    margin-right: 0px; 
 }
 
-.about-title h5 {
-    font-size: 30px;
+.about-container h5 {
+    font-size: 40px;
+    font-family: 'Lora', serif;
+    color: #000000;      
+    margin: 0;
+}
+
+.about-container p {
+    font-size: 15px;
     font-family: 'Lora', serif;
     color: #000000;      
     margin: 0;

@@ -1,13 +1,14 @@
-{% extends "home.html" %}
-
-<header class="header.section">
-    <div class="main-title">
-        <h1>RecipeWeb</h1>
-    </div>
-</header>
-
-
-
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RecipeWeb</title>
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/5/w3.css">   
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Alice">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
 <header class="header-section"style="margin-right: 360px; margin-top: 0px; background-color: #5e244e;">
     <div class="main-title" style="margin-right: 360px;">
         <h1>RecipeWeb</h1> 
@@ -50,9 +51,215 @@
   </div>
   <h5>About Us Page</h5>
   <div class="about-section">
-  <p>RecipeWeb is a recipe search engine that can provide helpful suggestions for meals based on the ingredients you have available in your pantry.</p>
+  <ul>
+    <p>RecipeWeb is a recipe search engine that can provide helpful suggestions for meals based on the ingredients you have available in your pantry.</p>
+     </ul>
+      <ul>
   <p>With easy simple filtering tools you can find a recipe that is that is perfect for you. Any type of meal, any kind of ingredients and any amount of time.</p>
+  </ul>
 </div>
 </div>
 </body>
+        
+        <!-- Change this line to remove inline styles -->
+    <div class="sidebar">
+        <h2>Pantry</h2>
+
+        <form action="/search" method="GET" class="nav-search-form">
+            <input type="text" name="query" placeholder="Search recipes..." class="nav-search">
+        </form>
+    
+
+
+        <div class="dropdown">
+            <button class="nav-button dropdown-trigger">Common ▾</button>
+            <div class="dropdown-content">
+                <div class="filter-bar">
+                    {% for meal in categories %}
+                        <a href="{{ url_for('home', common=meal) }}" 
+                           class="filter-pill {% if meal == selected_common %}active{% endif %}">
+                            {{ meal }}
+                        </a>
+                    {% endfor %}
+                    
+                    {% if selected_common %}
+                        <a href="{{ url_for('home') }}" class="clear-link">Clear Filter</a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+
+        <div class="dropdown">
+            <button class="nav-button dropdown-trigger">Vegetables ▾</button>
+            <div class="dropdown-content">
+                <div class="filter-bar">
+                    {% for meal in categories %}
+                        <a href="{{ url_for('home', category=meal) }}" 
+                           class="filter-pill {% if meal == selected_category %}active{% endif %}">
+                            {{ meal }}
+                        </a>
+                    {% endfor %}
+                    
+                    {% if selected_category %}
+                        <a href="{{ url_for('home') }}" class="clear-link">Clear Filter</a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+
+    <div class="dropdown">
+            <button class="nav-button dropdown-trigger">Meats ▾</button>
+            <div class="dropdown-content">
+                <div class="filter-bar">
+                    {% for meal in categories %}
+                        <a href="{{ url_for('home', category=meal) }}" 
+                           class="filter-pill {% if meal == selected_category %}active{% endif %}">
+                            {{ meal }}
+                        </a>
+                    {% endfor %}
+                    
+                    {% if selected_category %}
+                        <a href="{{ url_for('home') }}" class="clear-link">Clear Filter</a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+
+<div class="dropdown">
+            <button class="nav-button dropdown-trigger">Dairy ▾</button>
+            <div class="dropdown-content">
+                <div class="filter-bar">
+                    {% for meal in categories %}
+                        <a href="{{ url_for('home', category=meal) }}" 
+                           class="filter-pill {% if meal == selected_category %}active{% endif %}">
+                            {{ meal }}
+                        </a>
+                    {% endfor %}
+                    
+                    {% if selected_category %}
+                        <a href="{{ url_for('home') }}" class="clear-link">Clear Filter</a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+
+        <div class="dropdown">
+            <button class="nav-button dropdown-trigger">Baking ▾</button>
+            <div class="dropdown-content">
+                <div class="filter-bar">
+                    {% for meal in categories %}
+                        <a href="{{ url_for('home', category=meal) }}" 
+                           class="filter-pill {% if meal == selected_category %}active{% endif %}">
+                            {{ meal }}
+                        </a>
+                    {% endfor %}
+                    
+                    {% if selected_category %}
+                        <a href="{{ url_for('home') }}" class="clear-link">Clear Filter</a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+
+<div class="dropdown">
+            <button class="nav-button dropdown-trigger">Fruits ▾</button>
+            <div class="dropdown-content">
+                <div class="filter-bar">
+                    {% for meal in categories %}
+                        <a href="{{ url_for('home', category=meal) }}" 
+                           class="filter-pill {% if meal == selected_category %}active{% endif %}">
+                            {{ meal }}
+                        </a>
+                    {% endfor %}
+                    
+                    {% if selected_category %}
+                        <a href="{{ url_for('home') }}" class="clear-link">Clear Filter</a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+
+        <div class="dropdown">
+            <button class="nav-button dropdown-trigger">Mushrooms ▾</button>
+            <div class="dropdown-content">
+                <div class="filter-bar">
+                    {% for meal in categories %}
+                        <a href="{{ url_for('home', category=meal) }}" 
+                           class="filter-pill {% if meal == selected_category %}active{% endif %}">
+                            {{ meal }}
+                        </a>
+                    {% endfor %}
+                    
+                    {% if selected_category %}
+                        <a href="{{ url_for('home') }}" class="clear-link">Clear Filter</a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+
+<div class="dropdown">
+            <button class="nav-button dropdown-trigger">Herbs ▾</button>
+            <div class="dropdown-content">
+                <div class="filter-bar">
+                    {% for meal in categories %}
+                        <a href="{{ url_for('home', category=meal) }}" 
+                           class="filter-pill {% if meal == selected_category %}active{% endif %}">
+                            {{ meal }}
+                        </a>
+                    {% endfor %}
+                    
+                    {% if selected_category %}
+                        <a href="{{ url_for('home') }}" class="clear-link">Clear Filter</a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+
+<div class="dropdown">
+            <button class="nav-button dropdown-trigger">Nuts and Grains ▾</button>
+            <div class="dropdown-content">
+                <div class="filter-bar">
+                    {% for meal in categories %}
+                        <a href="{{ url_for('home', category=meal) }}" 
+                           class="filter-pill {% if meal == selected_category %}active{% endif %}">
+                            {{ meal }}
+                        </a>
+                    {% endfor %}
+                    
+                    {% if selected_category %}
+                        <a href="{{ url_for('home') }}" class="clear-link">Clear Filter</a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+
+<div class="dropdown">
+            <button class="nav-button dropdown-trigger">Miscellaneous ▾</button>
+            <div class="dropdown-content">
+                <div class="filter-bar">
+                    {% for meal in categories %}
+                        <a href="{{ url_for('home', category=meal) }}" 
+                           class="filter-pill {% if meal == selected_category %}active{% endif %}">
+                            {{ meal }}
+                        </a>
+                    {% endfor %}
+                    
+                    {% if selected_category %}
+                        <a href="{{ url_for('home') }}" class="clear-link">Clear Filter</a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        </div> <!-- Close sidebar -->
+</div> <!-- Close main-wrapper -->
+</body> <!-- Don't forget your closing tags -->
+</html>
+
+</div>
+</div>
+</body>
+</html>
+
+
+
 
