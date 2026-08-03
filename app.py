@@ -612,6 +612,7 @@ def search():
 
 @app.route("/recipes/<recipeid>")
 def recipe_detail(id):
+    return render_template("recipe_detail.html", recipeid=id)
     sql = """
         SELECT 
             Title,
