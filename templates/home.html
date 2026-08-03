@@ -83,10 +83,10 @@
             <button class="nav-button dropdown-trigger">Common ▾</button>
             <div class="dropdown-content">
                 <div class="filter-bar">
-                    {% for ingredient in common_ingredient %}
-                        <a href="{{ url_for('home', common=ingredient) }}" 
+                    {% for ingredients in common_ingredients %}
+                        <a href="{{ url_for('home', common=ingredients) }}" 
                            class="filter-pill {% if ingredients == selected_common %}active{% endif %}">
-                            {{ ingredient }}
+                            {{ ingredients }}
                         </a>
                     {% endfor %}
                     
