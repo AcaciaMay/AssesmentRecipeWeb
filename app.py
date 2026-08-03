@@ -627,7 +627,7 @@ def recipe_detail(id):
     recipe = query_db(sql, (id,), one=True)
     if not recipe:
         abort(404)
-    return render_template("recipes.html", recipe=recipe)
+    return render_template("recipe.html", recipe=recipe)
 
 
 

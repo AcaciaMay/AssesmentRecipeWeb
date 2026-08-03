@@ -2,33 +2,7 @@
 {% block body %}
 
 
- <nav class="navbar">
-  <div class="nav-links">
-    <a href="/" class="nav-button">Home</a>
-    <a href="/about" class="nav-button">About</a>
-        <form method="GET" action="/" class="nav-form">
-    <select name="category" class="nav-select" onchange="this.form.submit()">
-        <option value="" disabled selected hidden>Meal Type</option>
-            <option value="Breakfast">Breakfast</option>
-            <option value="Brunch">Brunch</option>
-            <option value="Lunch">Lunch</option>
-            <option value="Afternoon Tea">Afternoon Tea</option>
-            <option value="Dinner">Dinner</option>
-            <option value="Dessert">Dessert</option>
-            {% for category in categories %}
-                <option value="{{ category['Category'] }}" {% if category['Category'] == selected_category %}selected{% endif %}>
-                    {{ category['Category'] }}
-                </option>
-            {% endfor %}
-        </select>
-    </form>
-
-
-  <form action="/search" method="GET" class="nav-search-form">
-    <input type="text" name="query" placeholder="Search recipes..." class="nav-search">
-    
-  </form>
-</nav>
+ 
 
 <div class="recipe-container">
     <img src="{{ url_for('static', filename=recipe[6]) }}" alt="{{ recipe[0] }}" class="recipe-cover">
