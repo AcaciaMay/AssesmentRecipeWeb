@@ -192,6 +192,10 @@ body {
   cursor: pointer;
 }
 
+h4 {
+  font-size: 20px;
+}
+
 h6 {
   font-size: 20px;
 }
