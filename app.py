@@ -601,7 +601,7 @@ def search():
             Image,
             Ingredients
         FROM Recipes
-        WHERE LOWER(Title) LIKE ? OR LOWER(Creator) LIKE ?
+        WHERE LOWER(Title) LIKE ? OR LOWER(Ingredients) LIKE ?
         ORDER BY Title ASC;
     """
     like_query = f"%{query}%"
