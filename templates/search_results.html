@@ -37,29 +37,30 @@
 </body>
 </html>
 
-<h3>Search Results for "{{ query }}"</h3>
+<h6>Search Results for "{{ query }}"</h6>
 
-{% if results %}
-  <div class="recipe-section">
-    {% for recipe in results %}
-      <a href="{{ url_for('recipe_detail', recipe=recipe[1]) }}" class="recipe-card-link">
-        <div class="recipe-card">
-          <div class="recipe-image"> 
-            <img src="{{ url_for('static', filename=recipe[7]) }}" alt="Cover of {{ recipe[4] }}">
-          </div>
-          <div class="recipe-info">
-            <h3 class="recipe-title">{{ recipe[1] }}</h3>
-            <p><strong>Ingredients:</strong> {{ recipe[4] }}</p>
-            <p><strong>Creator:</strong> {{ recipe[2] }}</p>
+<div class="main-wrapper">
+    <div class="content-area">
+        <div class="recipe-section">
+            {% for recipe in recipes %}
+            <a href="{{ url_for('recipe_detail', recipeid=recipe['RecipeID']) }}" class="recipe-card-link">
+                <div class="recipe-container">
+                    <div class="recipe-title">
+                        <h4>{{ recipe['Title'] }}</h4> 
+                    </div>
+                    <div class="recipe-image">
+                        <!-- Ensure recipe['Image'] evaluates to just the filename string -->
+                        <img src="{{ url_for('static', filename=recipe['Image']) }}" alt="Recipe Image">
+                    </div>
+                    <div class="recipe-info">
+                        <p><strong>Ingredients:</strong> {{ recipe['Ingredients'] }}</p>
+                            <p><strong>Creator:</strong> {{ recipe[2] }}</p>
             <p><strong>Website:</strong> {{ recipe[6] }}</p>
-    
-          </div>
+                    </div>
+                </div>
+            </a> 
+            {% endfor %}
         </div>
-      </a>
-    {% endfor %}
-  </div>
-{% else %}
-  <p>No recipes found.</p>
-{% endif %}
-
+    </div>
+</div> 
 {% endblock %}
