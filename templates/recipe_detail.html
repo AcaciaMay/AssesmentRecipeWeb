@@ -2,7 +2,7 @@
 {% block body %}
 <div style="display: flex; gap: 2rem; align-items: flex-start; padding: 2rem; flex-wrap: wrap;">
 
-   <a href="{{ url_for('recipe_detail', id=recipe['ID']) }}" class="recipe-card-link"></a>
+   <a href="{{ url_for('recipe_detail', recipeid=recipe['RecipeID']) }}" class="recipe-card-link"></a>
 
   <!-- Main Info -->
   <div style="flex: 2; min-width: 300px;">
