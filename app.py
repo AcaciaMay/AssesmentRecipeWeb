@@ -622,7 +622,7 @@ def recipe_detail(recipeid):
             Website,
             RecipeLink
         FROM Recipes
-        WHERE ID = ?
+        WHERE RecipeID = ?
     """
     recipe = query_db(sql, (recipeid,), one=True)
     if not recipe:
@@ -638,7 +638,7 @@ def recipe_by_id(recipeid):
     sql = """
         SELECT Title, Creator, Image, Ingredients, Category, Website, Recipelink
         FROM Recipes
-        WHERE ID = ?;
+        WHERE RecipeID = ?;
     """
     result = query_db(sql, [recipeid], one=True)
     if result is None:
