@@ -1,42 +1,6 @@
 {% extends "home.html" %}
 
-
-
-  <body>
-<nav class="navbar" style="margin-right: 360px;">
-    <div class="nav-links">
-        <a href="/" class="nav-button">Home</a>
-        <a href="/about" class="nav-button">About</a>
-        
-        
-        <div class="dropdown" >
-            <button class="nav-button dropdown-trigger">Meal Types ▾</button>
-            <div class="dropdown-content">
-                <div class="filter-bar">
-                    {% for meal in categories %}
-                        <a href="{{ url_for('home', category=meal) }}" 
-                           class="filter-pill {% if meal == selected_category %}active{% endif %}">
-                            {{ meal }}
-                        </a>
-                    {% endfor %}
-                    
-                    {% if selected_category %}
-                        <a href="{{ url_for('home') }}" class="clear-link">Clear Filter</a>
-                    {% endif %}
-                </div>
-            </div>
-        </div>
-
-        
-
-    <form method="GET" action="{{ url_for('search') }}" class="nav-form">
-        <input type="text" name="q" class="nav-input" placeholder="Search for a book..." required>
-    </form>
-
-
-
-</html>
-
+{% block content %} {# Make sure your home.html has a matching {% block content %} tag #}
 <h3>Search Results for "{{ query }}"</h3>
 
 <div class="main-wrapper">
@@ -49,17 +13,18 @@
                         <h4>{{ recipe['Title'] }}</h4> 
                     </div>
                     <div class="recipe-image">
-                        <img src="{{ url_for('static', filename=recipe['Image']) }}" alt="Recipe Image">
+                        <img src="{{ url_for('static', filename=recipe['Image']) }}" alt="{{ recipe['Title'] }}">
                     </div>
                     <div class="recipe-info">
                         <p><strong>Ingredients:</strong> {{ recipe['Ingredients'] }}</p>
-                            <p><strong>Creator:</strong> {{ recipe[2] }}</p>
-            <p><strong>Website:</strong> {{ recipe[6] }}</p>
+                        <p><strong>Creator:</strong> {{ recipe['Creator'] }}</p>
                     </div>
                 </div>
             </a> 
-          </body>
+            {% else %}
+                <p>No recipes found matching your search.</p>
             {% endfor %}
         </div>
     </div>
-  </div>
+</div>
+{% endblock %}

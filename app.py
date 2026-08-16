@@ -592,10 +592,12 @@ def about():
 
 @app.route("/search", methods=["GET"])
 def search():
-    query = request.args.get("q", "").lower()
+    # Changed "q" to "query" to match your HTML input name field
+    query = request.args.get("query", "").lower()
+    
     sql = """
         SELECT 
-            ROW_NUMBER() OVER (ORDER BY Title ASC) AS RowNum,
+            RecipeID,
             Title,
             Creator,
             Image,
@@ -606,8 +608,7 @@ def search():
     """
     like_query = f"%{query}%"
     results = query_db(sql, (like_query, like_query))
-    return render_template("search_results.html", results=results, query=query)
-
+    return render_template("search_results.html", recipes=results, query=query)
 
 
 @app.route("/recipes/<recipeid>")
@@ -642,7 +643,7 @@ def recipe_by_id(recipeid):
     """
     result = query_db(sql, [recipeid], one=True)
     if result is None:
-        return "Recipe not found", 404
+        return render_template('error.html'), 404
     return render_template("recipe.html", recipe=result)
 
 
