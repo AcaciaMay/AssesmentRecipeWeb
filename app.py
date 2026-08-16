@@ -592,9 +592,8 @@ def about():
 
 @app.route("/search", methods=["GET"])
 def search():
-    # Changed "q" to "query" to match your HTML input name field
-    query = request.args.get("query", "").lower()
-    
+    query = request.args.get("query", "").strip()
+
     sql = """
         SELECT 
             RecipeID,
@@ -603,11 +602,16 @@ def search():
             Image,
             Ingredients
         FROM Recipes
-        WHERE LOWER(Title) LIKE ? OR LOWER(Ingredients) LIKE ?
-        ORDER BY Title ASC;
+        WHERE Title LIKE ? OR Ingredients LIKE ?
+        ORDER BY 
+            CASE WHEN Title LIKE ? THEN 0 ELSE 1 END ASC,
+            Title ASC;
     """
-    like_query = f"%{query}%"
-    results = query_db(sql, (like_query, like_query))
+    
+    like_anywhere = f"%{query}%"
+    like_start = f"{query}%" 
+    results = query_db(sql, (like_anywhere, like_anywhere, like_start))
+    
     return render_template("search_results.html", recipes=results, query=query)
 
 
