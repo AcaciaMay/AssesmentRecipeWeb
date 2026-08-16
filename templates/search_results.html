@@ -1,30 +1,26 @@
 {% extends "home.html" %}
 
-{% block content %} {# Make sure your home.html has a matching {% block content %} tag #}
+{% block content %}
 <h3>Search Results for "{{ query }}"</h3>
 
-<div class="main-wrapper">
-    <div class="content-area">
-        <div class="recipe-section">
-            {% for recipe in recipes %}
-            <a href="{{ url_for('recipe_detail', recipeid=recipe['RecipeID']) }}" class="recipe-card-link">
-                <div class="recipe-container">
-                    <div class="recipe-title">
-                        <h4>{{ recipe['Title'] }}</h4> 
-                    </div>
-                    <div class="recipe-image">
-                        <img src="{{ url_for('static', filename=recipe['Image']) }}" alt="{{ recipe['Title'] }}">
-                    </div>
-                    <div class="recipe-info">
-                        <p><strong>Ingredients:</strong> {{ recipe['Ingredients'] }}</p>
-                        <p><strong>Creator:</strong> {{ recipe['Creator'] }}</p>
-                    </div>
-                </div>
-            </a> 
-            {% else %}
-                <p>No recipes found matching your search.</p>
-            {% endfor %}
+<div class="recipe-section">
+    {% for recipe in recipes %}
+    <a href="{{ url_for('recipe_detail', recipeid=recipe['RecipeID']) }}" class="recipe-card-link">
+        <div class="recipe-container">
+            <div class="recipe-title">
+                <h4>{{ recipe['Title'] }}</h4> 
+            </div>
+            <div class="recipe-image">
+                <img src="{{ url_for('static', filename=recipe['Image']) }}" alt="{{ recipe['Title'] }}">
+            </div>
+            <div class="recipe-info">
+                <p><strong>Ingredients:</strong> {{ recipe['Ingredients'] }}</p>
+                <p><strong>Creator:</strong> {{ recipe['Creator'] }}</p>
+            </div>
         </div>
-    </div>
+    </a> 
+    {% else %}
+        <p class="no-results">No recipes found matching your criteria. Try different ingredients!</p>
+    {% endfor %}
 </div>
 {% endblock %}
