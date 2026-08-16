@@ -35,47 +35,6 @@ def get_unique_categories():
     return sorted(list(category_set))
 
 
-
-@app.route("/")
-def home():
-    category = request.args.get("category", "")
-    
-    
-    categories = get_unique_categories()
-
-    
-    base_select = """
-        SELECT RowNum, Title, Creator, Image, Ingredients, Category, Website 
-        FROM (SELECT ROW_NUMBER() OVER (ORDER BY Title ASC) AS RowNum, 
-              Title, Creator, Image, Ingredients, Category, Website 
-              FROM Recipes)
-    """
-
-    if category:
-        
-        sql = base_select + " WHERE Category LIKE ?"
-        recipes = query_db(sql, (f"%{category}%",))
-    else:
-        recipes = query_db(base_select)
-
-    return render_template(
-        "home.html", 
-        recipes=recipes, 
-        categories=categories, 
-        selected_category=category
-        )
-
-@app.route("/category/<category>")
-def filter_by_category(category):
-    categories = get_unique_categories()
-    recipes_data = query_db("SELECT * FROM Recipes")
-    return render_template(
-        "filtered_recipes.html",
-        recipes=recipes_data,
-        categories=categories,
-        selected_category=category
-)
-
 def get_unique_common():
     """Fetches, splits, and deduplicates common ingredients from the DB."""
     raw_data = query_db("SELECT DISTINCT Common FROM Pantry WHERE Common IS NOT NULL")
@@ -85,50 +44,6 @@ def get_unique_common():
         parts = [p.strip() for p in row['Common'].split(',')]
         common_set.update(parts)
     return sorted(list(common_set))
-
-@app.route("/filter-common")
-def filter_by_common():
-    # 1. Fetch all unique common ingredients for the dropdown checklist
-    common_ingredients_list = get_unique_common()
-    
-    # 2. Get the list of selected ingredients from the form checkbox parameters
-    selected_commons = request.args.getlist("common")
-    
-    if selected_commons:
-        # Create a dynamic matching score clause: (CASE WHEN Ingredients LIKE ? THEN 1 ELSE 0 END) + ...
-        match_score_clauses = " + ".join(["(CASE WHEN Ingredients LIKE ? THEN 1 ELSE 0 END)" for _ in selected_commons])
-        
-        sql = f"""
-            SELECT RowNum, Title, Creator, Image, Ingredients, Category, Website,
-                   ({match_score_clauses}) AS MatchCount
-            FROM (
-                SELECT ROW_NUMBER() OVER (ORDER BY Title ASC) AS RowNum, 
-                       Title, Creator, Image, Ingredients, Category, Website 
-                FROM Recipes
-            )
-            WHERE { " OR ".join(["Ingredients LIKE ?" for _ in selected_commons]) }
-            ORDER BY MatchCount DESC, Title ASC
-        """
-        query_params = [f"%{item}%" for item in selected_commons] * 2
-        pantry = query_db(sql, tuple(query_params))
-    else:
-        # Fallback if the user clicks "Apply Filter" without choosing anything
-        sql = """
-            SELECT ROW_NUMBER() OVER (ORDER BY Title ASC) AS RowNum, 
-                   Title, Creator, Image, Ingredients, Category, Website 
-            FROM Recipes
-            ORDER BY Title ASC
-        """
-        pantry = query_db(sql)
-
-    # Return your template (make sure it points to the page where your results loop is rendered)
-    return render_template(
-        "home.html", 
-        pantry=pantry,
-        common_ingredients=common_ingredients_list,
-        selected_commons=selected_commons
-    )
-
 
 
 def get_unique_vegetables():
@@ -142,96 +57,17 @@ def get_unique_vegetables():
     return sorted(list(vegetables_set))
 
 
-@app.route("/vegetables")
-def function2(vegetables):
-    vegetables = request.args.get("vegetables", "")
-    
-    
-    vegetables = get_unique_vegetables()
 
-    
-    base_select = """
-        SELECT RowNum, Title, Creator, Image, Ingredients, Category, Website 
-        FROM (SELECT ROW_NUMBER() OVER (ORDER BY Title ASC) AS RowNum, 
-              Title, Creator, Image, Ingredients, Category, Website 
-              FROM Recipes)
-    """
-
-    if vegetables:
-        
-        sql = base_select + " WHERE Vegetables LIKE ?"
-        pantry = query_db(sql, (f"%{vegetables}%",))
-    else:
-        pantry = query_db(base_select)
-
-    return render_template(
-        "home.html", 
-        pantry=pantry,
-        vegetables=vegetables,
-        selected_vegetables=vegetables)
-
-@app.route("/vegetables/<vegetables>")
-def filter_by_vegetables(vegetables):
-    vegetables_items = get_unique_vegetables()
-    recipes_data = query_db("SELECT * FROM Recipes")
-    return render_template(
-        "filtered_recipes.html",
-        recipes=recipes_data,
-        vegetables=vegetables_items,
-        selected_vegetables=vegetables
-)
-
-
-
-def get_unique_meat():
+def get_unique_meats():
     """Fetches, splits, and deduplicates meat ingredients from the DB."""
-    raw_data = query_db("SELECT DISTINCT Meat FROM Pantry WHERE Meat IS NOT NULL")
-    Meat_set = set()
+    raw_data = query_db("SELECT DISTINCT Meats FROM Pantry WHERE Meats IS NOT NULL")
+    Meats_set = set()
     for row in raw_data:
         
-        parts = [p.strip() for p in row['Meat'].split(',')]
-        Meat_set.update(parts)
-    return sorted(list(Meat_set))
+        parts = [p.strip() for p in row['Meats'].split(',')]
+        Meats_set.update(parts)
+    return sorted(list(Meats_set))
 
-
-@app.route("/meat")
-def function3(meat):
-    meat = request.args.get("meat", "")
-    
-    
-    meat = get_unique_meat()
-
-    
-    base_select = """
-        SELECT RowNum, Title, Creator, Image, Ingredients, Category, Website 
-        FROM (SELECT ROW_NUMBER() OVER (ORDER BY Title ASC) AS RowNum, 
-              Title, Creator, Image, Ingredients, Category, Website 
-              FROM Recipes)
-    """
-
-    if meat:
-        
-        sql = base_select + " WHERE Meat LIKE ?"
-        pantry = query_db(sql, (f"%{meat}%",))
-    else:
-        pantry = query_db(base_select)
-
-    return render_template(
-        "home.html", 
-        pantry=pantry,
-        meat=meat,
-        selected_meat=meat)
-
-@app.route("/meat/<meat>")
-def filter_by_meat(meat):
-    meat_items = get_unique_meat()
-    recipes_data = query_db("SELECT * FROM Recipes")
-    return render_template(
-        "filtered_recipes.html",
-        recipes=recipes_data,
-        meat=meat_items,
-        selected_meat=meat
-)
 
 
 def get_unique_dairy():
@@ -245,46 +81,6 @@ def get_unique_dairy():
     return sorted(list(dairy_set))
 
 
-@app.route("/dairy")
-def function4(dairy):
-    dairy = request.args.get("dairy", "")
-    
-    
-    dairy = get_unique_dairy()
-
-    
-    base_select = """
-        SELECT RowNum, Title, Creator, Image, Ingredients, Category, Website 
-        FROM (SELECT ROW_NUMBER() OVER (ORDER BY Title ASC) AS RowNum, 
-              Title, Creator, Image, Ingredients, Category, Website 
-              FROM Recipes)
-    """
-
-    if dairy:
-        
-        sql = base_select + " WHERE Dairy LIKE ?"
-        pantry = query_db(sql, (f"%{dairy}%",))
-    else:
-        pantry = query_db(base_select)
-
-    return render_template(
-        "home.html", 
-        pantry=pantry,
-        dairy=dairy,
-        selected_dairy=dairy)
-
-@app.route("/dairy/<dairy>")
-def filter_by_dairy(dairy):
-    dairy_items = get_unique_dairy()
-    recipes_data = query_db("SELECT * FROM Recipes")
-    return render_template(
-        "filtered_recipes.html",
-        recipes=recipes_data,
-        dairy=dairy_items,
-        selected_dairy=dairy
-)
-
-
 def get_unique_baking():
     """Fetches, splits, and deduplicates baking ingredients from the DB."""
     raw_data = query_db("SELECT DISTINCT Baking FROM Pantry WHERE Baking IS NOT NULL")
@@ -295,45 +91,6 @@ def get_unique_baking():
         baking_set.update(parts)
     return sorted(list(baking_set))
 
-
-@app.route("/baking")
-def function5(baking):
-    baking = request.args.get("baking", "")
-    
-    
-    baking_items = get_unique_baking()
-
-    
-    base_select = """
-        SELECT RowNum, Title, Creator, Image, Ingredients, Category, Website 
-        FROM (SELECT ROW_NUMBER() OVER (ORDER BY Title ASC) AS RowNum, 
-              Title, Creator, Image, Ingredients, Category, Website 
-              FROM Recipes)
-    """
-
-    if baking:
-        
-        sql = base_select + " WHERE Baking LIKE ?"
-        pantry = query_db(sql, (f"%{baking}%",))
-    else:
-        pantry = query_db(base_select)
-
-    return render_template(
-        "home.html", 
-        pantry=pantry,
-        baking=baking,
-        selected_baking=baking)
-
-@app.route("/baking/<baking>")
-def filter_by_baking(baking):
-    baking_items = get_unique_baking()
-    recipes_data = query_db("SELECT * FROM Recipes")
-    return render_template(
-        "filtered_recipes.html",
-        recipes=recipes_data,
-        baking=baking_items,
-        selected_baking=baking
-)
 
 
 def get_unique_fruits():
@@ -347,45 +104,6 @@ def get_unique_fruits():
     return sorted(list(fruits_set))
 
 
-@app.route("/fruits")
-def function6(fruits):
-    fruits = request.args.get("fruits", "")
-    
-    
-    fruits = get_unique_fruits()
-
-    
-    base_select = """
-        SELECT RowNum, Title, Creator, Image, Ingredients, Category, Website 
-        FROM (SELECT ROW_NUMBER() OVER (ORDER BY Title ASC) AS RowNum, 
-              Title, Creator, Image, Ingredients, Category, Website 
-              FROM Recipes)
-    """
-
-    if fruits:
-        
-        sql = base_select + " WHERE Fruits LIKE ?"
-        pantry = query_db(sql, (f"%{fruits}%",))
-    else:
-        pantry = query_db(base_select)
-
-    return render_template(
-        "home.html", 
-        pantry=pantry,
-        fruits=fruits,
-        selected_fruits=fruits)
-
-@app.route("/fruits/<fruits>")
-def filter_by_fruits(fruits):
-    fruits_items = get_unique_fruits()
-    recipes_data = query_db("SELECT * FROM Recipes")
-    return render_template(
-        "filtered_recipes.html",
-        recipes=recipes_data,
-        fruits=fruits_items,
-        selected_fruits=fruits
-)
-
 def get_unique_mushrooms():
     """Fetches, splits, and deduplicates mushroom ingredients from the DB."""
     raw_data = query_db("SELECT DISTINCT Mushrooms FROM Pantry WHERE Mushrooms IS NOT NULL")
@@ -397,45 +115,6 @@ def get_unique_mushrooms():
     return sorted(list(mushrooms_set))
 
 
-
-@app.route("/mushrooms")
-def function7(mushrooms):
-    mushrooms = request.args.get("mushrooms", "")
-    
-    
-    mushrooms = get_unique_mushrooms()
-
-    
-    base_select = """
-        SELECT RowNum, Title, Creator, Image, Ingredients, Category, Website 
-        FROM (SELECT ROW_NUMBER() OVER (ORDER BY Title ASC) AS RowNum, 
-              Title, Creator, Image, Ingredients, Category, Website 
-              FROM Recipes)
-    """
-
-    if mushrooms:
-        sql = base_select + " WHERE Mushrooms LIKE ?"
-        pantry = query_db(sql, (f"%{mushrooms}%",))
-    else:
-        pantry = query_db(base_select)
-
-    return render_template(
-        "home.html", 
-        pantry=pantry,
-        mushrooms=mushrooms,
-        selected_mushrooms=mushrooms)
-
-@app.route("/mushrooms/<mushrooms>")
-def filter_by_mushrooms(mushrooms):
-    mushrooms_items = get_unique_mushrooms()
-    recipes_data = query_db("SELECT * FROM Recipes")
-    return render_template(
-        "filtered_recipes.html",
-        recipes=recipes_data,
-        mushrooms=mushrooms_items,
-        selected_mushrooms=mushrooms
-)
-
 def get_unique_herbs():
     """Fetches, splits, and deduplicates herb ingredients from the DB."""
     raw_data = query_db("SELECT DISTINCT Herbs FROM Pantry WHERE Herbs IS NOT NULL")
@@ -446,117 +125,47 @@ def get_unique_herbs():
         herbs_set.update(parts)
     return sorted(list(herbs_set))
 
-
-@app.route("/herbs")
-def function8(herbs):
-    herbs = request.args.get("herbs", "")
-
-    
-    
-    herbs = get_unique_herbs()
-
-    
-    base_select = """
-        SELECT RowNum, Title, Creator, Image, Ingredients, Category, Website 
-        FROM (SELECT ROW_NUMBER() OVER (ORDER BY Title ASC) AS RowNum, 
-              Title, Creator, Image, Ingredients, Category, Website 
-              FROM Recipes)
-    """
-
-    if herbs:
-        
-        sql = base_select + " WHERE Herbs LIKE ?"
-        pantry = query_db(sql, (f"%{herbs}%",))
-    else:
-        pantry = query_db(base_select)
-
-    return render_template(
-        "home.html", 
-        pantry=pantry,
-        herbs=herbs,
-        selected_herbs=herbs)
-
-@app.route("/herbs/<herbs>")
-def filter_by_herbs(herbs):
-    herbs_items = get_unique_herbs()
-    recipes_data = query_db("SELECT * FROM Recipes")
-    return render_template(
-        "filtered_recipes.html",
-        recipes=recipes_data,
-        herbs=herbs_items,
-        selected_herbs=herbs
-)
-
-def get_unique_nuts_and_grains():
-    """Fetches, splits, and deduplicates nut and grain ingredients from the DB."""
-    raw_data = query_db("SELECT DISTINCT NutsAndGrains FROM Pantry WHERE NutsAndGrains IS NOT NULL")
-    nuts_and_grains_set = set()
+def get_unique_nuts_grains():
+    """Fetches, splits, and deduplicates nuts_grains safely from the DB."""
+    # FIX: Wrapped in square brackets so SQLite allows the '&' symbol
+    raw_data = query_db("SELECT DISTINCT [Nuts_Grains] FROM Pantry WHERE [Nuts_Grains] IS NOT NULL")
+    nuts_grains_set = set()
     for row in raw_data:
-        
-        parts = [p.strip() for p in row['NutsAndGrains'].split(',')]
-        nuts_and_grains_set.update(parts)
-    return sorted(list(nuts_and_grains_set))
+        # FIX: Matches the exact column string wrapper key name
+        parts = [p.strip() for p in row['Nuts_Grains'].split(',')]
+        nuts_grains_set.update(parts)
+    return sorted(list(nuts_grains_set))
 
 
-@app.route("/nuts-and-grains")
-def function9(nuts_and_grains):
-    nuts_and_grains = request.args.get("nuts_and_grains", "")
-
-    
-    
-    nuts_and_grains = get_unique_nuts_and_grains()
-
-    
-    base_select = """
-        SELECT RowNum, Title, Creator, Image, Ingredients, Category, Website 
-        FROM (SELECT ROW_NUMBER() OVER (ORDER BY Title ASC) AS RowNum, 
-              Title, Creator, Image, Ingredients, Category, Website 
-              FROM Recipes)
-    """
-
-    if nuts_and_grains:
-        
-        sql = base_select + " WHERE NutsAndGrains LIKE ?"
-        pantry = query_db(sql, (f"%{nuts_and_grains}%",))
-    else:
-        pantry = query_db(base_select)
-
-    return render_template(
-        "home.html", 
-        pantry=pantry,
-        nuts_and_grains=nuts_and_grains,
-        selected_nuts_and_grains=nuts_and_grains)
-
-@app.route("/nuts-and-grains/<nuts_and_grains>")
-def filter_by_nuts_and_grains(nuts_and_grains):
-    nuts_and_grains_items = get_unique_nuts_and_grains()
-    recipes_data = query_db("SELECT * FROM Recipes")
-    return render_template(
-        "filtered_recipes.html",
-        recipes=recipes_data,
-        nuts_and_grains=nuts_and_grains_items,
-        selected_nuts_and_grains=nuts_and_grains
-)
 
 def get_unique_miscellaneous():
-    """Fetches, splits, and deduplicates miscellaneous ingredients from the DB."""
-    raw_data = query_db("SELECT DISTINCT Miscellaneous FROM Pantry WHERE Miscellaneous IS NOT NULL")
-    miscellaneous_set = set()
+    """Fetches, splits, and deduplicates miscellaneous ingredients safely from the DB."""
+    raw_data = query_db("SELECT DISTINCT [Miscellaneous] FROM Pantry WHERE [Miscellaneous] IS NOT NULL")
+    misc_set = set()
     for row in raw_data:
-        
         parts = [p.strip() for p in row['Miscellaneous'].split(',')]
-        miscellaneous_set.update(parts)
-    return sorted(list(miscellaneous_set))
+        misc_set.update(parts)
+    return sorted(list(misc_set))
 
 
-@app.route("/miscellaneous")
-def function10(miscellaneous):
-    miscellaneous = request.args.get("miscellaneous", "")
 
+@app.route("/")
+def home():
+    category = request.args.get("category", "")
+    categories = get_unique_categories()
     
-    
-    miscellaneous = get_unique_miscellaneous()
-
+    # Pre-populate all the multi-select lists for your dropdown menus
+    dropdown_data = {
+        "common_ingredients": get_unique_common(),
+        "vegetables": get_unique_vegetables(),
+        "meats": get_unique_meats(),
+        "dairy": get_unique_dairy(),
+        # New functions matching your database screenshot names:
+        "mushrooms": get_unique_mushrooms(),
+        "herbs": get_unique_herbs(),
+        "nuts_grains": get_unique_nuts_grains(),
+        "miscellaneous": get_unique_miscellaneous()
+    }
     
     base_select = """
         SELECT RowNum, Title, Creator, Image, Ingredients, Category, Website 
@@ -565,28 +174,73 @@ def function10(miscellaneous):
               FROM Recipes)
     """
 
-    if miscellaneous:
-        sql = base_select + " WHERE Miscellaneous LIKE ?"
-        pantry = query_db(sql, (f"%{miscellaneous}%",))
+    if category:
+        sql = base_select + " WHERE Category LIKE ?"
+        recipes = query_db(sql, (f"%{category}%",))
     else:
-        pantry = query_db(base_select)
+        recipes = query_db(base_select)
 
     return render_template(
         "home.html", 
-        pantry=pantry,
-        miscellaneous=miscellaneous,
-        selected_miscellaneous=miscellaneous)
+        recipes=recipes, 
+        categories=categories, 
+        selected_category=category,
+        dropdown_data=dropdown_data,
+        selected_ingredients=[] # Emptied on normal home load
+    )
 
-@app.route("/miscellaneous/<miscellaneous>")
-def filter_by_miscellaneous(miscellaneous):
-    miscellaneous_items = get_unique_miscellaneous()
-    recipes_data = query_db("SELECT * FROM Recipes")
+@app.route("/filter")
+def filter_recipes():
+    # Gather items checked across ANY of your dropdown filters
+    selected_ingredients = request.args.getlist("ingredient")
+    
+    if selected_ingredients:
+        # Build score clauses matching against the "Ingredients" column in your Recipes table
+        match_score_clauses = " + ".join(["(CASE WHEN Ingredients LIKE ? THEN 1 ELSE 0 END)" for _ in selected_ingredients])
+        where_clauses = " OR ".join(["Ingredients LIKE ?" for _ in selected_ingredients])
+        
+        sql = f"""
+            SELECT RowNum, Title, Creator, Image, Ingredients, Category, Website,
+                   ({match_score_clauses}) AS MatchCount
+            FROM (
+                SELECT ROW_NUMBER() OVER (ORDER BY Title ASC) AS RowNum, 
+                       Title, Creator, Image, Ingredients, Category, Website 
+                FROM Recipes
+            )
+            WHERE {where_clauses}
+            ORDER BY MatchCount DESC, Title ASC
+        """
+        query_params = [f"%{item}%" for item in selected_ingredients] * 2
+        recipes = query_db(sql, tuple(query_params))
+    else:
+        sql = """
+            SELECT ROW_NUMBER() OVER (ORDER BY Title ASC) AS RowNum, 
+                   Title, Creator, Image, Ingredients, Category, Website 
+            FROM Recipes
+            ORDER BY Title ASC
+        """
+        recipes = query_db(sql)
+
+    # Repopulate your side menus so they don't break on page load
+    dropdown_data = {
+        "common_ingredients": get_unique_common(),
+        "vegetables": get_unique_vegetables(),
+        "meats": get_unique_meats(),
+        "dairy": get_unique_dairy(),
+        "mushrooms": get_unique_mushrooms(),
+        "herbs": get_unique_herbs(),
+        "nuts&grains": get_unique_nuts_grains(),
+        "miscellaneous": get_unique_miscellaneous()
+    }
+
     return render_template(
-        "filtered_recipes.html",
-        recipes=recipes_data,
-        miscellaneous=miscellaneous_items,
-        selected_miscellaneous=miscellaneous
-)
+        "home.html", 
+        recipes=recipes, 
+        categories=get_unique_categories(), 
+        selected_category="",
+        dropdown_data=dropdown_data,
+        selected_ingredients=selected_ingredients
+    )
 
 
 

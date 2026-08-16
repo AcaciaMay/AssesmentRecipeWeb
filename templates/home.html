@@ -77,222 +77,202 @@
             <input type="text" name="query" placeholder="Search recipes..." class="nav-search">
         </form>
     
+<!-- Form wraps all dropdown controls completely -->
+<form action="{{ url_for('filter_recipes') }}" method="GET" id="filterForm">
 
+<!-- One master form wraps your entire filter layout system -->
+<form action="{{ url_for('filter_recipes') }}" method="GET" id="filterForm">
 
-    <div class="dropdown">
-    <button class="nav-button dropdown-trigger" type="button" onclick="toggleDropdown()">Common ▾</button>
-    <div class="dropdown-content" id="dropdownContent" style="display: none;">
+    <div class="filter-dropdowns-container" style="display: flex; gap: 15px; flex-wrap: wrap; margin-top: 10px;">
         
-        <!-- Updated action to point to the specific route function -->
-        <form action="{{ url_for('filter_by_common') }}" method="GET" id="filterForm">
-            <div class="filter-bar">
-                {% for ingredients in common_ingredients %}
-                    <label class="filter-pill-label">
-                        <input type="checkbox" name="common" value="{{ ingredients }}"
-                               class="hidden-checkbox"
-                               {% if ingredients in selected_commons %}checked{% endif %}
-                               onchange="this.parentElement.classList.toggle('active', this.checked)">
-                        <span class="filter-pill {% if ingredients in selected_commons %}active{% endif %}">
-                            {{ ingredients }}
-                        </span>
-                    </label>
-                {% endfor %}
+        <!-- 1. COMMON INGREDIENTS DROPDOWN -->
+        <div class="dropdown">
+            <button class="nav-button dropdown-trigger" type="button" onclick="toggleDropdown('commonMenu')">Common ▾</button>
+            <div class="dropdown-content" id="commonMenu" style="display: none;">
+                <div class="filter-bar">
+                    {% for item in dropdown_data.common_ingredients %}
+                        <label class="filter-pill-label">
+                            <input type="checkbox" name="ingredient" value="{{ item }}" class="hidden-checkbox"
+                                   {% if item in selected_ingredients %}checked{% endif %} onchange="autoSubmitFilter()">
+                            <span class="filter-pill {% if item in selected_ingredients %}active{% endif %}">{{ item }}</span>
+                        </label>
+                    {% endfor %}
+                </div>
             </div>
-            
-            <div class="dropdown-actions">
-                <button type="submit" class="apply-btn">Apply Filter</button>
-                {% if selected_commons %}
-                    <a href="{{ url_for('filter_by_common') }}" class="clear-link">Clear All</a>
-                {% endif %}
+        </div>
+
+        <!-- 2. VEGETABLES DROPDOWN -->
+        <div class="dropdown">
+            <button class="nav-button dropdown-trigger" type="button" onclick="toggleDropdown('vegMenu')">Vegetables ▾</button>
+            <div class="dropdown-content" id="vegMenu" style="display: none;">
+                <div class="filter-bar">
+                    {% for item in dropdown_data.vegetables %}
+                        <label class="filter-pill-label">
+                            <input type="checkbox" name="ingredient" value="{{ item }}" class="hidden-checkbox"
+                                   {% if item in selected_ingredients %}checked{% endif %} onchange="autoSubmitFilter()">
+                            <span class="filter-pill {% if item in selected_ingredients %}active{% endif %}">{{ item }}</span>
+                        </label>
+                    {% endfor %}
+                </div>
             </div>
-        </form>
+        </div>
+
+        <!-- 3. MEAT DROPDOWN -->
+        <div class="dropdown">
+            <button class="nav-button dropdown-trigger" type="button" onclick="toggleDropdown('meatMenu')">Meats ▾</button>
+            <div class="dropdown-content" id="meatMenu" style="display: none;">
+                <div class="filter-bar">
+                    {% for item in dropdown_data.meats %}
+                        <label class="filter-pill-label">
+                            <input type="checkbox" name="ingredient" value="{{ item }}" class="hidden-checkbox"
+                                   {% if item in selected_ingredients %}checked{% endif %} onchange="autoSubmitFilter()">
+                            <span class="filter-pill {% if item in selected_ingredients %}active{% endif %}">{{ item }}</span>
+                        </label>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+
+        <!-- 4. DAIRY DROPDOWN -->
+        <div class="dropdown">
+            <button class="nav-button dropdown-trigger" type="button" onclick="toggleDropdown('dairyMenu')">Dairy ▾</button>
+            <div class="dropdown-content" id="dairyMenu" style="display: none;">
+                <div class="filter-bar">
+                    {% for item in dropdown_data.dairy %}
+                        <label class="filter-pill-label">
+                            <input type="checkbox" name="ingredient" value="{{ item }}" class="hidden-checkbox"
+                                   {% if item in selected_ingredients %}checked{% endif %} onchange="autoSubmitFilter()">
+                            <span class="filter-pill {% if item in selected_ingredients %}active{% endif %}">{{ item }}</span>
+                        </label>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+
+        <!-- 5. MUSHROOMS DROPDOWN -->
+        <div class="dropdown">
+            <button class="nav-button dropdown-trigger" type="button" onclick="toggleDropdown('mushroomsMenu')">Mushrooms ▾</button>
+            <div class="dropdown-content" id="mushroomsMenu" style="display: none;">
+                <div class="filter-bar">
+                    {% for item in dropdown_data.mushrooms %}
+                        <label class="filter-pill-label">
+                            <input type="checkbox" name="ingredient" value="{{ item }}" class="hidden-checkbox"
+                                   {% if item in selected_ingredients %}checked{% endif %} onchange="autoSubmitFilter()">
+                            <span class="filter-pill {% if item in selected_ingredients %}active{% endif %}">{{ item }}</span>
+                        </label>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+
+        <!-- 6. HERBS DROPDOWN -->
+        <div class="dropdown">
+            <button class="nav-button dropdown-trigger" type="button" onclick="toggleDropdown('herbsMenu')">Herbs ▾</button>
+            <div class="dropdown-content" id="herbsMenu" style="display: none;">
+                <div class="filter-bar">
+                    {% for item in dropdown_data.herbs %}
+                        <label class="filter-pill-label">
+                            <input type="checkbox" name="ingredient" value="{{ item }}" class="hidden-checkbox"
+                                   {% if item in selected_ingredients %}checked{% endif %} onchange="autoSubmitFilter()">
+                            <span class="filter-pill {% if item in selected_ingredients %}active{% endif %}">{{ item }}</span>
+                        </label>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+
+        <!-- 7. NUTS & GRAINS DROPDOWN -->
+        <div class="dropdown">
+            <button class="nav-button dropdown-trigger" type="button" onclick="toggleDropdown('nutsGrainsMenu')">Nuts & Grains ▾</button>
+            <div class="dropdown-content" id="nutsGrainsMenu" style="display: none;">
+                <div class="filter-bar">
+                    {% for item in dropdown_data.nuts_grains %}
+                        <label class="filter-pill-label">
+                            <input type="checkbox" name="ingredient" value="{{ item }}" class="hidden-checkbox"
+                                   {% if item in selected_ingredients %}checked{% endif %} onchange="autoSubmitFilter()">
+                            <span class="filter-pill {% if item in selected_ingredients %}active{% endif %}">{{ item }}</span>
+                        </label>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+
+        <!-- 8. MISCELLANEOUS DROPDOWN -->
+        <div class="dropdown">
+            <button class="nav-button dropdown-trigger" type="button" onclick="toggleDropdown('miscMenu')">Miscellaneous ▾</button>
+            <div class="dropdown-content" id="miscMenu" style="display: none;">
+                <div class="filter-bar">
+                    {% for item in dropdown_data.miscellaneous %}
+                        <label class="filter-pill-label">
+                            <input type="checkbox" name="ingredient" value="{{ item }}" class="hidden-checkbox"
+                                   {% if item in selected_ingredients %}checked{% endif %} onchange="autoSubmitFilter()">
+                            <span class="filter-pill {% if item in selected_ingredients %}active{% endif %}">{{ item }}</span>
+                        </label>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+
     </div>
-</div>
 
-
-        <div class="dropdown">
-            <button class="nav-button dropdown-trigger">Vegetables ▾</button>
-            <div class="dropdown-content">
-                <div class="filter-bar">
-                    {% for meal in categories %}
-                        <a href="{{ url_for('home', category=meal) }}" 
-                           class="filter-pill {% if meal == selected_category %}active{% endif %}">
-                            {{ meal }}
-                        </a>
-                    {% endfor %}
-                    
-                    {% if selected_category %}
-                        <a href="{{ url_for('home') }}" class="clear-link">Clear Filter</a>
-                    {% endif %}
-                </div>
-            </div>
+    <!-- Active clear controller element -->
+    {% if selected_ingredients %}
+        <div class="global-filter-actions" style="margin-top: 15px;">
+            <a href="{{ url_for('home') }}" class="clear-link" style="color: white; text-decoration: underline;">Clear All Filters</a>
         </div>
+    {% endif %}
 
-    <div class="dropdown">
-            <button class="nav-button dropdown-trigger">Meats ▾</button>
-            <div class="dropdown-content">
-                <div class="filter-bar">
-                    {% for meal in categories %}
-                        <a href="{{ url_for('home', category=meal) }}" 
-                           class="filter-pill {% if meal == selected_category %}active{% endif %}">
-                            {{ meal }}
-                        </a>
-                    {% endfor %}
-                    
-                    {% if selected_category %}
-                        <a href="{{ url_for('home') }}" class="clear-link">Clear Filter</a>
-                    {% endif %}
-                </div>
-            </div>
+</form>
+
+        <!-- Continue with your other categories (Meat, Dairy, Nuts, etc.) using the same pattern -->
+    </div>
+
+    <!-- FIX: "Apply Filter" buttons have been completely removed. Only show the clear link if filters are active -->
+    {% if selected_ingredients %}
+        <div class="global-filter-actions">
+            <a href="{{ url_for('home') }}" class="clear-link">Clear All Filters</a>
         </div>
+    {% endif %}
 
-<div class="dropdown">
-            <button class="nav-button dropdown-trigger">Dairy ▾</button>
-            <div class="dropdown-content">
-                <div class="filter-bar">
-                    {% for meal in categories %}
-                        <a href="{{ url_for('home', category=meal) }}" 
-                           class="filter-pill {% if meal == selected_category %}active{% endif %}">
-                            {{ meal }}
-                        </a>
-                    {% endfor %}
-                    
-                    {% if selected_category %}
-                        <a href="{{ url_for('home') }}" class="clear-link">Clear Filter</a>
-                    {% endif %}
-                </div>
-            </div>
-        </div>
+</form>
 
-        <div class="dropdown">
-            <button class="nav-button dropdown-trigger">Baking ▾</button>
-            <div class="dropdown-content">
-                <div class="filter-bar">
-                    {% for meal in categories %}
-                        <a href="{{ url_for('home', category=meal) }}" 
-                           class="filter-pill {% if meal == selected_category %}active{% endif %}">
-                            {{ meal }}
-                        </a>
-                    {% endfor %}
-                    
-                    {% if selected_category %}
-                        <a href="{{ url_for('home') }}" class="clear-link">Clear Filter</a>
-                    {% endif %}
-                </div>
-            </div>
-        </div>
 
-<div class="dropdown">
-            <button class="nav-button dropdown-trigger">Fruits ▾</button>
-            <div class="dropdown-content">
-                <div class="filter-bar">
-                    {% for meal in categories %}
-                        <a href="{{ url_for('home', category=meal) }}" 
-                           class="filter-pill {% if meal == selected_category %}active{% endif %}">
-                            {{ meal }}
-                        </a>
-                    {% endfor %}
-                    
-                    {% if selected_category %}
-                        <a href="{{ url_for('home') }}" class="clear-link">Clear Filter</a>
-                    {% endif %}
-                </div>
-            </div>
-        </div>
+</form> <!-- 2. CLOSE THE FORM FIRST -->
 
-        <div class="dropdown">
-            <button class="nav-button dropdown-trigger">Mushrooms ▾</button>
-            <div class="dropdown-content">
-                <div class="filter-bar">
-                    {% for meal in categories %}
-                        <a href="{{ url_for('home', category=meal) }}" 
-                           class="filter-pill {% if meal == selected_category %}active{% endif %}">
-                            {{ meal }}
-                        </a>
-                    {% endfor %}
-                    
-                    {% if selected_category %}
-                        <a href="{{ url_for('home') }}" class="clear-link">Clear Filter</a>
-                    {% endif %}
-                </div>
-            </div>
-        </div>
+<script>
+// Automatically submits the form when a checkbox is checked or unchecked
+function autoSubmitFilter() {
+    document.getElementById("filterForm").submit();
+}
 
-<div class="dropdown">
-            <button class="nav-button dropdown-trigger">Herbs ▾</button>
-            <div class="dropdown-content">
-                <div class="filter-bar">
-                    {% for meal in categories %}
-                        <a href="{{ url_for('home', category=meal) }}" 
-                           class="filter-pill {% if meal == selected_category %}active{% endif %}">
-                            {{ meal }}
-                        </a>
-                    {% endfor %}
-                    
-                    {% if selected_category %}
-                        <a href="{{ url_for('home') }}" class="clear-link">Clear Filter</a>
-                    {% endif %}
-                </div>
-            </div>
-        </div>
+function toggleDropdown(menuId) {
+    const dropdown = document.getElementById(menuId);
+    
+    // Hide all other open dropdowns so they don't overlap awkwardly
+    document.querySelectorAll('.dropdown-content').forEach(el => {
+        if(el.id !== menuId) el.style.display = 'none';
+    });
 
-<div class="dropdown">
-            <button class="nav-button dropdown-trigger">Nuts and Grains ▾</button>
-            <div class="dropdown-content">
-                <div class="filter-bar">
-                    {% for meal in categories %}
-                        <a href="{{ url_for('home', category=meal) }}" 
-                           class="filter-pill {% if meal == selected_category %}active{% endif %}">
-                            {{ meal }}
-                        </a>
-                    {% endfor %}
-                    
-                    {% if selected_category %}
-                        <a href="{{ url_for('home') }}" class="clear-link">Clear Filter</a>
-                    {% endif %}
-                </div>
-            </div>
-        </div>
+    if (dropdown.style.display === "none" || dropdown.style.display === "") {
+        dropdown.style.display = "block";
+    } else {
+        dropdown.style.display = "none";
+    }
+}
 
-<div class="dropdown">
-            <button class="nav-button dropdown-trigger">Miscellaneous ▾</button>
-            <div class="dropdown-content">
-                <div class="filter-bar">
-                    {% for meal in categories %}
-                        <a href="{{ url_for('home', category=meal) }}" 
-                           class="filter-pill {% if meal == selected_category %}active{% endif %}">
-                            {{ meal }}
-                        </a>
-                    {% endfor %}
-                    
-                    {% if selected_category %}
-                        <a href="{{ url_for('home') }}" class="clear-link">Clear Filter</a>
-                    {% endif %}
-                </div>
-            </div>
-        </div>
-        </div> <!-- Close sidebar -->
-</div> <!-- Close main-wrapper -->
-<!-- ... Your existing HTML layout code ... -->
-
-    <script>
-        function toggleDropdown() {
-            const dropdown = document.getElementById("dropdownContent");
-            dropdown.style.display = dropdown.style.display === "none" ? "block" : "none";
-        }
-
-        window.onclick = function(event) {
-            if (!event.target.matches('.dropdown-trigger')) {
-                const dropdowns = document.getElementsByClassName("dropdown-content");
-                for (let i = 0; i < dropdowns.length; i++) {
-                    let openDropdown = dropdowns[i];
-                    if (openDropdown.style.display === "block" && !openDropdown.contains(event.target)) {
-                        openDropdown.style.display = "none";
-                    }
-                }
+// Close the dropdowns if a user clicks completely outside of them
+window.onclick = function(event) {
+    if (!event.target.matches('.dropdown-trigger')) {
+        document.querySelectorAll(".dropdown-content").forEach(openDropdown => {
+            if (openDropdown.style.display === "block" && !openDropdown.contains(event.target)) {
+                openDropdown.style.display = "none";
             }
-        }
-    </script>
+        });
+    }
+}
+</script>
+
+
 </body>
 </html>
 
