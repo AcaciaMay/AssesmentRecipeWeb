@@ -79,23 +79,36 @@
     
 
 
-        <div class="dropdown">
-            <button class="nav-button dropdown-trigger">Common ▾</button>
-            <div class="dropdown-content">
-                <div class="filter-bar">
-                    {% for ingredients in common_ingredients %}
-                        <a href="{{ url_for('home', common=ingredients) }}" 
-                           class="filter-pill {% if ingredients == selected_common %}active{% endif %}">
+    <div class="dropdown">
+    <button class="nav-button dropdown-trigger" type="button" onclick="toggleDropdown()">Common ▾</button>
+    <div class="dropdown-content" id="dropdownContent" style="display: none;">
+        
+        <!-- Updated action to point to the specific route function -->
+        <form action="{{ url_for('filter_by_common') }}" method="GET" id="filterForm">
+            <div class="filter-bar">
+                {% for ingredients in common_ingredients %}
+                    <label class="filter-pill-label">
+                        <input type="checkbox" name="common" value="{{ ingredients }}"
+                               class="hidden-checkbox"
+                               {% if ingredients in selected_commons %}checked{% endif %}
+                               onchange="this.parentElement.classList.toggle('active', this.checked)">
+                        <span class="filter-pill {% if ingredients in selected_commons %}active{% endif %}">
                             {{ ingredients }}
-                        </a>
-                    {% endfor %}
-                    
-                    {% if selected_common %}
-                        <a href="{{ url_for('home') }}" class="clear-link">Clear Filter</a>
-                    {% endif %}
-                </div>
+                        </span>
+                    </label>
+                {% endfor %}
             </div>
-        </div>
+            
+            <div class="dropdown-actions">
+                <button type="submit" class="apply-btn">Apply Filter</button>
+                {% if selected_commons %}
+                    <a href="{{ url_for('filter_by_common') }}" class="clear-link">Clear All</a>
+                {% endif %}
+            </div>
+        </form>
+    </div>
+</div>
+
 
         <div class="dropdown">
             <button class="nav-button dropdown-trigger">Vegetables ▾</button>
@@ -260,6 +273,29 @@
         </div>
         </div> <!-- Close sidebar -->
 </div> <!-- Close main-wrapper -->
+<!-- ... Your existing HTML layout code ... -->
+
+    <script>
+        function toggleDropdown() {
+            const dropdown = document.getElementById("dropdownContent");
+            dropdown.style.display = dropdown.style.display === "none" ? "block" : "none";
+        }
+
+        window.onclick = function(event) {
+            if (!event.target.matches('.dropdown-trigger')) {
+                const dropdowns = document.getElementsByClassName("dropdown-content");
+                for (let i = 0; i < dropdowns.length; i++) {
+                    let openDropdown = dropdowns[i];
+                    if (openDropdown.style.display === "block" && !openDropdown.contains(event.target)) {
+                        openDropdown.style.display = "none";
+                    }
+                }
+            }
+        }
+    </script>
+</body>
+</html>
+
 </body> <!-- Don't forget your closing tags -->
 </html>
 

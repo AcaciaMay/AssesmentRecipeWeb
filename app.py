@@ -86,45 +86,50 @@ def get_unique_common():
         common_set.update(parts)
     return sorted(list(common_set))
 
-
-@app.route("/common")
-def function1(common):
-    common = request.args.get("common", "")
+@app.route("/filter-common")
+def filter_by_common():
+    # 1. Fetch all unique common ingredients for the dropdown checklist
+    common_ingredients_list = get_unique_common()
     
+    # 2. Get the list of selected ingredients from the form checkbox parameters
+    selected_commons = request.args.getlist("common")
     
-    common = get_unique_common()
-
-    
-    base_select = """
-        SELECT RowNum, Title, Creator, Image, Ingredients, Category, Website 
-        FROM (SELECT ROW_NUMBER() OVER (ORDER BY Title ASC) AS RowNum, 
-              Title, Creator, Image, Ingredients, Category, Website 
-              FROM Recipes)
-    """
-
-    if common:
+    if selected_commons:
+        # Create a dynamic matching score clause: (CASE WHEN Ingredients LIKE ? THEN 1 ELSE 0 END) + ...
+        match_score_clauses = " + ".join(["(CASE WHEN Ingredients LIKE ? THEN 1 ELSE 0 END)" for _ in selected_commons])
         
-        sql = base_select + " WHERE Common LIKE ?"
-        pantry = query_db(sql, (f"%{common}%",))
+        sql = f"""
+            SELECT RowNum, Title, Creator, Image, Ingredients, Category, Website,
+                   ({match_score_clauses}) AS MatchCount
+            FROM (
+                SELECT ROW_NUMBER() OVER (ORDER BY Title ASC) AS RowNum, 
+                       Title, Creator, Image, Ingredients, Category, Website 
+                FROM Recipes
+            )
+            WHERE { " OR ".join(["Ingredients LIKE ?" for _ in selected_commons]) }
+            ORDER BY MatchCount DESC, Title ASC
+        """
+        query_params = [f"%{item}%" for item in selected_commons] * 2
+        pantry = query_db(sql, tuple(query_params))
     else:
-        pantry = query_db(base_select)
+        # Fallback if the user clicks "Apply Filter" without choosing anything
+        sql = """
+            SELECT ROW_NUMBER() OVER (ORDER BY Title ASC) AS RowNum, 
+                   Title, Creator, Image, Ingredients, Category, Website 
+            FROM Recipes
+            ORDER BY Title ASC
+        """
+        pantry = query_db(sql)
 
+    # Return your template (make sure it points to the page where your results loop is rendered)
     return render_template(
         "home.html", 
         pantry=pantry,
-        common=common,
-        selected_common=common)
+        common_ingredients=common_ingredients_list,
+        selected_commons=selected_commons
+    )
 
-@app.route("/common/<common>")
-def filter_by_common(common):
-    common_items = get_unique_common()
-    recipes_data = query_db("SELECT * FROM Recipes")
-    return render_template(
-        "filtered_recipes.html",
-        recipes=recipes_data,
-        common=common_items,
-        selected_common=common
-)
+
 
 def get_unique_vegetables():
     """Fetches, splits, and deduplicates vegetable ingredients from the DB."""
