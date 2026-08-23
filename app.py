@@ -184,9 +184,9 @@ def home():
     }
     
     base_select = """
-        SELECT RowNum, Title, Creator, Image, Ingredients, Category, Website 
+        SELECT RowNum, Title, Creator, Image, Ingredients, Category, AllergyWarning, Website 
         FROM (SELECT ROW_NUMBER() OVER (ORDER BY Title ASC) AS RowNum, 
-              Title, Creator, Image, Ingredients, Category, Website 
+              Title, Creator, Image, Ingredients, Category, AllergyWarning, Website 
               FROM Recipes)
     """
 
@@ -205,22 +205,21 @@ def home():
         selected_ingredients=[] # Emptied on normal home load
     )
 
+
+@app.route("/recipes/<int:recipeid>")
 @app.route("/filter")
 def filter_recipes():
-    # Gather items checked across ANY of your dropdown filters
     selected_ingredients = request.args.getlist("ingredient")
     
     if selected_ingredients:
-        # Build score clauses matching against the "Ingredients" column in your Recipes table
         match_score_clauses = " + ".join(["(CASE WHEN Ingredients LIKE ? THEN 1 ELSE 0 END)" for _ in selected_ingredients])
         where_clauses = " OR ".join(["Ingredients LIKE ?" for _ in selected_ingredients])
         
-        # We select RecipeID explicitly as Index 0 so our HTML links work perfectly
         sql = f"""
-            SELECT RecipeID, Title, Creator, Image, Ingredients, Category, Website,
+            SELECT RecipeID, Title, Creator, Image, Ingredients, Category, Website, AllergyWarning,
                    ({match_score_clauses}) AS MatchCount
             FROM (
-                SELECT RecipeID, Title, Creator, Image, Ingredients, Category, Website 
+                SELECT RecipeID, Title, Creator, Image, Ingredients, Category, AllergyWarning, Website 
                 FROM Recipes
             )
             WHERE {where_clauses}
@@ -229,35 +228,21 @@ def filter_recipes():
         query_params = [f"%{item}%" for item in selected_ingredients] * 2
         recipes = query_db(sql, tuple(query_params))
     else:
-        # Fetch everything safely if no filters are checked
         sql = """
-            SELECT RecipeID, Title, Creator, Image, Ingredients, Category, Website 
+            SELECT RecipeID, Title, Creator, Image, Ingredients, Category, Website, AllergyWarning
             FROM Recipes
             ORDER BY Title ASC
         """
         recipes = query_db(sql)
 
-    # Context values for your menus
-    dropdown_data = {
-        "common_ingredients": get_unique_common(),
-        "vegetables": get_unique_vegetables(),
-        "meats": get_unique_meats(),
-        "dairy": get_unique_dairy(),
-        "mushrooms": get_unique_mushrooms(),
-        "herbs": get_unique_herbs(),
-        "nuts_grains": get_unique_nuts_grains(),
-        "miscellaneous": get_unique_miscellaneous()
-    }
-
-    # This single return block ends the function and stops the server from hanging
     return render_template(
         "home.html", 
         recipes=recipes, 
         categories=get_unique_categories(), 
         selected_category="",
-        dropdown_data=dropdown_data,
         selected_ingredients=selected_ingredients
     )
+
 
 
 @app.route('/about')
@@ -288,26 +273,17 @@ def search():
     results = query_db(sql, (like_anywhere, like_anywhere, like_start))
     
     return render_template("search_results.html", recipes=results, query=query)
-@app.route("/recipes/<int:recipeid>")
+
+@app.route("/recipes/<recipeid>")
 def recipe_detail(recipeid):
-    # Standard SQL query without broken text comment annotations
     sql = """
-        SELECT 
-            RecipeID,     
-            Title,        
-            Creator,      
-            Image,        
-            Ingredients,  
-            Category,     
-            Website,      
-            RecipeLink    
+        SELECT RecipeID, Title, Creator, Image, Ingredients, Category, Website, AllergyWarning, RecipeLink
         FROM Recipes
         WHERE RecipeID = ?
     """
     recipe = query_db(sql, (recipeid,), one=True)
     if not recipe:
-        return render_template('error.html'), 404
-        
+        abort(404)
     return render_template("recipe.html", recipe=recipe)
 
 if __name__ == "__main__":
