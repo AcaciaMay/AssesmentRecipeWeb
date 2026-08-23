@@ -284,7 +284,6 @@ def search():
     )
 
 
-
 @app.route("/recipes/<recipeid>")
 def recipe_detail(recipeid):
     sql = """
