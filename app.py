@@ -229,7 +229,7 @@ def filter_recipes():
         "dairy": get_unique_dairy(),
         "mushrooms": get_unique_mushrooms(),
         "herbs": get_unique_herbs(),
-        "nuts&grains": get_unique_nuts_grains(),
+        "nuts_grains": get_unique_nuts_grains(),
         "miscellaneous": get_unique_miscellaneous()
     }
 
