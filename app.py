@@ -271,7 +271,10 @@ def search():
     like_start = f"{query}%" 
     results = query_db(sql, (like_anywhere, like_anywhere, like_start))
     
-    # FIXED: Added required parameters so extended layouts don't crash
+    # FIX: If no recipes match the search query, show your custom error page!
+    if not results:
+        return render_template("error.html", query=query), 404
+    
     return render_template(
         "search_results.html", 
         recipes=results, 
