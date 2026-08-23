@@ -45,32 +45,34 @@
     </div>
 </nav>
 
-<!-- Recipes Grid lives entirely OUTSIDE of the filter form context -->
+
 <div class="main-wrapper">
     <div class="content-area">
+        
         <!-- If a recipe is being viewed, inject the detail block instead of the grid -->
         {% if recipe %}
             {% block body %}{% endblock %}
         {% else %}
+            <!-- Default Home Page Grid Layout -->
             <div class="recipe-section">
                 {% for recipe in recipes %}
-                <!-- Use the correct dictionary lookup syntax since row_factory is active -->
-                <a href="{{ url_for('recipe_detail', recipeid=recipe['RecipeID']) }}" class="recipe-card-link" style="text-decoration: none; color: inherit;">
+                <a href="{{ url_for('recipe_detail', recipeid=recipe[0]) }}" class="recipe-card-link" style="text-decoration: none; color: inherit;">
                     <div class="recipe-container">
                         <div class="recipe-title">
-                            <h4>{{ recipe['Title'] }}</h4>
+                            <h4>{{ recipe[1] }}</h4>
                         </div>
                         <div class="recipe-image">
-                            <img src="{{ url_for('static', filename=recipe['Image']) }}" alt="Recipe Image">
+                            <img src="{{ url_for('static', filename=recipe[3]) }}" alt="Recipe Image">
                         </div>
                         <div class="recipe-info">
-                            <p><strong>Ingredients:</strong> {{ recipe['Ingredients'] }}</p>
+                            <p><strong>Ingredients:</strong> {{ recipe[4] }}</p>
                         </div>
                     </div>
                 </a>
                 {% endfor %}
             </div>
         {% endif %}
+
     </div>
 </div>
 

@@ -273,6 +273,7 @@ def search():
     
     return render_template("search_results.html", recipes=results, query=query)
 
+
 @app.route("/recipes/<recipeid>")
 def recipe_detail(recipeid):
     sql = """
@@ -284,3 +285,6 @@ def recipe_detail(recipeid):
     if not recipe:
         abort(404)
     return render_template("recipe.html", recipe=recipe)
+
+if __name__ == "__main__":
+    app.run(debug=True, port=4567, host="0.0.0.0")

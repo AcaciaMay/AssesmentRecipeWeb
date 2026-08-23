@@ -5,8 +5,8 @@
     .recipe-display-card {
         display: flex;
         background-color: #fff3d1; 
-        border: 2px solid #000000;      
-        border-radius: 12px;           
+        border: 2px solid #000000;      /* Added crisp black outline */
+        border-radius: 12px;           /* Added smooth rounded corners */
         padding: 15px;            
         gap: 20px;
         font-family: 'Alice', serif, Georgia, sans-serif;
@@ -37,7 +37,7 @@
         max-height: 220px;        
         object-fit: cover;
         border: 1px solid #ccc;
-        border-radius: 6px;
+        border-radius: 6px;        /* Optional: slightly rounds the image corners to match */
     }
 
     .recipe-column-details {
@@ -58,38 +58,35 @@
     .recipe-detail-row strong {
         font-weight: bold;
         display: inline-block;
-        width: 130px; /* Widened slightly so "Allergy Warnings:" stays inline */
+        width: 110px;             
     }
 </style>
 
 <div class="recipe-display-card">
 
-    <!-- Left Column: Title and Image -->
+    <!-- Left side: Title and Image -->
     <div class="recipe-column-visual">
-        <h1>{{ recipe['Title'] }}</h1> 
+        <h1>{{ recipe[1] }}</h1> 
+        
         <div class="recipe-image-wrapper">
-            <img src="{{ url_for('static', filename=recipe['Image']) }}" alt="{{ recipe['Title'] }}">
+            <img src="{{ url_for('static', filename=recipe[3]) }}" alt="{{ recipe[1] }}">
         </div>
     </div>
 
-    <!-- Right Column: Details using Database Keys -->
+    <!-- Right side: Details with Colons -->
     <div class="recipe-column-details">
-        <p class="recipe-detail-row"><strong>Creator:</strong> {{ recipe['Creator'] }}</p>
-        <p class="recipe-detail-row"><strong>Ingredients:</strong> {{ recipe['Ingredients'] }}</p>
-        <p class="recipe-detail-row"><strong>Category:</strong> {{ recipe['Category'] }}</p>
-        
-        <!-- Pulls directly from the AllergyWarning string column -->
-        <p class="recipe-detail-row"><strong>Allergy Warnings:</strong> {{ recipe['AllergyWarning'] if recipe['AllergyWarning'] else 'None' }}</p>
-        
-        <p class="recipe-detail-row"><strong>Website:</strong> {{ recipe['Website'] }}</p>
+        <p class="recipe-detail-row"><strong>Creator:</strong> {{ recipe[2] }}</p>
+        <p class="recipe-detail-row"><strong>Ingredients:</strong> {{ recipe[4] }}</p>
+        <p class="recipe-detail-row"><strong>Category:</strong> {{ recipe[5] }}</p>
+        <p class="recipe-detail-row"><strong>Allergy Warnings:</strong> {{ recipe[8] }}</p>
+        <p class="recipe-detail-row"><strong>Website:</strong> {{ recipe[6] }}</p>
         <p class="recipe-detail-row">
             <strong>Recipe Link:</strong> 
-            <a href="{{ recipe['RecipeLink'] }}" target="_blank" style="color: inherit; text-decoration: underline;">{{ recipe['RecipeLink'] }}</a>
+            <a href="{{ recipe[7] }}" target="_blank" style="color: inherit; text-decoration: underline;">{{ recipe[7] }}</a>
         </p>
     </div>
 
 </div>
 {% endblock %}
-
 
 
