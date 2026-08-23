@@ -206,7 +206,6 @@ def home():
     )
 
 
-@app.route("/recipes/<int:recipeid>")
 @app.route("/filter")
 def filter_recipes():
     selected_ingredients = request.args.getlist("ingredient")
@@ -285,6 +284,3 @@ def recipe_detail(recipeid):
     if not recipe:
         abort(404)
     return render_template("recipe.html", recipe=recipe)
-
-if __name__ == "__main__":
-    app.run(debug=True, port=4567, host="0.0.0.0")
