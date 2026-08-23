@@ -215,12 +215,12 @@ def filter_recipes():
         match_score_clauses = " + ".join(["(CASE WHEN Ingredients LIKE ? THEN 1 ELSE 0 END)" for _ in selected_ingredients])
         where_clauses = " OR ".join(["Ingredients LIKE ?" for _ in selected_ingredients])
         
+        # We select RecipeID explicitly as Index 0 so our HTML links work perfectly
         sql = f"""
-            SELECT RowNum, Title, Creator, Image, Ingredients, Category, Website,
+            SELECT RecipeID, Title, Creator, Image, Ingredients, Category, Website,
                    ({match_score_clauses}) AS MatchCount
             FROM (
-                SELECT ROW_NUMBER() OVER (ORDER BY Title ASC) AS RowNum, 
-                       Title, Creator, Image, Ingredients, Category, Website 
+                SELECT RecipeID, Title, Creator, Image, Ingredients, Category, Website 
                 FROM Recipes
             )
             WHERE {where_clauses}
@@ -229,15 +229,15 @@ def filter_recipes():
         query_params = [f"%{item}%" for item in selected_ingredients] * 2
         recipes = query_db(sql, tuple(query_params))
     else:
+        # Fetch everything safely if no filters are checked
         sql = """
-            SELECT ROW_NUMBER() OVER (ORDER BY Title ASC) AS RowNum, 
-                   Title, Creator, Image, Ingredients, Category, Website 
+            SELECT RecipeID, Title, Creator, Image, Ingredients, Category, Website 
             FROM Recipes
             ORDER BY Title ASC
         """
         recipes = query_db(sql)
 
-    # Repopulate your side menus so they don't break on page load
+    # Context values for your menus
     dropdown_data = {
         "common_ingredients": get_unique_common(),
         "vegetables": get_unique_vegetables(),
@@ -249,6 +249,7 @@ def filter_recipes():
         "miscellaneous": get_unique_miscellaneous()
     }
 
+    # This single return block ends the function and stops the server from hanging
     return render_template(
         "home.html", 
         recipes=recipes, 
@@ -257,7 +258,6 @@ def filter_recipes():
         dropdown_data=dropdown_data,
         selected_ingredients=selected_ingredients
     )
-
 
 
 @app.route('/about')
@@ -288,47 +288,27 @@ def search():
     results = query_db(sql, (like_anywhere, like_anywhere, like_start))
     
     return render_template("search_results.html", recipes=results, query=query)
-
-@app.route("/recipes/<recipeid>")
+@app.route("/recipes/<int:recipeid>")
 def recipe_detail(recipeid):
+    # Standard SQL query without broken text comment annotations
     sql = """
         SELECT 
-            RecipeID,     # Index 0
-            Title,        # Index 1
-            Creator,      # Index 2
-            Image,        # Index 3
-            Ingredients,  # Index 4
-            Category,     # Index 5
-            Website,      # Index 6
-            RecipeLink    # Index 7
+            RecipeID,     
+            Title,        
+            Creator,      
+            Image,        
+            Ingredients,  
+            Category,     
+            Website,      
+            RecipeLink    
         FROM Recipes
         WHERE RecipeID = ?
     """
     recipe = query_db(sql, (recipeid,), one=True)
     if not recipe:
-        abort(404)
-    return render_template("recipe.html", recipe=recipe)
-
-
-
-
-
-
-@app.route("/recipe/id/<recipeid>")
-def recipe_by_id(recipeid):
-    sql = """
-        SELECT Title, Creator, Image, Ingredients, Category, Website, Recipelink
-        FROM Recipes
-        WHERE RecipeID = ?;
-    """
-    result = query_db(sql, [recipeid], one=True)
-    if result is None:
         return render_template('error.html'), 404
-    return render_template("recipe.html", recipe=result)
-
+        
+    return render_template("recipe.html", recipe=recipe)
 
 if __name__ == "__main__":
     app.run(debug=True, port=4567, host="0.0.0.0")
-
-
-
