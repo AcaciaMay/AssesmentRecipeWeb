@@ -271,7 +271,15 @@ def search():
     like_start = f"{query}%" 
     results = query_db(sql, (like_anywhere, like_anywhere, like_start))
     
-    return render_template("search_results.html", recipes=results, query=query)
+    # FIXED: Added required parameters so extended layouts don't crash
+    return render_template(
+        "search_results.html", 
+        recipes=results, 
+        query=query, 
+        categories=get_unique_categories(),
+        selected_category=""
+    )
+
 
 
 @app.route("/recipes/<recipeid>")
