@@ -248,11 +248,11 @@ def filter_recipes():
 def about():
     return render_template('about.html')
 
-
 @app.route("/search", methods=["GET"])
 def search():
     query = request.args.get("query", "").strip()
 
+    # FIXED: Cleaned up the CASE WHEN statement syntax
     sql = """
         SELECT 
             RecipeID,
@@ -263,17 +263,15 @@ def search():
         FROM Recipes
         WHERE Title LIKE ? OR Ingredients LIKE ?
         ORDER BY 
-            CASE WHEN Title LIKE ? THEN 0 ELSE 1 END ASC,
-            Titl  
-            e ASC;
+            (CASE WHEN Title LIKE ? THEN 0 ELSE 1 END) ASC,
+            Title ASC;
     """
-
     
     like_anywhere = f"%{query}%"
     like_start = f"{query}%" 
     results = query_db(sql, (like_anywhere, like_anywhere, like_start))
     
-    # FIX: If no recipes match the search query, show your custom error page!
+    # If no recipes match the search query, show your custom error page!
     if not results:
         return render_template("error.html", query=query), 404
     
