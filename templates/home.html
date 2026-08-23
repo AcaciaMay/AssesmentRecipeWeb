@@ -84,22 +84,23 @@
 <form action="{{ url_for('filter_recipes') }}" method="GET" id="filterForm">
 
     <div class="filter-dropdowns-container" style="display: flex; gap: 15px; flex-wrap: wrap; margin-top: 10px;">
-        
+
         <!-- 1. COMMON INGREDIENTS DROPDOWN -->
-        <div class="dropdown">
-            <button class="nav-button dropdown-trigger" type="button" onclick="toggleDropdown('commonMenu')">Common ▾</button>
-            <div class="dropdown-content" id="commonMenu" style="display: none;">
-                <div class="filter-bar">
-                    {% for item in dropdown_data.common_ingredients %}
-                        <label class="filter-pill-label">
-                            <input type="checkbox" name="ingredient" value="{{ item }}" class="hidden-checkbox"
-                                   {% if item in selected_ingredients %}checked{% endif %} onchange="autoSubmitFilter()">
-                            <span class="filter-pill {% if item in selected_ingredients %}active{% endif %}">{{ item }}</span>
-                        </label>
-                    {% endfor %}
-                </div>
-            </div>
+<div class="dropdown">
+    <button class="nav-button dropdown-trigger" type="button" onclick="toggleDropdown('commonMenu')">Common ▾</button>
+    <div class="dropdown-content" id="commonMenu" style="display: none;">
+        <div class="filter-bar">
+            <!-- Defend against the UndefinedError using 'default' -->
+            {% for item in dropdown_data.common_ingredients | default([]) %}
+                <label class="filter-pill-label">
+                    <input type="checkbox" name="ingredient" value="{{ item }}" class="hidden-checkbox"
+                           {% if item in selected_ingredients | default([]) %}checked{% endif %} onchange="autoSubmitFilter()">
+                    <span class="filter-pill {% if item in selected_ingredients | default([]) %}active{% endif %}">{{ item }}</span>
+                </label>
+            {% endfor %}
         </div>
+    </div>
+</div>
 
         <!-- 2. VEGETABLES DROPDOWN -->
         <div class="dropdown">
@@ -240,8 +241,19 @@
 </form> <!-- 2. CLOSE THE FORM FIRST -->
 
 <script>
-// Automatically submits the form when a checkbox is checked or unchecked
+// Automatically submits the form and remembers which dropdown was open
 function autoSubmitFilter() {
+    // Find the currently open dropdown menu
+    const openMenu = Array.from(document.querySelectorAll('.dropdown-content'))
+                          .find(el => el.style.display === 'block');
+    
+    // Save its ID if it exists, otherwise clear it
+    if (openMenu) {
+        sessionStorage.setItem('activeDropdownId', openMenu.id);
+    } else {
+        sessionStorage.removeItem('activeDropdownId', openMenu.id);
+    }
+
     document.getElementById("filterForm").submit();
 }
 
@@ -266,11 +278,24 @@ window.onclick = function(event) {
         document.querySelectorAll(".dropdown-content").forEach(openDropdown => {
             if (openDropdown.style.display === "block" && !openDropdown.contains(event.target)) {
                 openDropdown.style.display = "none";
+                sessionStorage.removeItem('activeDropdownId');
             }
         });
     }
 }
+
+// RESTORE STATE ON PAGE LOAD: Reopen the dropdown that triggered the reload
+window.addEventListener('DOMContentLoaded', () => {
+    const activeMenuId = sessionStorage.getItem('activeDropdownId');
+    if (activeMenuId) {
+        const menu = document.getElementById(activeMenuId);
+        if (menu) {
+            menu.style.display = 'block';
+        }
+    }
+});
 </script>
+
 
 
 </body>

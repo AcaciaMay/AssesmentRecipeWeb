@@ -4,6 +4,22 @@ import sqlite3
 app = Flask(__name__)
 DATABASE = 'database.db'
 
+@app.context_processor
+def inject_dropdown_data():
+    # This automatically makes 'dropdown_data' available to EVERY HTML template, including search_results.html
+    return {
+        "dropdown_data": {
+            "common_ingredients": get_unique_common(),
+            "vegetables": get_unique_vegetables(),
+            "meats": get_unique_meats(),
+            "dairy": get_unique_dairy(),
+            "mushrooms": get_unique_mushrooms(),
+            "herbs": get_unique_herbs(),
+            "nuts_grains": get_unique_nuts_grains(), # Ensure key matches template exactly
+            "miscellaneous": get_unique_miscellaneous()
+        }
+    }
+
 
 def get_db():
     db = getattr(g, '_database', None)
@@ -273,18 +289,18 @@ def search():
     
     return render_template("search_results.html", recipes=results, query=query)
 
-
 @app.route("/recipes/<recipeid>")
 def recipe_detail(recipeid):
     sql = """
         SELECT 
-            Title,
-            Creator,
-            Image,
-            Ingredients,
-            Category,
-            Website,
-            RecipeLink
+            RecipeID,     # Index 0
+            Title,        # Index 1
+            Creator,      # Index 2
+            Image,        # Index 3
+            Ingredients,  # Index 4
+            Category,     # Index 5
+            Website,      # Index 6
+            RecipeLink    # Index 7
         FROM Recipes
         WHERE RecipeID = ?
     """
@@ -292,6 +308,7 @@ def recipe_detail(recipeid):
     if not recipe:
         abort(404)
     return render_template("recipe.html", recipe=recipe)
+
 
 
 
