@@ -266,6 +266,7 @@ def search():
             CASE WHEN Title LIKE ? THEN 0 ELSE 1 END ASC,
             Title ASC;
     """
+
     
     like_anywhere = f"%{query}%"
     like_start = f"{query}%" 
