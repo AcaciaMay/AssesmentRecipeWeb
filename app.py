@@ -264,7 +264,8 @@ def search():
         WHERE Title LIKE ? OR Ingredients LIKE ?
         ORDER BY 
             CASE WHEN Title LIKE ? THEN 0 ELSE 1 END ASC,
-            Title ASC;
+            Titl  
+            e ASC;
     """
 
     
