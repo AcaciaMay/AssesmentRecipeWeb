@@ -45,7 +45,9 @@ body {
     background-color: #aa1c41; 
     color: white;
     padding: 20px;    
-    
+    display: flex;
+  flex-direction: column; /* Stacks children vertically */
+  gap: 15px; 
     /* CRUCIAL FIXES */
     position: fixed;        /* Pulls the sidebar completely out of the regular document flow */
     top: 0;                 /* Touches the absolute top edge of the browser viewport */
