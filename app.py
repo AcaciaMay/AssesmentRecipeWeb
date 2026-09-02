@@ -283,6 +283,20 @@ def search():
         selected_category=""
     )
 
+@app.errorhandler(404) # Fixed: Changed from @app.app_errorhandler to @app.errorhandler
+def page_not_found(e):
+    # Dynamically gets the invalid path typed in, or defaults to "Unknown Page"
+    from flask import request
+    invalid_query = request.path.lstrip('/')
+    
+    return render_template(
+        "error.html", 
+        query=invalid_query,
+        categories=get_unique_categories(),  # Keeps your navbar layout menus populated
+        selected_category=""
+    ), 404
+
+
 
 @app.route("/recipes/<recipeid>")
 def recipe_detail(recipeid):
