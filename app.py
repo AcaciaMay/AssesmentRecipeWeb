@@ -252,14 +252,15 @@ def about():
 def search():
     query = request.args.get("query", "").strip()
 
-    # FIXED: Cleaned up the CASE WHEN statement syntax
+    # ADDED: "Category" column included right after Ingredients
     sql = """
         SELECT 
             RecipeID,
             Title,
             Creator,
             Image,
-            Ingredients
+            Ingredients,
+            Category
         FROM Recipes
         WHERE Title LIKE ? OR Ingredients LIKE ?
         ORDER BY 
@@ -271,7 +272,6 @@ def search():
     like_start = f"{query}%" 
     results = query_db(sql, (like_anywhere, like_anywhere, like_start))
     
-    # If no recipes match the search query, show my custom error page
     if not results:
         return render_template("error.html", query=query), 404
     

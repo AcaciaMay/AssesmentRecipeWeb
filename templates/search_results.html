@@ -1,26 +1,42 @@
 {% extends "home.html" %}
 
-{% block content %}
-<h3>Search Results for "{{ query }}"</h3>
+{% block body %}
+<div class="search-override-container" style="margin-top: 20px;">
+    <h3 style="margin-left: 20px; font-family: 'Alice', serif; color: #5e244e;">Search Results for "{{ query }}"</h3>
 
-<div class="recipe-section">
-    {% for recipe in recipes %}
-    <a href="{{ url_for('recipe_detail', recipeid=recipe['RecipeID']) }}" class="recipe-card-link">
-        <div class="recipe-container {{ primary_category }}">
-            <div class="recipe-title">
-                <h4>{{ recipe['Title'] }}</h4> 
+    <div class="recipe-section">
+        {% for recipe in recipes %}
+        <a href="{{ url_for('recipe_detail', recipeid=recipe[0]) }}" class="recipe-card-link" style="text-decoration: none; color: inherit;">
+            
+            {# 1. Extract the category text from index position 5 (now active thanks to your updated Python query) #}
+            {% set raw_category = recipe[5] if recipe[5] else '' %}
+            {% set primary_category = raw_category.split(',')[0].strip().lower().replace(' ', '-') %}
+            
+            {# 2. Dynamic class string generation #}
+            <div class="recipe-container {{ primary_category }}">
+                <div class="recipe-title">
+                    <h4>{{ recipe[1] }}</h4>
+                </div>
+                <div class="recipe-image">
+                    <img src="{{ url_for('static', filename=recipe[3]) }}" alt="Recipe Image">
+                </div>
+                <div class="recipe-info">
+                    <p><strong>Ingredients:</strong> {{ recipe[4] }}</p>
+                </div>
             </div>
-            <div class="recipe-image">
-                <img src="{{ url_for('static', filename=recipe['Image']) }}" alt="{{ recipe['Title'] }}">
-            </div>
-            <div class="recipe-info">
-                <p><strong>Ingredients:</strong> {{ recipe['Ingredients'] }}</p>
-                <p><strong>Creator:</strong> {{ recipe['Creator'] }}</p>
-            </div>
-        </div>
-    </a> 
-    {% else %}
-        <p class="no-results">No recipes found matching your criteria. Try different ingredients!</p>
-    {% endfor %}
+        </a>
+        {% endfor %}
+    </div>
 </div>
+
+{# 3. This block safely suppresses the duplicate homepage layout without breaking home.html itself #}
+<style>
+    .content-area > .recipe-section {
+        display: none !important;
+    }
+    .search-override-container .recipe-section {
+        display: grid !important; 
+    }
+</style>
 {% endblock %}
+
