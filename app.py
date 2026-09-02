@@ -1,8 +1,10 @@
-from flask import Flask, g, render_template, request, abort
 import sqlite3
 
+from flask import Flask, abort, g, render_template, request
+
 app = Flask(__name__)
-DATABASE = 'database.db'
+DATABASE = "database.db"
+
 
 @app.context_processor
 def inject_dropdown_data():
@@ -15,24 +17,26 @@ def inject_dropdown_data():
             "dairy": get_unique_dairy(),
             "mushrooms": get_unique_mushrooms(),
             "herbs": get_unique_herbs(),
-            "nuts_grains": get_unique_nuts_grains(), # Ensure key matches template exactly
-            "miscellaneous": get_unique_miscellaneous()
+            "nuts_grains": get_unique_nuts_grains(),  # Ensure key matches template exactly
+            "miscellaneous": get_unique_miscellaneous(),
         }
     }
 
 
 def get_db():
-    db = getattr(g, '_database', None)
+    db = getattr(g, "_database", None)
     if db is None:
         db = g._database = sqlite3.connect(DATABASE)
-        db.row_factory = sqlite3.Row  
+        db.row_factory = sqlite3.Row
     return db
+
 
 @app.teardown_appcontext
 def close_connection(exception):
-    db = getattr(g, '_database', None)
+    db = getattr(g, "_database", None)
     if db is not None:
         db.close()
+
 
 def query_db(query, args=(), one=False):
     cur = get_db().execute(query, args)
@@ -40,15 +44,17 @@ def query_db(query, args=(), one=False):
     cur.close()
     return (rv[0] if rv else None) if one else rv
 
+
 def get_unique_categories():
     """Fetches, splits, and deduplicates categories from the DB."""
-    raw_data = query_db("SELECT DISTINCT Category FROM Recipes WHERE Category IS NOT NULL")
+    raw_data = query_db(
+        "SELECT DISTINCT Category FROM Recipes WHERE Category IS NOT NULL"
+    )
     category_set = set()
     for row in raw_data:
-        
-        parts = [p.strip() for p in row['Category'].split(',')]
+        parts = [p.strip() for p in row["Category"].split(",")]
         category_set.update(parts)
-    return sorted(list(category_set))
+    return sorted(category_set)
 
 
 def get_unique_common():
@@ -56,22 +62,21 @@ def get_unique_common():
     raw_data = query_db("SELECT DISTINCT Common FROM Pantry WHERE Common IS NOT NULL")
     common_set = set()
     for row in raw_data:
-        
-        parts = [p.strip() for p in row['Common'].split(',')]
+        parts = [p.strip() for p in row["Common"].split(",")]
         common_set.update(parts)
-    return sorted(list(common_set))
+    return sorted(common_set)
 
 
 def get_unique_vegetables():
     """Fetches, splits, and deduplicates vegetable ingredients from the DB."""
-    raw_data = query_db("SELECT DISTINCT Vegetables FROM Pantry WHERE Vegetables IS NOT NULL")
+    raw_data = query_db(
+        "SELECT DISTINCT Vegetables FROM Pantry WHERE Vegetables IS NOT NULL"
+    )
     vegetables_set = set()
     for row in raw_data:
-        
-        parts = [p.strip() for p in row['Vegetables'].split(',')]
+        parts = [p.strip() for p in row["Vegetables"].split(",")]
         vegetables_set.update(parts)
-    return sorted(list(vegetables_set))
-
+    return sorted(vegetables_set)
 
 
 def get_unique_meats():
@@ -79,11 +84,9 @@ def get_unique_meats():
     raw_data = query_db("SELECT DISTINCT Meats FROM Pantry WHERE Meats IS NOT NULL")
     Meats_set = set()
     for row in raw_data:
-        
-        parts = [p.strip() for p in row['Meats'].split(',')]
+        parts = [p.strip() for p in row["Meats"].split(",")]
         Meats_set.update(parts)
-    return sorted(list(Meats_set))
-
+    return sorted(Meats_set)
 
 
 def get_unique_dairy():
@@ -91,10 +94,9 @@ def get_unique_dairy():
     raw_data = query_db("SELECT DISTINCT Dairy FROM Pantry WHERE Dairy IS NOT NULL")
     dairy_set = set()
     for row in raw_data:
-        
-        parts = [p.strip() for p in row['Dairy'].split(',')]
+        parts = [p.strip() for p in row["Dairy"].split(",")]
         dairy_set.update(parts)
-    return sorted(list(dairy_set))
+    return sorted(dairy_set)
 
 
 def get_unique_baking():
@@ -102,11 +104,9 @@ def get_unique_baking():
     raw_data = query_db("SELECT DISTINCT Baking FROM Pantry WHERE Baking IS NOT NULL")
     baking_set = set()
     for row in raw_data:
-        
-        parts = [p.strip() for p in row['Baking'].split(',')]
+        parts = [p.strip() for p in row["Baking"].split(",")]
         baking_set.update(parts)
-    return sorted(list(baking_set))
-
+    return sorted(baking_set)
 
 
 def get_unique_fruits():
@@ -114,21 +114,21 @@ def get_unique_fruits():
     raw_data = query_db("SELECT DISTINCT Fruits FROM Pantry WHERE Fruits IS NOT NULL")
     fruits_set = set()
     for row in raw_data:
-        
-        parts = [p.strip() for p in row['Fruits'].split(',')]
+        parts = [p.strip() for p in row["Fruits"].split(",")]
         fruits_set.update(parts)
-    return sorted(list(fruits_set))
+    return sorted(fruits_set)
 
 
 def get_unique_mushrooms():
     """Fetches, splits, and deduplicates mushroom ingredients from the DB."""
-    raw_data = query_db("SELECT DISTINCT Mushrooms FROM Pantry WHERE Mushrooms IS NOT NULL")
+    raw_data = query_db(
+        "SELECT DISTINCT Mushrooms FROM Pantry WHERE Mushrooms IS NOT NULL"
+    )
     mushrooms_set = set()
     for row in raw_data:
-        
-        parts = [p.strip() for p in row['Mushrooms'].split(',')]
+        parts = [p.strip() for p in row["Mushrooms"].split(",")]
         mushrooms_set.update(parts)
-    return sorted(list(mushrooms_set))
+    return sorted(mushrooms_set)
 
 
 def get_unique_herbs():
@@ -136,40 +136,42 @@ def get_unique_herbs():
     raw_data = query_db("SELECT DISTINCT Herbs FROM Pantry WHERE Herbs IS NOT NULL")
     herbs_set = set()
     for row in raw_data:
-        
-        parts = [p.strip() for p in row['Herbs'].split(',')]
+        parts = [p.strip() for p in row["Herbs"].split(",")]
         herbs_set.update(parts)
-    return sorted(list(herbs_set))
+    return sorted(herbs_set)
+
 
 def get_unique_nuts_grains():
     """Fetches, splits, and deduplicates nuts_grains safely from the DB."""
-    
-    raw_data = query_db("SELECT DISTINCT [Nuts_Grains] FROM Pantry WHERE [Nuts_Grains] IS NOT NULL")
+
+    raw_data = query_db(
+        "SELECT DISTINCT [Nuts_Grains] FROM Pantry WHERE [Nuts_Grains] IS NOT NULL"
+    )
     nuts_grains_set = set()
     for row in raw_data:
         # FIX: Matches the exact column string wrapper key name
-        parts = [p.strip() for p in row['Nuts_Grains'].split(',')]
+        parts = [p.strip() for p in row["Nuts_Grains"].split(",")]
         nuts_grains_set.update(parts)
-    return sorted(list(nuts_grains_set))
-
+    return sorted(nuts_grains_set)
 
 
 def get_unique_miscellaneous():
     """Fetches, splits, and deduplicates miscellaneous ingredients safely from the DB."""
-    raw_data = query_db("SELECT DISTINCT [Miscellaneous] FROM Pantry WHERE [Miscellaneous] IS NOT NULL")
+    raw_data = query_db(
+        "SELECT DISTINCT [Miscellaneous] FROM Pantry WHERE [Miscellaneous] IS NOT NULL"
+    )
     misc_set = set()
     for row in raw_data:
-        parts = [p.strip() for p in row['Miscellaneous'].split(',')]
+        parts = [p.strip() for p in row["Miscellaneous"].split(",")]
         misc_set.update(parts)
-    return sorted(list(misc_set))
-
+    return sorted(misc_set)
 
 
 @app.route("/")
 def home():
     category = request.args.get("category", "")
     categories = get_unique_categories()
-    
+
     # Pre-populate all the multi-select lists for the dropdown menus
     dropdown_data = {
         "common_ingredients": get_unique_common(),
@@ -180,9 +182,9 @@ def home():
         "mushrooms": get_unique_mushrooms(),
         "herbs": get_unique_herbs(),
         "nuts_grains": get_unique_nuts_grains(),
-        "miscellaneous": get_unique_miscellaneous()
+        "miscellaneous": get_unique_miscellaneous(),
     }
-    
+
     base_select = """
         SELECT RowNum, Title, Creator, Image, Ingredients, Category, AllergyWarning, Website 
         FROM (SELECT ROW_NUMBER() OVER (ORDER BY Title ASC) AS RowNum, 
@@ -197,23 +199,30 @@ def home():
         recipes = query_db(base_select)
 
     return render_template(
-        "home.html", 
-        recipes=recipes, 
-        categories=categories, 
+        "home.html",
+        recipes=recipes,
+        categories=categories,
         selected_category=category,
         dropdown_data=dropdown_data,
-        selected_ingredients=[] # Emptied on normal home load
+        selected_ingredients=[],  # Emptied on normal home load
     )
 
 
 @app.route("/filter")
 def filter_recipes():
     selected_ingredients = request.args.getlist("ingredient")
-    
+
     if selected_ingredients:
-        match_score_clauses = " + ".join(["(CASE WHEN Ingredients LIKE ? THEN 1 ELSE 0 END)" for _ in selected_ingredients])
-        where_clauses = " OR ".join(["Ingredients LIKE ?" for _ in selected_ingredients])
-        
+        match_score_clauses = " + ".join(
+            [
+                "(CASE WHEN Ingredients LIKE ? THEN 1 ELSE 0 END)"
+                for _ in selected_ingredients
+            ]
+        )
+        where_clauses = " OR ".join(
+            ["Ingredients LIKE ?" for _ in selected_ingredients]
+        )
+
         sql = f"""
             SELECT RecipeID, Title, Creator, Image, Ingredients, Category, Website, AllergyWarning,
                    ({match_score_clauses}) AS MatchCount
@@ -235,18 +244,18 @@ def filter_recipes():
         recipes = query_db(sql)
 
     return render_template(
-        "home.html", 
-        recipes=recipes, 
-        categories=get_unique_categories(), 
+        "home.html",
+        recipes=recipes,
+        categories=get_unique_categories(),
         selected_category="",
-        selected_ingredients=selected_ingredients
+        selected_ingredients=selected_ingredients,
     )
 
 
-
-@app.route('/about')
+@app.route("/about")
 def about():
-    return render_template('about.html')
+    return render_template("about.html")
+
 
 @app.route("/search", methods=["GET"])
 def search():
@@ -267,34 +276,37 @@ def search():
             (CASE WHEN Title LIKE ? THEN 0 ELSE 1 END) ASC,
             Title ASC;
     """
-    
+
     like_anywhere = f"%{query}%"
-    like_start = f"{query}%" 
+    like_start = f"{query}%"
     results = query_db(sql, (like_anywhere, like_anywhere, like_start))
-    
+
     if not results:
         return render_template("error.html", query=query), 404
-    
+
     return render_template(
-        "search_results.html", 
-        recipes=results, 
-        query=query, 
+        "search_results.html",
+        recipes=results,
+        query=query,
         categories=get_unique_categories(),
-        selected_category=""
+        selected_category="",
     )
 
-@app.errorhandler(404) # Fixed: Changed from @app.app_errorhandler to @app.errorhandler
+
+@app.errorhandler(404)  # Fixed: Changed from @app.app_errorhandler to @app.errorhandler
 def page_not_found(e):
     # Dynamically gets the invalid path typed in, or defaults to "Unknown Page"
     from flask import request
-    invalid_query = request.path.lstrip('/')
-    
+
+    invalid_query = request.path.lstrip("/")
+
     return render_template(
-        "error.html", 
+        "error.html",
         query=invalid_query,
         categories=get_unique_categories(),  # Keeps your navbar layout menus populated
-        selected_category=""
+        selected_category="",
     ), 404
+
 
 
 
@@ -309,6 +321,7 @@ def recipe_detail(recipeid):
     if not recipe:
         abort(404)
     return render_template("recipe.html", recipe=recipe)
+
 
 if __name__ == "__main__":
     app.run(debug=True, port=4667, host="0.0.0.0")

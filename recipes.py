@@ -1,33 +1,32 @@
 import sqlite3
 
 title_to_image = {
-"Chicken and Leek Pie": "chickenandleek.jpg",
-"BBQ Butterflied Lamb": "bbqlamb.jpg",
-"Sticky Five Spice Beef": "spicebeef.jpg",
-"Roti Chicken Curry": "rotichickencurry.jpg",
-"Oreo Cheesecake Slice": "oreo.jpg",
-"Chocolate Roulade": "chocolateroulade.jpg",
-"Easter Cheesecake Cups": "eastercups.jpg",
-"Strawberry Tray Cheesecake": "strawberrycheesecake.jpg",
-"Chocolate Roulade": "chocolateroulade.jpg",
-"Turkish Delight Rocky Road": "turkishchocolate.jpg",
-"Peanut Butter Brownies": "peanutbutterbrownies.jpg",
-"Tiramisu": "tiramasu.jpg", 
-"Puttanesca Chicken": "puttanesa.jpg",
-"Asparagus & Gruyere Souffle Omelettes": "asparagusomlette.jpg",
-"Peach & Rasberry Smoothie": "berrysmoothie.jpg",
-"Cauliflower Rice and Eggs": "cauliflowerriceandeggs.jpg",
-"Cheese and Herb Garlic Bread": "cheeseandherbgarlicbread.jpg",
-"Chicken and Leek": "chickenandleek.jpg",
-"Chicken Wontons": "chickenwonton.jpg",
-"Crepes": 'crepes.jpg',
-"Deviled Eggs": "deviledeggs.jpg",
-"Eggs Benedict": "eggsbenedict.jpg",
-"Flat Bread Pizzas": "flatbreadpizzas.jpg",
-"Honey Garlic Chicken": "honeygarlicchicken.jpg",
-"Perfect Pancakes": "perfectpancakes.jpg",
-"Pear, Honey & Ricotta Toast": "pearandhoneytoast.jpg",
-"Pikelets": "pikelets.jpg"
+    "Chicken and Leek Pie": "chickenandleek.jpg",
+    "BBQ Butterflied Lamb": "bbqlamb.jpg",
+    "Sticky Five Spice Beef": "spicebeef.jpg",
+    "Roti Chicken Curry": "rotichickencurry.jpg",
+    "Oreo Cheesecake Slice": "oreo.jpg",
+    "Chocolate Roulade": "chocolateroulade.jpg",
+    "Easter Cheesecake Cups": "eastercups.jpg",
+    "Strawberry Tray Cheesecake": "strawberrycheesecake.jpg",
+    "Turkish Delight Rocky Road": "turkishchocolate.jpg",
+    "Peanut Butter Brownies": "peanutbutterbrownies.jpg",
+    "Tiramisu": "tiramasu.jpg",
+    "Puttanesca Chicken": "puttanesa.jpg",
+    "Asparagus & Gruyere Souffle Omelettes": "asparagusomlette.jpg",
+    "Peach & Rasberry Smoothie": "berrysmoothie.jpg",
+    "Cauliflower Rice and Eggs": "cauliflowerriceandeggs.jpg",
+    "Cheese and Herb Garlic Bread": "cheeseandherbgarlicbread.jpg",
+    "Chicken and Leek": "chickenandleek.jpg",
+    "Chicken Wontons": "chickenwonton.jpg",
+    "Crepes": "crepes.jpg",
+    "Deviled Eggs": "deviledeggs.jpg",
+    "Eggs Benedict": "eggsbenedict.jpg",
+    "Flat Bread Pizzas": "flatbreadpizzas.jpg",
+    "Honey Garlic Chicken": "honeygarlicchicken.jpg",
+    "Perfect Pancakes": "perfectpancakes.jpg",
+    "Pear, Honey & Ricotta Toast": "pearandhoneytoast.jpg",
+    "Pikelets": "pikelets.jpg",
 }
 
 
@@ -40,11 +39,14 @@ not_found = []
 
 for title, filename in title_to_image.items():
     image_path = f"images/{filename}"
-    cursor.execute("""
+    cursor.execute(
+        """
         UPDATE Recipes
         SET "Image" = ?
         WHERE Title = ?
-    """, (image_path, title))
+    """,
+        (image_path, title),
+    )
     if cursor.rowcount == 0:
         not_found.append(title)
     else:
