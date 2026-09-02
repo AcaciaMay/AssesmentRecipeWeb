@@ -45,7 +45,6 @@
     </div>
 </nav>
 
-
 <div class="main-wrapper">
     <div class="content-area">
         
@@ -57,7 +56,13 @@
             <div class="recipe-section">
                 {% for recipe in recipes %}
                 <a href="{{ url_for('recipe_detail', recipeid=recipe[0]) }}" class="recipe-card-link" style="text-decoration: none; color: inherit;">
-                    <div class="recipe-container">
+                    
+                    {# 1. Extract the raw string from index 5, strip it, split it, and convert to a lowercase slug #}
+                    {% set raw_category = recipe[5] if recipe[5] else '' %}
+                    {% set primary_category = raw_category.split(',')[0].strip().lower().replace(' ', '-') %}
+                    
+                    {# 2. Append the category slug directly onto the card class name #}
+                    <div class="recipe-container {{ primary_category }}">
                         <div class="recipe-title">
                             <h4>{{ recipe[1] }}</h4>
                         </div>
@@ -79,7 +84,7 @@
 
 
         
-        <!-- Change this line to remove inline styles -->
+        
     <div class="sidebar">
         <h2>Pantry</h2>
 
@@ -91,7 +96,7 @@
 <!-- One master form wraps your entire filter layout system -->
 <form action="{{ url_for('filter_recipes') }}" method="GET" id="filterForm">
 
-    <div class="filter-dropdowns-container" style="display: flex; gap: 15px; flex-wrap: wrap; margin-top: 10px;">
+ <div class="filter-dropdowns-container" style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; margin-top: 10px; width: 100%;">
 
         <!-- 1. COMMON INGREDIENTS DROPDOWN -->
 <div class="dropdown">
@@ -233,10 +238,10 @@
 
 </form>
 
-        <!-- Continue with your other categories (Meat, Dairy, Nuts, etc.) using the same pattern -->
+    
     </div>
 
-    <!-- FIX: "Apply Filter" buttons have been completely removed. Only show the clear link if filters are active -->
+    <!-- FIX: "Apply Filter" buttons have been completely removed. Only showing the clear link if filters are active -->
     {% if selected_ingredients %}
         <div class="global-filter-actions">
             <a href="{{ url_for('home') }}" class="clear-link">Clear All Filters</a>
@@ -246,7 +251,7 @@
 </form>
 
 
-</form> <!-- 2. CLOSE THE FORM FIRST -->
+</form> <!-- 2. NEEDS TO CLOSE THE FORM FIRST -->
 
 <script>
 // Automatically submits the form and remembers which dropdown was open
@@ -309,7 +314,7 @@ window.addEventListener('DOMContentLoaded', () => {
 </body>
 </html>
 
-</body> <!-- Don't forget your closing tags -->
+</body> 
 </html>
 
 </div>

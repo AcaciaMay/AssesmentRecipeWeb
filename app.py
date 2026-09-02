@@ -143,7 +143,7 @@ def get_unique_herbs():
 
 def get_unique_nuts_grains():
     """Fetches, splits, and deduplicates nuts_grains safely from the DB."""
-    # FIX: Wrapped in square brackets so SQLite allows the '&' symbol
+    
     raw_data = query_db("SELECT DISTINCT [Nuts_Grains] FROM Pantry WHERE [Nuts_Grains] IS NOT NULL")
     nuts_grains_set = set()
     for row in raw_data:
@@ -170,7 +170,7 @@ def home():
     category = request.args.get("category", "")
     categories = get_unique_categories()
     
-    # Pre-populate all the multi-select lists for your dropdown menus
+    # Pre-populate all the multi-select lists for the dropdown menus
     dropdown_data = {
         "common_ingredients": get_unique_common(),
         "vegetables": get_unique_vegetables(),
@@ -271,7 +271,7 @@ def search():
     like_start = f"{query}%" 
     results = query_db(sql, (like_anywhere, like_anywhere, like_start))
     
-    # If no recipes match the search query, show your custom error page!
+    # If no recipes match the search query, show my custom error page
     if not results:
         return render_template("error.html", query=query), 404
     
@@ -297,4 +297,4 @@ def recipe_detail(recipeid):
     return render_template("recipe.html", recipe=recipe)
 
 if __name__ == "__main__":
-    app.run(debug=True, port=4567, host="0.0.0.0")
+    app.run(debug=True, port=4667, host="0.0.0.0")

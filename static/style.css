@@ -46,17 +46,17 @@ body {
     color: white;
     padding: 20px;    
     display: flex;
-  flex-direction: column; /* Stacks children vertically */
+  flex-direction: column; /* Stacks things vertically */
   gap: 15px; 
     /* CRUCIAL FIXES */
     position: fixed;        /* Pulls the sidebar completely out of the regular document flow */
-    top: 0;                 /* Touches the absolute top edge of the browser viewport */
-    right: 0;               /* Snaps it directly to the right edge of the screen */
+    top: 0;                 /* Touches the top edge of the browser viewport */
+    right: 0;               /* Puts it directly to the right edge of the screen */
     width: 360px; 
     height: 100vh;          /* Spans the exact height of the browser screen */
     box-sizing: border-box; /* Forces padding to stay inside the 360px width limits */
     
-    overflow-y: auto;       /* Keeps your scrolling feature working */
+    overflow-y: auto;       /* Keeps my scrolling feature working */
     z-index: 100;           /* Ensures it layers on top of recipe cards during scrolling */
 }
 
@@ -168,7 +168,7 @@ body {
     display: flex;
     padding-top: 0;
     align-items: flex-start; 
-    margin-right: 360px; /* CRUCIAL FIX: Blocks recipes from slipping under the 360px sidebar */
+    margin-right: 360px; /* Blocks recipes from slipping under the 360px sidebar */
 }
 
 .recipe-section {
@@ -195,6 +195,34 @@ body {
   transition: transform 0.2s ease, box-shadow 0.2s ease;
   cursor: pointer;
 }
+
+/* Color Coding Variants */
+
+.recipe-container.afternoon-tea {
+    background: #ffebe6; /* Pastel Red */
+    border-left: 5px solid #ff4d4d;
+}
+
+.recipe-container.breakfast {
+    background: #fff0f5; /* Pastel Pink */
+    border-left: 5px solid #ff69b4;
+}
+
+.recipe-container.dessert {
+    background: #f6ebff; /* Pastel Purple */
+    border-left: 5px solid #9933ff;
+}
+
+.recipe-container.dinner {
+    background: #e6f7ff; /* Pastel Blue */
+    border-left: 5px solid #33adff;
+}
+
+.recipe-container.lunch {
+    background: #fff5e6; /* Pastel Orange */
+    border-left: 5px solid #ff944d;
+}
+
 
 h4 {
   font-size: 20px;

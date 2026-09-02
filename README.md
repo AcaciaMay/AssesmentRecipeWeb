@@ -1,1 +1,1 @@
-Website to see recipes
+RecipeWeb will be a website for people of a variety of ages and backgrounds (12-60 years old) to utilise to find recipes based on the ingredients already in their pantry. Many people have limited funds due to the cost of living crisis which can make meal options strict and difficult, this website will be able to serve as a big help to those who don’t have a lot of cooking options. 
