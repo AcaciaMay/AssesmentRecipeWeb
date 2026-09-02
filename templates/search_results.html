@@ -8,7 +8,7 @@
         {% for recipe in recipes %}
         <a href="{{ url_for('recipe_detail', recipeid=recipe[0]) }}" class="recipe-card-link" style="text-decoration: none; color: inherit;">
             
-            {# 1. Extract the category text from index position 5 (now active thanks to your updated Python query) #}
+            {# 1. Extract the category text from index position 5 #}
             {% set raw_category = recipe[5] if recipe[5] else '' %}
             {% set primary_category = raw_category.split(',')[0].strip().lower().replace(' ', '-') %}
             
