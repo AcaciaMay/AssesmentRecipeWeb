@@ -307,6 +307,23 @@ def page_not_found(e):
         selected_category="",
     ), 404
 
+@app.route('/user/<int:user_id>/favorites')
+def view_favorites(user_id):
+    conn = sqlite3.connect("database.db")
+    cursor = conn.cursor()
+    
+    # This query uses the many-to-many junction table to grab the saved recipes
+    cursor.execute('''
+        SELECT Recipes.Title, Recipes.Image 
+        FROM Recipes
+        JOIN Saved_Recipes ON Recipes.RecipeID = Saved_Recipes.RecipeID
+        WHERE Saved_Recipes.UserID = ?
+    ''', (user_id,))
+    
+    fav_recipes = cursor.fetchall()
+    conn.close()
+    return f"This user has {len(fav_recipes)} favorited recipes!"
+
 
 
 

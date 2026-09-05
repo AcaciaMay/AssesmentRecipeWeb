@@ -1,0 +1,21 @@
+-- database: ./database.db
+
+-- Use the ▷ button in the top right corner to run the entire file.
+
+-- 1. Create the Users table
+CREATE TABLE Users (
+    UserID INTEGER PRIMARY KEY AUTOINCREMENT,
+    Username TEXT UNIQUE NOT NULL,
+    Password TEXT NOT NULL,
+    Email TEXT
+);
+
+-- 2. Create the Many-to-Many Junction table for Saved Recipes
+CREATE TABLE Saved_Recipes (
+    UserID INTEGER,
+    RecipeID INTEGER,
+    SavedAt DATETIME DEFAULT CURRENT_TIMESTAMP,
+    PRIMARY KEY (UserID, RecipeID),
+    FOREIGN KEY (UserID) REFERENCES Users(UserID) ON DELETE CASCADE,
+    FOREIGN KEY (RecipeID) REFERENCES Recipes(RecipeID) ON DELETE CASCADE
+);
